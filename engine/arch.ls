@@ -1,5 +1,5 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
-require! <[./route ./redis-node ./module/view/pug]>
+require! <[./route ./watch ./redis-node ./module/view/pug]>
 
 default-config = do
   limit: '10mb'
@@ -60,6 +60,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
     if !@server => @server = @app.listen @config.port, ~> res @server
     else server.listen @config.port, -> res @server
 
+  watch: -> if @config.build and @config.build.enabled => watch(@).init @config.build
+
   start: ->
     Promise.resolve!
       .then ~>
@@ -112,10 +114,10 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.use (req, res, next) ~> next new lderror(404)     # nothing match - 404
         app.use backend.middleware.error-handler                     # error handler
 
-
         @listen!
       .then ~>
         @log.info "[SERVER] listening on port #{@server.address!port}".cyan
+        @watch!
       .catch (err) ~>
         @log.error {err}, "[SERVER] failed to start server. ".red
 
@@ -131,5 +133,9 @@ config = do
       user: \grantdash
       password: \hsadtnarg
 
+  build:
+    enabled: true
+    watcher: do
+      ignores: ['\/\..*\.swp$', '^static/s', '^static/assets/img']
 
 backend.create {config}

@@ -14,8 +14,8 @@
     "npm": ">=1.2.2"
   },
   "scripts": {
-    "start": "cd script; NODE_ENV=production ./start",
-    "dev": "cd script; ./start",
+    "start": "NODE_ENV=production ./start",
+    "dev": "./start",
     "cannon": "cd script; ./cannon"
   },
   "devDependencies": {
