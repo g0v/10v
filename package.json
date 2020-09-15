@@ -13,6 +13,11 @@
     "node": ">=0.12.6",
     "npm": ">=1.2.2"
   },
+  "scripts": {
+    "start": "cd script; NODE_ENV=production ./start",
+    "dev": "cd script; ./start",
+    "cannon": "cd script; ./cannon"
+  },
   "devDependencies": {
     "LiveScript": ">=1.2.0",
     "colors": "^1.3.3",
@@ -23,6 +28,8 @@
     "uglifycss": "0.0.29"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "csurf": "^1.11.0",
     "express-session": "^1.17.1",
     "lderror": "0.0.4",
     "passport": "^0.4.1",
@@ -32,6 +39,9 @@
     "pino": "^6.6.0",
     "pino-http": "^5.2.0",
     "pino-pretty": "^4.2.1",
-    "redis": "^3.0.2"
+    "pug": "^3.0.0",
+    "redis": "^3.0.2",
+    "redis-clustr": "^1.7.0",
+    "require-reload": "^0.2.2"
   }
 }

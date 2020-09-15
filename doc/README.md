@@ -9,6 +9,8 @@ server
      - https://github.com/share/sharedb/issues/110
      - https://github.com/share/sharedb/issues/295
      - https://stackoverfow.com/questions/20375338/
+     - https://github.com/share/sharedb-redis-pubsub
+   - nginx can help: https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
  - Stateless Web Server
    - OpenAPI
      - https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md
@@ -32,6 +34,8 @@ server
 
  - module redesign
  - redis + sharedb, cross instance communication
+ - zero down-time strategy
+   - https://yu-jack.github.io/2020/03/09/nodejs-zero-downtime/
 
 
 ## Security

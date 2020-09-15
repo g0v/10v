@@ -13,6 +13,18 @@ setup = ({app, config, io}) ->
         done null, false, {message: msg}
         return null
 
+  passport.serializeUser (u,done) ->
+    authio.user.serialize u .then (v) ->
+      done null, v
+      return null
+    return null
+  passport.deserializeUser (v,done) ->
+    authio.user.deserialize v .then (u) ->
+      done null, u or {}
+      return null
+    return null
+
+
 
 
   passport.use new passport-local.Strategy {
