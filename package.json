@@ -16,6 +16,7 @@
   "scripts": {
     "start": "NODE_ENV=production ./start",
     "dev": "./start",
+    "prebuild": "node_modules/.bin/lsc -co .engine engine",
     "cannon": "cd tool; ./cannon"
   },
   "devDependencies": {

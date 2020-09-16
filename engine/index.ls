@@ -52,7 +52,7 @@ backend <<< do
       catch e
         req.log.error {err: e}, "exception occurred while handling other exceptions".red
         req.log.error "original exception follows:".red
-      req.log.error {err}, "unhandled exception occurred".red
+      req.log.error {err}, "unhandled exception occurred #{if err.message => ': ' + err.message else ''}".red
       res.status 500 .send!
 
 

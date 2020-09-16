@@ -4,9 +4,10 @@ reload = require("require-reload")(require)
 
 engine = (backend) ->
   pug-cached = {}
+  _log = backend.log.child {module: \view}
   log = (f, opt, t, type, cache) ->
     f = f.replace(opt.basedir, '')
-    backend.log.debug "[VIEW] #{f} served in #{t}ms (#type#{if cache =>' cached' else ''})"
+    _log.debug "#{f} served in #{t}ms (#type#{if cache =>' cached' else ''})"
   return (f, opt, cb) ->
     lc = {}
     if opt.settings.env == \development => lc.dev = true
@@ -45,7 +46,7 @@ engine = (backend) ->
           if lc.dev => log f, opt, t2 - t1, 'from pug', cache
           cb null, ret
         .catch ->
-          backend.log.error "[VIEW] #{f.replace(opt.basedir, '')} serve failed."
+          _log.error "#{f.replace(opt.basedir, '')} serve failed."
           cb e, null
 
 module.exports = engine

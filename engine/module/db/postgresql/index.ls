@@ -109,10 +109,13 @@ ret = (backend) ->
 
 ret.prototype = do
   query: (q, p) ->
-    (client) <- @pool.connect!then _
-    (ret) <- client.query q, p .then _
-    client.release!
-    return ret
+    @pool.connect!
+      .then (client) -> 
+        (ret) <- client.query q, p .then _
+        client.release!
+        return ret
+      .catch ->
+        Promise.reject new lderror {err: it, id: 0, query: q, message: "database query error"}
 
 module.exports = ret
 
