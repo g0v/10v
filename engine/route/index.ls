@@ -1,15 +1,20 @@
 require! <[lderror]>
 
 (backend) <- (->module.exports = it)  _
-{api, app, db} = backend.route
+db = backend.db
+{api, app} = backend.route
 
-app.get \/, (req, res, next) ->
-  res.render \index.pug
+autocatch = (handler) -> (req, res, next) -> handler req, res, next .catch -> next it
+
+app.get \/, autocatch (req, res, next) ->
+  db.query "select count(key) as count from prj"
+    .then (r={}) ->
+      count = (r.[]rows.0 or {count: 0}).count
+      res.render \index.pug, {count}
 
 api.get \/x, (req, res, next) ->
   return next new lderror(1005)
 app.get \/x, (req, res, next) ->
   return next new Error!
-  return next new lderror(1006)
 
 

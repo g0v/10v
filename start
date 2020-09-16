@@ -10,11 +10,11 @@ trap "kill 0" exit
 while [ 1 ]; do
   lsc ./engine/arch | \
       tee -a server.log | \
-      ./node_modules/.bin/pino-pretty -c -i req,res,hostname,pid -t "yyyy/mm/dd HH:MM:sso"
-  #    ./node_modules/.bin/pino-pretty \
-  #      -c -o "[{module}] {msg}" \
-  #      -i req,res,hostname,pid,module \
-  #      -t "yyyy/mm/dd HH:MM:sso"
+      ./node_modules/.bin/pino-pretty \
+        -c -o "{module}|{responseTime}| {msg}" \
+        -i req,res,hostname,pid,module,responseTime \
+        -t "yyyy/mm/dd HH:MM:sso"
+  #    ./node_modules/.bin/pino-pretty -c -i req,res,hostname,pid -t "yyyy/mm/dd HH:MM:sso"
   echo "server down; try to auto restart after 1s."
   sleep 1;
 done

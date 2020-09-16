@@ -10,8 +10,8 @@
     "url": "https://github.com/plotdb/servlet"
   },
   "engines": {
-    "node": ">=0.12.6",
-    "npm": ">=1.2.2"
+    "node": "=14.11.0",
+    "npm": "=6.14.8"
   },
   "scripts": {
     "start": "NODE_ENV=production ./start",
@@ -28,6 +28,7 @@
     "uglifycss": "0.0.29"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "csurf": "^1.11.0",
     "express-session": "^1.17.1",
@@ -36,6 +37,8 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.3.3",
+    "pg-pool": "^3.2.1",
     "pino": "^6.6.0",
     "pino-http": "^5.2.0",
     "pino-pretty": "^4.2.1",

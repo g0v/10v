@@ -1,9 +1,20 @@
-require! <[pg crypto bcrypt colors ./aux]>
+require! <[pg crypto bcrypt colors]>
 
 pg.defaults.poolSize = 30
 
 ret = (config) ->
   @config = config
+  {user, password, host, database} = config.db.postgresql
+  @uri = "postgres://#{user}:#{password}@#{host}/#{database}"
+
+  @pool = new pg.Pool do
+    connectionString: @uri
+    max: config.db.postgresql.poolSize or 20
+    idleTimeoutMillis: 30000
+    connectionTimeoutMillis: 2000
+
+  @pool.on \error, (err, client) -> console.log "db pool error"
+
   @authio = authio = do
     user: do
       # store whole object ( no serialization )
@@ -106,24 +117,11 @@ ret = (config) ->
   @
 
 ret.prototype = do
-  query: (a,b=null,c=null) ->
-    debug = Math.random!toString(16).substring(2)
-    if typeof(a) == \string => [client,q,params] = [null,a,b]
-    else => [client,q,params] = [a,b,c]
-    _query = (client, q, params=null) -> new Promise (res, rej) ->
-      #console.log " - " + "[#debug][QUERY]".cyan + " #{q.substring(0, 80)}"
-      (e,r) <- client.query q, params, _
-      if e => return rej e
-      return res r
-    if client => return _query client, q, params
-    (res, rej) <~ new Promise _
-    #console.log " - " + "[#debug][QUERY]".cyan +  " pg.connect.."
-    (err, client, done) <~ pg.connect @config.io-pg.uri, _
-    if err => return rej err
-    _query client, q, params
-      .then (r) -> [done!, res r]
-      .catch -> [done!, rej it]
-  aux: aux
+  query: (q, p) ->
+    (client) <- @pool.connect!then _
+    (ret) <- client.query q, p .then _
+    client.release!
+    return ret
 
 module.exports = ret
 

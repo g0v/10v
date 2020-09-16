@@ -1,5 +1,5 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
-require! <[./route ./watch ./redis-node ./module/view/pug]>
+require! <[./route ./watch ./redis-node ./module/view/pug ./module/db/postgresql]>
 
 default-config = do
   limit: '10mb'
@@ -70,8 +70,13 @@ backend.prototype = Object.create(Object.prototype) <<< do
           log.error {err}, "uncaught exception ocurred, outside express routes".red
           log.error "terminate process to reset server status".red
           process.exit -1
+        process.on \unhandledRejection, (err) ->
+          log.error {err}, "unhandled rejection ocurred".red
+          log.error "terminate process to reset server status".red
+          process.exit -1
 
-        #@db = new postgresql @config
+
+        @db = new postgresql @config
 
         @app = @route.app = app = express!
         @store = new redis-node!
@@ -83,7 +88,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         # CSP  - default in nginx but can be overwritten in api server.
         # CORS - only needed if we need this
 
-        app.use pino-http { logger: log, auto-logging: false}
+        app.use pino-http { logger: log, auto-logging: true}
 
         app.use body-parser.json do
           limit: @config.limit
@@ -127,11 +132,11 @@ config = do
   limit: '20mb'
   db: do
     postgresql: do
-      #uri: "postgres://grantdash:hsadtnarg@localhost/grantdash"
       host: \localhost
       database: \grantdash
       user: \grantdash
       password: \hsadtnarg
+  #   poolSize: 20
 
   build:
     enabled: true
