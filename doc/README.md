@@ -1,5 +1,30 @@
 server
 
+## Repo Structure ( TBD Tentative ) 
+
+ - src
+   - ls, styl, pug
+ - static
+   - assets and other
+ - engine
+   - watch
+   - route
+   - module
+     - db
+     - util? # 額外的工具模組
+   - other files
+     - index.ls
+ - user
+ - config # 需要考慮到支援不同網域
+   - nginx
+ - doc
+ - test
+ - tool
+ - .view, .engine - prebuilt files
+ - other files
+   - start
+   - package.json, package-lock.json, .gitignore, .git, node_modules, server.log
+
 ## Infrastructure
 
  - Load Balancing

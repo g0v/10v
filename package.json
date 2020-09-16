@@ -16,7 +16,7 @@
   "scripts": {
     "start": "NODE_ENV=production ./start",
     "dev": "./start",
-    "cannon": "cd script; ./cannon"
+    "cannon": "cd tool; ./cannon"
   },
   "devDependencies": {
     "LiveScript": ">=1.2.0",
