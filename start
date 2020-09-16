@@ -8,10 +8,10 @@ trap "kill 0" exit
 
 # TODO This should be done via some kind of service
 while [ 1 ]; do
-  lsc ./engine/arch | \
+  lsc ./engine/index | \
       tee -a server.log | \
       ./node_modules/.bin/pino-pretty \
-        -c -o "{module}|{responseTime}| {msg}" \
+        -c -o "[{module}] {msg} {responseTime}" \
         -i req,res,hostname,pid,module,responseTime \
         -t "yyyy/mm/dd HH:MM:sso"
   #    ./node_modules/.bin/pino-pretty -c -i req,res,hostname,pid -t "yyyy/mm/dd HH:MM:sso"

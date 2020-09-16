@@ -13,6 +13,7 @@ app.get \/, autocatch (req, res, next) ->
       res.render \index.pug, {count}
 
 api.get \/x, (req, res, next) ->
+  req.log.info \hi
   return next new lderror(1005)
 app.get \/x, (req, res, next) ->
   return next new Error!

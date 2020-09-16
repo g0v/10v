@@ -5,6 +5,7 @@ PugTree.set-root \src/pug
 StylusTree.set-root \src/styl
 
 ret = (backend) ->
+  log = backend.log.child {module: 'watcher'}
   watch = do
     ignores: [/^\..*\.swp$/]
     init: (opt={}) ->
@@ -18,7 +19,7 @@ ret = (backend) ->
         .on \change, (~> @update it)
         .on \unlink, (~> @unlink it)
       @assets opt.assets or []
-      backend.log.info "[WATCHER] watching src for file change".cyan
+      log.info "watching src for file change".cyan
     custom: ({files, update, unlink, ignored}) ->
       w = chokidar.watch files, {persistent: true} <<< (if ignored => {ignored} else {})
       w.on \add, -> update it
@@ -30,7 +31,7 @@ ret = (backend) ->
       while modpath.length < 50 =>
         if fs.exists-sync(modpath) => break
         modpath = path.join('..', modpath)
-      if !fs.exists-sync(modpath) => return backend.log.error "[WATCHER] assets building: node_modules dir not found.".red
+      if !fs.exists-sync(modpath) => return log.error "assets building: node_modules dir not found.".red
 
       desdir = (f) -> path.join(\static/assets, path.relative(modpath, path.dirname(f)), \..)
       add = (src) ->
@@ -38,12 +39,12 @@ ret = (backend) ->
         if !aux.newer(src, [des]) => return
         fs-extra.ensure-dir-sync desdir(src)
         fs-extra.copy-file-sync src, des
-        backend.log.info "[WATCHER] assets: #src -> #des "
+        log.info "assets: #src -> #des "
       remove = (src) ->
         des = path.join(desdir(src), path.basename(src))
         if !fs.exists-sync(des) => return
         fs.unlink-sync des
-        backend.log.info "[WATCHER] assets: #src -> #des deleted.".yellow
+        log.info "assets: #src -> #des deleted.".yellow
 
       chokidar.watch assets.map(-> "#modpath/#it/dist/"), {persistent: true}
         .on \add, add
@@ -81,7 +82,7 @@ ret = (backend) ->
         list.map ~> @pending{}[it][f] = true
         @update-debounced!
       catch e
-        backend.log.error {err}, "[WATCHER] Update failed with following information: ".red
+        log.error {err}, "Update failed with following information: ".red
 
   # Process Wrapper 
   #  - list: candidate files

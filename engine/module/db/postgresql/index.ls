@@ -1,9 +1,10 @@
-require! <[pg crypto bcrypt colors]>
+require! <[pg crypto bcrypt colors lderror]>
 
 pg.defaults.poolSize = 30
 
-ret = (config) ->
-  @config = config
+ret = (backend) ->
+  @config = config = backend.config
+  @log = log = backend.log.child {module: 'DB'}
   {user, password, host, database} = config.db.postgresql
   @uri = "postgres://#{user}:#{password}@#{host}/#{database}"
 
@@ -13,7 +14,7 @@ ret = (config) ->
     idleTimeoutMillis: 30000
     connectionTimeoutMillis: 2000
 
-  @pool.on \error, (err, client) -> console.log "db pool error"
+  @pool.on \error, (err, client) -> log.error "db pool error".red
 
   @authio = authio = do
     user: do
@@ -39,7 +40,7 @@ ret = (config) ->
       get: (username, password, usepasswd, detail, doCreate = false) ~>
         username-lower = username.toLowerCase!
         if !/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(username) =>
-          return Promise.reject new Error("not email")
+          return Promise.reject lderror(1015)
         user = {}
 
         # We query both for case sensitive and insensitive username, because
@@ -51,7 +52,7 @@ ret = (config) ->
             user := users.rows.filter(-> it.username == username).0
             # case insensitive ( both for old and new user )
             if !user => user := users.rows.filter(->it.username == username-lower).0
-            if !user and !doCreate => return Promise.reject new Error("failed")
+            if !user and !doCreate => return Promise.reject new lderror(1012)
             if !user and doCreate => return @authio.user.create username-lower, password, usepasswd, detail
             else if user and !(usepasswd or user.usepasswd) =>
               delete user.password
@@ -70,8 +71,7 @@ ret = (config) ->
         user = {}
         username = username.toLowerCase!
         if !/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(username) =>
-          #console.log "[CREATE USER] mailformat email: #username"
-          return Promise.reject new Error("not email")
+          return Promise.reject new lderror(1015)
         @authio.user.hashing password, usepasswd, usepasswd
           .then (pw-hashed) ~>
             displayname = if detail => detail.displayname or detail.username
@@ -91,29 +91,20 @@ ret = (config) ->
             return user <<< {key}
 
     session: do
-      get: (sid, cb) ~>
+      get: (sid, cb) !~>
         @query "select * from sessions where key=$1", [sid]
-          .then ->
-            cb null, (it.[]rows.0 or {}).detail
-            return null
-          .catch -> [console.error("session.get", it), cb it]
-        return null
-      set: (sid, session, cb) ~>
+          .then -> cb null, (it.[]rows.0 or {}).detail
+          .catch (err) -> [log.error({err}, "get session failed"), cb(err)]
+      set: (sid, session, cb) !~>
         @query([
           "insert into sessions (key,detail) values"
           "($1, $2) on conflict (key) do update set detail=$2"].join(" "), [sid, session])
-          .then ->
-            cb!
-            return null
-          .catch -> [console.error("session.set", it), cb!]
-        return null
-      destroy: (sid, cb) ~>
+          .then -> cb!
+          .catch (err) -> [log.error({err},"set session failed"), cb!]
+      destroy: (sid, cb) !~>
         @query "delete from sessions where key = $1", [sid]
-          .then ->
-            cb!
-            return null
-          .catch -> [console.error("session.destroy",it),cb!]
-        return null
+          .then -> cb!
+          .catch (err) -> [log.error({err}, "destroy session failed"),cb!]
   @
 
 ret.prototype = do

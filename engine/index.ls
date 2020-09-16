@@ -9,6 +9,7 @@ backend = (opt = {}) ->
   @opt = opt
   @ <<< do
     mode: process.env.NODE_ENV # 'production' or other
+    production: process.env.NODE_ENVT == \production
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: ({} <<< default-config <<< opt.config) # backend configuration
     server: null # http.Server object, either created by express or from other lib
@@ -65,22 +66,23 @@ backend.prototype = Object.create(Object.prototype) <<< do
   start: ->
     Promise.resolve!
       .then ~>
-        @log = log = pino {level: (if @mode == \production => 'info' else 'debug')}
+        @log = log = pino {level: (if @production => 'info' else 'debug')}
+        @log-server = log.child {module: \server}
         process.on \uncaughtException, (err, origin) ->
-          log.error {err}, "uncaught exception ocurred, outside express routes".red
-          log.error "terminate process to reset server status".red
+          @log-server.error {err}, "uncaught exception ocurred, outside express routes".red
+          @log-server.error "terminate process to reset server status".red
           process.exit -1
         process.on \unhandledRejection, (err) ->
-          log.error {err}, "unhandled rejection ocurred".red
-          log.error "terminate process to reset server status".red
+          @log-server.error {err}, "unhandled rejection ocurred".red
+          @log-server.error "terminate process to reset server status".red
           process.exit -1
 
 
-        @db = new postgresql @config
+        @db = new postgresql @
 
         @app = @route.app = app = express!
         @store = new redis-node!
-        log.info "[SERVER] initializing backend in #{app.get \env} mode".cyan
+        @log-server.info "initializing backend in #{app.get \env} mode".cyan
 
         app.disable \x-powered-by # Dont show server detail
         app.set 'trust proxy', '127.0.0.1' # So we can trust sth like ip from X-Forwarded-*
@@ -88,7 +90,10 @@ backend.prototype = Object.create(Object.prototype) <<< do
         # CSP  - default in nginx but can be overwritten in api server.
         # CORS - only needed if we need this
 
-        app.use pino-http { logger: log, auto-logging: true}
+        app.use pino-http do
+          useLevel: (if @production => \info else \debug)
+          logger: log.child({module: \route})
+          auto-logging: (!@production)
 
         app.use body-parser.json do
           limit: @config.limit
@@ -121,10 +126,10 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         @listen!
       .then ~>
-        @log.info "[SERVER] listening on port #{@server.address!port}".cyan
+        @log-server.info "listening on port #{@server.address!port}".cyan
         @watch!
       .catch (err) ~>
-        @log.error {err}, "[SERVER] failed to start server. ".red
+        @log-server.error {err}, "failed to start server. ".red
 
 
 config = do

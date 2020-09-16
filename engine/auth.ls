@@ -2,9 +2,9 @@ require! <[express-session passport passport-local passport-facebook passport-go
 
 setup = ({app, config, io}) ->
 
-  get-user = -> authio.user.get u, p, usep, detail, doCreate
+  get-user = -> db.authio.user.get u, p, usep, detail, doCreate
 
-    authio.user.get u, p, usep, detail, doCreate
+    db.authio.user.get u, p, usep, detail, doCreate
       .then ->
         done null, it
         return null
@@ -14,12 +14,12 @@ setup = ({app, config, io}) ->
         return null
 
   passport.serializeUser (u,done) ->
-    authio.user.serialize u .then (v) ->
+    db.authio.user.serialize u .then (v) ->
       done null, v
       return null
     return null
   passport.deserializeUser (v,done) ->
-    authio.user.deserialize v .then (u) ->
+    db.authio.user.deserialize v .then (u) ->
       done null, u or {}
       return null
     return null

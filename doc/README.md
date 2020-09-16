@@ -42,10 +42,12 @@ server
      - https://github.com/wesleytodd/express-openapi/
  - SQL Server / Shading
  - Docker / Kubernete
+   - write file to host - https://stackoverflow.com/questions/31448821
 
 ## Error Handling
 
  - all errors should be handled in a common handler.
+ - promise-based route can be wrapped with a util function, such as `autocatch`
  - use lderror to provide error information.
    - id
    - meta data
@@ -54,6 +56,11 @@ server
        - <error-name> ( general error )
      - <error-name> should be simple, short, and matches [a-b0-9][a-b0-9-]*
 
+## Route Sanity Check
+
+ - authed
+ - staff
+ - recaptcha - should provide fallback for failure
 
 ## Backend
 
@@ -65,4 +72,4 @@ server
 
 ## Security
 
- - hidden recaptcha with fallback
+ - recaptcha - should provide fallback for failure
