@@ -24,6 +24,7 @@ server
  - other files
    - start
    - package.json, package-lock.json, .gitignore, .git, node_modules, server.log
+   - secret ( 公開與非公開? )
 
 ## Infrastructure
 
@@ -55,6 +56,9 @@ server
        - <module-name>/<error-name>
        - <error-name> ( general error )
      - <error-name> should be simple, short, and matches [a-b0-9][a-b0-9-]*
+
+## Code Check
+ - ls-lint: https://github.com/eheitherd/ls-lint
 
 ## Route Sanity Check
 
