@@ -3,4 +3,14 @@ doctype html
 html
   head
   body
-    span hi16 #{count}
+    h1 Sign Up
+    form(method="POST",action="/api/auth/signup")
+      input(type="text",name="username")
+      input(type="text",name="displayname")
+      input(type="password",name="password")
+      input(type="submit")
+    h1 Login
+    form(method="POST",action="/api/auth/login")
+      input(type="text",name="username")
+      input(type="password",name="password")
+      input(type="submit")

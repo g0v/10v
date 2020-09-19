@@ -1,5 +1,6 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
-require! <[./route ./watch ./redis-node ./module/view/pug ./module/db/postgresql]>
+require! <[./auth ./route ./watch ./redis-node ./module/view/pug ./module/db/postgresql]>
+require! <[../secret]>
 
 default-config = do
   limit: '10mb'
@@ -117,8 +118,16 @@ backend.prototype = Object.create(Object.prototype) <<< do
         # CSRF Protection
         # app.use @middleware.csrf = csurf!
 
-        app.use \/api, (@route.api = api = express.Router {mergeParams: true})
-        route @
+        @route.api = api = express.Router {mergeParams: true}
+        @route.auth = express.Router {mergeParams: true}
+
+        # Authentication
+        auth @  # Authenticate
+
+        app.use \/api, @route.api
+        app.use \/api/auth, @route.auth
+
+        route @ # APIs
 
         app.use \/, express.static(path.join(__dirname, '.')) # static file fallback
         app.use (req, res, next) ~> next new lderror(404)     # nothing match - 404
@@ -130,22 +139,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @watch!
       .catch (err) ~>
         @log-server.error {err}, "failed to start server. ".red
+        process.exit -1
 
 
-config = do
-  port: 8901
-  limit: '20mb'
-  db: do
-    postgresql: do
-      host: \localhost
-      database: \grantdash
-      user: \grantdash
-      password: \hsadtnarg
-  #   poolSize: 20
-
-  build:
-    enabled: true
-    watcher: do
-      ignores: ['\/\..*\.swp$', '^static/s', '^static/assets/img']
-
-backend.create {config}
+backend.create {config: secret}

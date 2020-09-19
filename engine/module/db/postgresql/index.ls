@@ -1,5 +1,7 @@
 require! <[pg crypto bcrypt colors lderror]>
 
+is-email = -> return /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(it)
+
 pg.defaults.poolSize = 30
 
 ret = (backend) ->
@@ -16,18 +18,11 @@ ret = (backend) ->
 
   @pool.on \error, (err, client) -> log.error "db pool error".red
 
-  @authio = authio = do
+  @auth = auth = do
     user: do
       # store whole object ( no serialization )
-      serialize: (user={}) -> Promise.resolve( user or {} )
-      deserialize: (v) ~> Promise.resolve( v or {})
-
-      # store only key
-      #serialize: (user={}) -> Promise.resolve( user.key or 0 )
-      #deserialize: (v) ~>
-      #  @query "select * from users where key = $1", [v]
-      #    .then (r={}) -> r.[]rows.0
-
+      serialize: (u = {}) -> Promise.resolve u
+      deserialize: (v = {}) -> Promise.resolve v
       hashing: (password, doMD5 = true, doBcrypt = true) -> new Promise (res, rej) ->
         ret = if doMD5 => crypto.createHash(\md5).update(password).digest(\hex) else password
         if doBcrypt => bcrypt.genSalt 12, (e, salt) -> bcrypt.hash ret, salt, (e, hash) -> res hash
@@ -35,60 +30,48 @@ ret = (backend) ->
 
       compare: (password='', hash) -> new Promise (res, rej) ->
         md5 = crypto.createHash(\md5).update(password).digest(\hex)
-        bcrypt.compare md5, hash, (e, ret) -> if ret => res! else rej new Error!
+        bcrypt.compare md5, hash, (e, ret) -> if ret => res! else rej new lderror(1012)
 
-      get: (username, password, usepasswd, detail, doCreate = false) ~>
-        username-lower = username.toLowerCase!
-        if !/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(username) =>
-          return Promise.reject lderror(1015)
-        user = {}
-
-        # We query both for case sensitive and insensitive username, because
-        # - if it's not a typo - some old users may already get used to it.
-        # - it it's a typo - we can at least find the correct user object for new user
-        @query "select * from users where username = $1 or username = $2", [username, username-lower]
-          .then (users = {}) ~>
-            # case sensitive user ( only for old user )
-            user := users.rows.filter(-> it.username == username).0
-            # case insensitive ( both for old and new user )
-            if !user => user := users.rows.filter(->it.username == username-lower).0
-            if !user and !doCreate => return Promise.reject new lderror(1012)
-            if !user and doCreate => return @authio.user.create username-lower, password, usepasswd, detail
-            else if user and !(usepasswd or user.usepasswd) =>
+      get: ({username, password, method, detail, create}) ~>
+        username = username.toLowerCase!
+        if !(is-email username) => return Promise.reject new lderror(1015)
+        @query "select * from users where username = $1", [username]
+          .then (ret = {}) ~>
+            if !(user = ret.[]rows.0) and !create => return Promise.reject(new lderror(1012))
+            if !user => return @auth.user.create {username, password, method, detail}
+            if !(method == \local or user.method == \local) =>
               delete user.password
               return user
-            @authio.user.compare password, user.password
-          .then ~>
-            if it => user := (if user => user else {}) <<< it
-            if !user.{}config.{}consent.cookie =>
-              user.{}config.{}consent.cookie = new Date!getTime!
-              @query "update users set config = $2 where key = $1", [user.key, user.config]
-          .then ->
+            @auth.user.compare password, user.password .then ~> user
+          .then (user) ~>
+            if user.{}config.{}consent.cookie => return user
+            user.config.consent.cookie = new Date!getTime!
+            @query "update users set config = $2 where key = $1", [user.key, user.config] .then -> user
+          .then (user) ->
             delete user.password
             return user
 
-      create: (username, password, usepasswd, detail = {}, config = {}) ~>
-        user = {}
+      create: ({username, password, method, detail, config}) ~>
         username = username.toLowerCase!
-        if !/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(username) =>
-          return Promise.reject new lderror(1015)
-        @authio.user.hashing password, usepasswd, usepasswd
-          .then (pw-hashed) ~>
+        if !is-email(username) => return Promise.reject new lderror(1015)
+        Promise.resolve!
+          .then ~> if method == \local => @auth.user.hashing(password) else password
+          .then (password) ~>
             displayname = if detail => detail.displayname or detail.username
             if !displayname => displayname = username.replace(/@.+$/, "")
             config.{}consent.cookie = new Date!getTime!
-            user <<< {username, password: pw-hashed, usepasswd, displayname, detail, config, createdtime: new Date!}
-            @query [
-              "insert into users"
-              "(username,password,usepasswd,displayname,createdtime,detail,config) values"
-              "($1,$2,$3,$4,$5,$6,$7) returning key"
-            ].join(" "), [
-              user.username, user.password, user.usepasswd,
-              user.displayname, new Date!toUTCString!, user.detail, user.config
+            user = { username, password, method, displayname, detail, config, createdtime: new Date! }
+            @query """
+            insert into users (username,password,method,displayname,createdtime,detail,config)
+            values ($1,$2,$3,$4,$5,$6,$7)
+            returning key
+            """, [
+              username, password, method, displayname,
+              new Date!toUTCString!, detail, config
             ]
-          .then (r) ~>
-            key = r.[]rows.0.key
-            return user <<< {key}
+              .then (r={}) ->
+                if !(r = r.[]rows.0) => return Promise.reject 500
+                return user <<< r{key}
 
     session: do
       get: (sid, cb) !~>

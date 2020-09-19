@@ -19,8 +19,8 @@ engine = (backend) ->
       t1 = Date.now!
       mtime = fs.stat-sync(pc).mtime
       cache = false
-      ret = pug-cached[pc] = if !lc.cache => {js: reload(pc), mtime}
-      else if !pug-cached[pc] or (mtime - pug-cached[pc].mtime) > 0 => {js: require(pc), mtime}
+      ret = pug-cached[pc] = if !lc.cache or !pug-cached[pc] or (mtime - pug-cached[pc].mtime) > 0 =>
+        {js: reload(pc), mtime}
       else 
         cache = true
         pug-cached[pc]

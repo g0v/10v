@@ -7,11 +7,14 @@
   pugExtapi = require("../../watch/build/pug").extapi;
   reload = require("require-reload")(require);
   engine = function(backend){
-    var pugCached, log;
+    var pugCached, _log, log;
     pugCached = {};
+    _log = backend.log.child({
+      module: 'view'
+    });
     log = function(f, opt, t, type, cache){
       f = f.replace(opt.basedir, '');
-      return backend.log.debug("[VIEW] " + f + " served in " + t + "ms (" + type + (cache ? ' cached' : '') + ")");
+      return _log.debug(f + " served in " + t + "ms (" + type + (cache ? ' cached' : '') + ")");
     };
     return function(f, opt, cb){
       var lc, viewdir, basedir, pc, t1, mtime, cache, ret, t2, e, p;
@@ -26,17 +29,12 @@
         t1 = Date.now();
         mtime = fs.statSync(pc).mtime;
         cache = false;
-        ret = pugCached[pc] = !lc.cache
+        ret = pugCached[pc] = !lc.cache || !pugCached[pc] || mtime - pugCached[pc].mtime > 0
           ? {
             js: reload(pc),
             mtime: mtime
           }
-          : !pugCached[pc] || mtime - pugCached[pc].mtime > 0
-            ? {
-              js: require(pc),
-              mtime: mtime
-            }
-            : (cache = true, pugCached[pc]);
+          : (cache = true, pugCached[pc]);
         if (!ret.js) {
           throw new Error();
         }
@@ -77,7 +75,7 @@
           }
           return cb(null, ret);
         })['catch'](function(){
-          backend.log.error("[VIEW] " + f.replace(opt.basedir, '') + " serve failed.");
+          _log.error(f.replace(opt.basedir, '') + " serve failed.");
           return cb(e, null);
         });
       }

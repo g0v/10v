@@ -16,7 +16,7 @@
       };
     };
     app.get('/', autocatch(function(req, res, next){
-      return db.query("sxelect count(key) as count from prj").then(function(r){
+      return db.query("select count(key) as count from prj").then(function(r){
         var count;
         r == null && (r = {});
         count = ((r.rows || (r.rows = []))[0] || {
