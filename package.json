@@ -14,6 +14,7 @@
     "npm": "=6.14.8"
   },
   "scripts": {
+    "postinstall": "./node_modules/.bin/fedep",
     "start": "NODE_ENV=production ./start",
     "dev": "./start",
     "prebuild": "node_modules/.bin/lsc -co .engine engine",
@@ -31,8 +32,11 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.2",
+    "bootstrap.native": "^3.0.10",
     "csurf": "^1.11.0",
     "express-session": "^1.17.1",
+    "fedep": "github:plotdb/fedep",
     "lderror": "0.0.4",
     "ls-lint": "^0.1.2",
     "passport": "^0.4.1",
@@ -48,5 +52,12 @@
     "redis": "^3.0.2",
     "redis-clustr": "^1.7.0",
     "require-reload": "^0.2.2"
+  },
+  "frontendDependencies": {
+    "root": "static/assets/lib",
+    "modules": [
+      "bootstrap",
+      "bootstrap.native"
+    ]
   }
 }
