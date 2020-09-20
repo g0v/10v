@@ -20,6 +20,7 @@ html
             .form-group
               label password
               input.form-control(type="password",name="password")
+            input(type="hidden",name="_csrf")
             input.btn.btn-primary(type="submit")
         .col-md
           h2 Login
@@ -30,5 +31,26 @@ html
             .form-group
               label password
               input.form-control(type="password",name="password")
+            input(type="hidden",name="_csrf")
             input.btn.btn-primary(type="submit")
+        .col-md
+          h2 Logout
+          a.btn.btn-primary(ld="logout") Logout
     +script("/assets/lib/bootstrap.native/main/bootstrap-native.min.js")
+    +script("/assets/lib/ldui/ldui.min.js")
+    script: :lsc
+      view = new ldView do
+        root: document.body
+        action: click: do
+          logout: ->
+            ld$.fetch "/api/auth/logout", {method: "POST"}
+              .then -> console.log \logout.
+              .catch -> console.log \failed, it
+        handler: do
+          logout: -> console.log it
+      ld$.fetch \/api/auth/info, {method: \GET}, {type: \json}
+        .then (g = {}) ->
+          console.log g.user
+          ld$.find '[name=_csrf]' .map (f) -> f.value = g.csrfToken
+          ld$.fetch.{}headers['X-CSRF-Token'] = g.csrfToken
+        .catch -> console.log it
