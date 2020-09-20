@@ -1,16 +1,34 @@
 //- view
 doctype html
+include /../../static/assets/lib/ldui/pug/ldui.pug
 html
   head
+    +css("/assets/lib/bootstrap/4.5.2/css/bootstrap.min.css")
+    +css("/assets/lib/ldui/ldui.min.css")
   body
-    h1 Sign Up
-    form(method="POST",action="/api/auth/signup")
-      input(type="text",name="username")
-      input(type="text",name="displayname")
-      input(type="password",name="password")
-      input(type="submit")
-    h1 Login
-    form(method="POST",action="/api/auth/login")
-      input(type="text",name="username")
-      input(type="password",name="password")
-      input(type="submit")
+    .w-1024.mx-auto.rwd
+      .row
+        .col-md
+          h2 Sign Up
+          form(method="POST",action="/api/auth/signup")
+            .form-group
+              label username
+              input.form-control(type="text",name="username")
+            .form-group
+              label displayname
+              input.form-control(type="text",name="displayname")
+            .form-group
+              label password
+              input.form-control(type="password",name="password")
+            input.btn.btn-primary(type="submit")
+        .col-md
+          h2 Login
+          form(method="POST",action="/api/auth/login")
+            .form-group
+              label username
+              input.form-control(type="text",name="username")
+            .form-group
+              label password
+              input.form-control(type="password",name="password")
+            input.btn.btn-primary(type="submit")
+    +script("/assets/lib/bootstrap.native/main/bootstrap-native.min.js")

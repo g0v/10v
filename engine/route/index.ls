@@ -7,7 +7,7 @@ db = backend.db
 autocatch = (handler) -> (req, res, next) -> handler req, res, next .catch -> next it
 
 app.get \/, autocatch (req, res, next) ->
-  db.query "select count(key) as count from prj"
+  db.query "select count(key) as count from users"
     .then (r={}) ->
       count = (r.[]rows.0 or {count: 0}).count
       res.render \index.pug, {count}
