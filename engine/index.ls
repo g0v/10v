@@ -67,13 +67,16 @@ backend.prototype = Object.create(Object.prototype) <<< do
   start: ->
     Promise.resolve!
       .then ~>
-        @log = log = pino {level: (if @production => 'info' else 'debug')}
+        log-level = @config.{}log.level or (if @production => \info else \debug)
+        if !(log-level in <[silent trace debug info warn error fatal]>) =>
+          return Promise.reject new Error("pino log level incorrect. please fix secret.ls: log.level")
+        @log = log = pino level: log-level
         @log-server = log.child {module: \server}
-        process.on \uncaughtException, (err, origin) ->
+        process.on \uncaughtException, (err, origin) ~>
           @log-server.error {err}, "uncaught exception ocurred, outside express routes".red
           @log-server.error "terminate process to reset server status".red
           process.exit -1
-        process.on \unhandledRejection, (err) ->
+        process.on \unhandledRejection, (err) ~>
           @log-server.error {err}, "unhandled rejection ocurred".red
           @log-server.error "terminate process to reset server status".red
           process.exit -1
@@ -160,8 +163,15 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @log-server.info "listening on port #{@server.address!port}".cyan
         @watch!
       .catch (err) ~>
-        @log-server.error {err}, "failed to start server. ".red
+        try
+          @log-server.error {err}, "failed to start server. ".red
+        catch e
+          console.log "log failed: ".red, e
+          console.log "original error - failed to start server: ".red, err
         process.exit -1
 
 
-backend.create {config: secret}
+if require.main == module =>
+  backend.create {config: secret}
+
+module.exports = backend
