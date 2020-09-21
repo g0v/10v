@@ -36,8 +36,10 @@ html
         .col-md
           h2 Logout
           a.btn.btn-primary(ld="logout") Logout
-    +script("/assets/lib/bootstrap.native/main/bootstrap-native.min.js")
-    +script("/assets/lib/ldui/ldui.min.js")
+    //-
+      +script("/assets/lib/bootstrap.native/main/bootstrap-native.min.js")
+      +script("/assets/lib/ldui/ldui.min.js")
+    +script("/js/pack/vendor.min.js")
     script: :lsc
       view = new ldView do
         root: document.body

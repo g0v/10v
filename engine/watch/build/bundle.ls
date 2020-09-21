@@ -1,10 +1,11 @@
-require! <[fs fs-extra LiveScript stylus path colors uglify-js uglifycss ./aux debounce.js]>
+require! <[fs fs-extra LiveScript stylus path colors uglify-js uglifycss require-reload ./aux debounce.js]>
+reload = require-reload require
 
 cwd = path.resolve process.cwd!
 
 bundle = {css: {}, js: {}}
 task = {css: {}, js: {}}
-bundle-file = "config/bundle.json"
+bundle-file = "config/bundle.ls"
 
 build = ({name, list, type}) ->
   t1 = Date.now!
@@ -66,7 +67,8 @@ main = do
   build: (list) ->
     if bundle-file in list =>
       try
-        bundle := JSON.parse(fs.read-file-sync bundle-file .toString!)
+        #bundle := JSON.parse(fs.read-file-sync bundle-file .toString!)
+        bundle := reload path.join('../../..', bundle-file)
         for type of bundle => for n,l of bundle[type] => bundle[type][n] = l.map -> path.join(\static,it)
       catch e
         console.log e

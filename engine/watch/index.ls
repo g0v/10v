@@ -103,9 +103,8 @@ ret = (backend) ->
   watch.on \unlink.pug, -> pug.unlink it
   watch.on \unlink.styl, -> stylus.unlink it
   watch.on \unlink.ls, -> lsc.unlink it
-
   watch.custom do
-    files: <[static config/bundle.json]>
+    files: <[static config/bundle.json config/bundle.ls]>
     ignored: (f) ~> watch.ignores.filter(-> it.exec(f)).length or /static\/s\/|static\/(js|css)\/pack\//.exec(f)
     update: -> bundle.build [it]
     unlink: -> bundle.unlink [it]
