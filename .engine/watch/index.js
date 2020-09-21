@@ -234,7 +234,7 @@
       return lsc.unlink(it);
     });
     watch.custom({
-      files: ['static', 'config/bundle.json'],
+      files: ['static', 'config/bundle.ls'],
       ignored: function(f){
         return watch.ignores.filter(function(it){
           return it.exec(f);
