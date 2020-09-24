@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker run --net=mynet -it servlet /bin/bash

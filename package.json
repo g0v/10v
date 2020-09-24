@@ -17,6 +17,7 @@
     "postinstall": "./node_modules/.bin/fedep",
     "start": "NODE_ENV=production ./start",
     "dev": "./start",
+    "try": "./node_modules/.bin/lsc log.ls",
     "prebuild": "node_modules/.bin/lsc -co .engine engine",
     "cannon": "cd tool; ./cannon"
   },

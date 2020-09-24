@@ -72,6 +72,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
           return Promise.reject new Error("pino log level incorrect. please fix secret.ls: log.level")
         @log = log = pino level: log-level
         @log-server = log.child {module: \server}
+
         process.on \uncaughtException, (err, origin) ~>
           @log-server.error {err}, "uncaught exception ocurred, outside express routes".red
           @log-server.error "terminate process to reset server status".red
@@ -169,7 +170,6 @@ backend.prototype = Object.create(Object.prototype) <<< do
           console.log "log failed: ".red, e
           console.log "original error - failed to start server: ".red, err
         process.exit -1
-
 
 if require.main == module =>
   backend.create {config: secret}

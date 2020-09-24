@@ -8,7 +8,6 @@ trap "kill 0" exit
 
 # TODO This should be done via some kind of service
 while [ 1 ]; do
-
   # production
   #node ./.engine/index.js | \
   #    tee -a ./server.log | \
@@ -18,12 +17,12 @@ while [ 1 ]; do
   #      -t "yyyy/mm/dd HH:MM:sso"
 
   # dev
-  lsc ./engine/index | \
-      tee -a server.log | \
-      ./node_modules/.bin/pino-pretty \
-        -c -o "[{module}] {msg} {responseTime}" \
-        -i req,res,hostname,pid,module,responseTime \
-        -t "yyyy/mm/dd HH:MM:sso"
+  ./node_modules/.bin/lsc ./engine/index | \
+     tee -a server.log | \
+     ./node_modules/.bin/pino-pretty \
+       -c -o "[{module}] {msg} {responseTime}" \
+       -i req,res,hostname,pid,module,responseTime \
+       -t "yyyy/mm/dd HH:MM:sso"
 
   echo "server down; try to auto restart after 1s."
   sleep 1;
