@@ -26,25 +26,6 @@ server
    - package.json, package-lock.json, .gitignore, .git, node_modules, server.log
    - secret ( 公開與非公開? )
 
-## Infrastructure
-
- - Load Balancing
-   - https://blog.gcp.expert/gcp-http-load-balancer-console/
-   - https://blog.gcp.expert/gcp-instance-autoscaling/
-   - for ShareDB - use Redis Pub/Sub across instances
-     - https://github.com/share/sharedb/issues/110
-     - https://github.com/share/sharedb/issues/295
-     - https://stackoverfow.com/questions/20375338/
-     - https://github.com/share/sharedb-redis-pubsub
-   - nginx can help: https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
- - Stateless Web Server
-   - OpenAPI
-     - https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md
-     - https://github.com/wesleytodd/express-openapi/
- - SQL Server / Shading
- - Docker / Kubernete
-   - write file to host - https://stackoverflow.com/questions/31448821
-
 ## Error Handling
 
  - all errors should be handled in a common handler.
