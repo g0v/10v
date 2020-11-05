@@ -5,6 +5,7 @@ html
   head
     +css("/assets/lib/bootstrap/4.5.2/css/bootstrap.min.css")
     +css("/assets/lib/ldui/ldui.min.css")
+    +css("/assets/lib/ldcover/main/ldcv.effects.min.css")
   body
     .w-1024.mx-auto.rwd
       .row
@@ -36,6 +37,9 @@ html
         .col-md
           h2 Logout
           a.btn.btn-primary(ld="logout") Logout
+      include /modules/cover/logout.pug
+      div
+        .btn.btn-outline-dark(onclick="ldcv.toggle(true)") Popup
     //-
       +script("/assets/lib/bootstrap.native/main/bootstrap-native.min.js")
       +script("/assets/lib/ldui/ldui.min.js")
@@ -56,3 +60,5 @@ html
           ld$.find '[name=_csrf]' .map (f) -> f.value = g.csrfToken
           ld$.fetch.{}headers['X-CSRF-Token'] = g.csrfToken
         .catch -> console.log it
+      ldcv = new ldCover do
+        root: ld$.find('.ldcv[data-name=logout]',0)
