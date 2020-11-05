@@ -6,6 +6,8 @@ server
    - ls, styl, pug
  - static
    - assets and other
+ - locales
+   - i18n 
  - engine
    - watch
    - route
@@ -25,6 +27,7 @@ server
  - doc
  - test
  - tool
+ - script
  - .view, .engine - prebuilt files
  - other files
    - start

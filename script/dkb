@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+ 
+# should use server root 
 docker build -t servlet .
 docker rmi -f `docker images --filter dangling=true -q`
 docker run --net=mynet -p 8902:8901 -it servlet
