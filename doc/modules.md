@@ -12,6 +12,7 @@
 
 stage
 permission
+ - permission cache?
 sharedb + programmable api
 prj
 brd hierarchy
