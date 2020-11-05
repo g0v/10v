@@ -13,6 +13,8 @@
    - OpenAPI
      - https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md
      - https://github.com/wesleytodd/express-openapi/
+ - Nginx Configuration
+   - can use tools like nginx-confgen to help.
  - SQL Server / Shading
  - Docker / Kubernete
    - write file to host - https://stackoverflow.com/questions/31448821
@@ -39,3 +41,5 @@
      - https://www.opsdash.com/blog/postgresql-streaming-replication-howto.html
      - https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
  - replication
+ - in-table auditing and logging
+    - https://dzone.com/articles/audit-log-database-changes-in-postgresql

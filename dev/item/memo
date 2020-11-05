@@ -1,0 +1,26 @@
+table item (
+  state text
+  key bigserial not null primary key
+  owner int
+  deleted bool
+  data json
+  createdtime timestamp
+  modifiedtime timestamp
+
+  parent int
+  parent_type text
+)
+
+# auditing + log - perhaps we don't have to implement this by ourselves, but use things like Cyan Audit
+table history (
+  table text,
+  history json,
+  modifiedtime timestamp
+)
+
+get({type, key}) = ->
+  db.query "select * from $1~ where key = ... and ...", [type, key...]
+    .then -> return (it.[]rows or [])
+
+permcheck obj, perm, role, action
+permcheck obj.parent, perm, role, action

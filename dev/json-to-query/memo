@@ -1,0 +1,31 @@
+json 轉 db row
+ - 主要在於列表式的物件, 比方說 權限, 檔案, 文章, 留言等等
+ - 通常列表不會太長, 而且可以一次編輯
+   - 太長怎麼辦? 部份編輯?
+     - 分組管理
+     - 限制上限 ( 因此不適用於可以無限增長的資料類型 )
+ - 通常只存鍵值, 不存引用的完整物件. 物件存在另外的表格.
+
+bulk action
+ - insert
+   - query: 
+     insert into perm (data)
+       select json from (select unnest($1::json[]) as json) as t
+   - param: [[{...}, ...]]
+ - update
+   - query:
+     update perm set data = t.json
+       from (select unnest($1::json[]) as json) as t
+     where (data->'key')::text = (t.json->'key')::text
+   - param: [[{...}, ...]]
+ - delete
+   - query:
+     delete from perm where (t.data->'key')::text = ANY($1)
+   - param:
+     [[key1, key2, ...]]
+
+1 normal query takes 5ms
+1 query with bulk 100 items: 5ms 
+1 query with bulk 1000 items: 10ms
+bottleneck: query penalty.
+

@@ -18,4 +18,7 @@ api.get \/x, (req, res, next) ->
 app.get \/x, (req, res, next) ->
   return next new Error!
 
+app.get \/i18n, (req, res, next) ->
+  console.log req.get("I18n-Locale")
+  return res.send('ok')
 
