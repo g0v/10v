@@ -62,3 +62,7 @@ html
         .catch -> console.log it
       ldcv = new ldCover do
         root: ld$.find('.ldcv[data-name=logout]',0)
+
+      # detect locale
+      lng = if (ret = /\/intl\/([^\/]+)\//.exec(window.location.href)) => ret.1 else ''
+      console.log ">", lng
