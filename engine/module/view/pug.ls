@@ -13,8 +13,9 @@ engine = (backend) ->
     if opt.settings.env == \development => lc.dev = true
     # force cache to true since we do invalidate cache. still keep opt.settings for reference.
     lc.cache = true or opt.settings['view cache']
+    intl = if opt.i18n => path.join("intl", opt._locals.language) else ''
     {viewdir, basedir} = opt
-    pc = path.join(viewdir, f.replace(basedir, '').replace(/\.pug$/, '.js'))
+    pc = path.join(viewdir, intl, f.replace(basedir, '').replace(/\.pug$/, '.js'))
     try
       t1 = Date.now!
       mtime = fs.stat-sync(pc).mtime
@@ -48,5 +49,10 @@ engine = (backend) ->
         .catch ->
           _log.error "#{f.replace(opt.basedir, '')} serve failed."
           cb e, null
+
+engine.opt = (opt = {}) ->
+  if opt.i18n =>
+    pug-extapi.i18n = -> opt.i18n.t(it)
+    pug-extapi.{}filters.i18n = (t, o) -> opt.i18n.t(t)
 
 module.exports = engine

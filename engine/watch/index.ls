@@ -1,4 +1,5 @@
 require! <[fs fs-extra chokidar path debounce.js]>
+require! <[../module/i18n]>
 require! <[./tree/PugTree ./tree/StylusTree ./build/pug ./build/stylus ./build/lsc ./build/aux ./build/bundle]>
 
 PugTree.set-root \src/pug
@@ -9,17 +10,22 @@ ret = (backend) ->
   watch = do
     ignores: [/^\..*\.swp$/]
     init: (opt={}) ->
-      cfg = do
-        persistent: true
-        ignored: (f) ~> @ignores.filter(-> it.exec(f)).length
-      if opt.{}watcher.ignores => @ignores = opt.{}watcher.ignores
-      @ignores = @ignores.map -> new RegExp(it)
-      @watcher = chokidar.watch <[src static]>, cfg
-        .on \add, (~> @update it)
-        .on \change, (~> @update it)
-        .on \unlink, (~> @unlink it)
-      @assets opt.assets or []
-      log.info "watching src for file change".cyan
+      build = opt.build or {}
+      i18n(opt.i18n)
+        .then (i18n) ~>
+          pug.opt({i18n})
+          cfg = do
+            persistent: true
+            ignored: (f) ~> @ignores.filter(-> it.exec(f)).length
+          if build.{}watcher.ignores => @ignores = build.{}watcher.ignores
+          @ignores = @ignores.map -> new RegExp(it)
+          @watcher = chokidar.watch <[src static]>, cfg
+            .on \add, (~> @update it)
+            .on \change, (~> @update it)
+            .on \unlink, (~> @unlink it)
+          @assets build.assets or []
+          log.info "watching src for file change".cyan
+
     custom: ({files, update, unlink, ignored}) ->
       w = chokidar.watch files, {persistent: true} <<< (if ignored => {ignored} else {})
       w.on \add, -> update it

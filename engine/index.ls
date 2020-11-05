@@ -1,5 +1,7 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
-require! <[./auth ./route ./watch ./redis-node ./module/aux ./module/view/pug ./module/db/postgresql]>
+require! <[i18next-http-middleware]>
+require! <[./auth ./route ./watch ./redis-node]>
+require! <[./module/i18n ./module/aux ./module/view/pug ./module/db/postgresql]>
 require! <[../secret]>
 
 default-config = do
@@ -62,7 +64,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
     if !@server => @server = @app.listen @config.port, ~> res @server
     else server.listen @config.port, -> res @server
 
-  watch: -> if @config.build and @config.build.enabled => watch(@).init @config.build
+  watch: -> if @config.build and @config.build.enabled => watch(@).init @config{build, i18n}
 
   start: ->
     Promise.resolve!
@@ -82,6 +84,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
           @log-server.error "terminate process to reset server status".red
           process.exit -1
 
+        i18n(@config.i18n or {})
+      .then (i18n) ~>
 
         @db = new postgresql @
 
@@ -97,7 +101,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         app.use pino-http do
           useLevel: (if @production => \info else \debug)
-          logger: log.child({module: \route})
+          logger: @log.child({module: \route})
           auto-logging: (!@production)
 
         app.use body-parser.json do
@@ -112,6 +116,9 @@ backend.prototype = Object.create(Object.prototype) <<< do
         # TODO invalidate cache after view updated
         if app.get(\env) != \development => app.enable 'view cache'
 
+        app.use i18next-http-middleware.handle i18n, {ignoreRoutes: <[]>}
+
+        pug.opt({i18n})
         # also, we precompile all view pug into .view folder, which can be used by our custom pug view engine.
         app.engine 'pug', pug(@)
         app.set 'view engine', 'pug'
