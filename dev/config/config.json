@@ -1,0 +1,11 @@
+{
+  "ip": "127.0.0.1",
+  "port": "8901",
+  "hostname": "servlet.v2",
+  "cert": {
+    "crt": "/Path/To/My/Cert/server.crt",
+    "key": "/Path/To/My/Cert/server.key"
+  },
+  "root": "/Path/To/My/Server/Root/"
+}
+

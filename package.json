@@ -60,7 +60,8 @@
     "pug": "^3.0.0",
     "redis": "^3.0.2",
     "redis-clustr": "^1.7.0",
-    "require-reload": "^0.2.2"
+    "require-reload": "^0.2.2",
+    "template-text": "0.0.1"
   },
   "frontendDependencies": {
     "root": "static/assets/lib",
