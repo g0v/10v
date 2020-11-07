@@ -1,0 +1,7 @@
+ip: \127.0.0.1
+port: 8901
+hostname: \servlet.v2
+root: \/Users/tkirby/workspace/zbryikt/plotdb/projects/servlet/static/
+cert:
+  crt: \/Users/tkirby/workspace/zbryikt/projects/cert/servlet.v2/server.crt
+  key: \/Users/tkirby/workspace/zbryikt/projects/cert/servlet.v2/server.key
