@@ -1,0 +1,40 @@
+
+ - 目前架構 / 需要的設定
+   - bundle.ls ( build 用. 所有機器應該都一樣 )
+   - db        ( db schema. 所有機器應該都一樣 )
+   - mail      ( mail template. 會需要 i18n. 所有機器應該都一樣 )
+   - nginx     ( nginx 設定, 依機器路徑, ip, port, domain name 有所差異. 會需要動態生成 )
+   - key       ( 公私鑰對. 用來加密文字? 可能會需要隨網域而變更 )
+   - site      ( 主機各項公開設定   )
+   - secret.ls ( 主機各項不公開設定 )
+ - 條件
+   - 可能需要對不同網域做設定
+   - 設定可能需要透過程式生成. 生成可能會在佈署時進行, 也可能在營運期間執行.
+     - 營運期間執行的 config, 若為 UGC, 可能會需要備份與還原機制
+   - 會有的差異包括:
+     - domain
+     - node ( 同一 cluster 中的不同 node )
+     - cluster 
+   - 會需要有程式庫外部的設定架構, 以貼合各種情境 ( staging, different customer, etc ) 來佈署主機.
+     - 以舊架構來說, 就是 secret.ls
+ - 可能的架構 
+   - 提案 1
+     - repo 
+       - config
+         - src ( 不因 domain, node, cluster 改變而有所不同. 進 git )
+           - build
+             - bundle.ls
+           - db
+             - <purpose>.sql
+           - nginx
+           - mail
+             - intl/<locale>
+         - gen ( 佈署時期生成的內容. 在佈署時依外部設定來生成. 不可進 git )
+           - nginx
+       - user ... 存放 UGC config. 比方說 mail template, nginx config for specific domain
+     - external
+       - 另外一個服務來管理..? 比方說:
+         - 存在 google data storage 
+         - 依 customer id, domain name 來存放
+         - private key 什麼的通通扔進來
+         - 由另外的 deploy script 透過程序化方式來取用

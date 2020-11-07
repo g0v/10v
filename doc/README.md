@@ -16,19 +16,18 @@ server
      - util? # 額外的工具模組
    - other files
      - index.ls
- - user
-   - 考慮到幾種情境:
-     - 用戶上傳檔案 ( 至特定物件下 ) - /<type>/f/<uu/id>.type
-     - 指示下載檔案 - /<type>/d/<uu/id>/
-     - 子結構 - /<type>/s/<type>/...
-   
- - config # 需要考慮到支援不同網域
-   - nginx
  - doc
  - test
  - tool
  - script
  - .view, .engine - prebuilt files
+ - user
+   - 考慮到幾種情境:
+     - 用戶上傳檔案 ( 至特定物件下 ) - /<type>/f/<uu/id>.type
+     - 指示下載檔案 - /<type>/d/<uu/id>/
+     - 子結構 - /<type>/s/<type>/...
+ - config # 需要考慮到支援不同網域. ( 參考 config-structure.md )
+   - build, nginx, key, mail, site
  - other files
    - start
    - package.json, package-lock.json, .gitignore, .git, node_modules, server.log
