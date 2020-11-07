@@ -1,5 +1,4 @@
-
-# backup
+# Backup
 
  - source code
    - 使用 Github 管理.
@@ -25,7 +24,7 @@
 # status monitor
   - 採用 statuscake?
 
-# security monitor
+# Security Operation Center
   - 自己寫?
 
 # code linting
