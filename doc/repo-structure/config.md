@@ -1,4 +1,3 @@
-
  - 目前架構 / 需要的設定
    - bundle.ls ( build 用. 所有機器應該都一樣 )
    - db        ( db schema. 所有機器應該都一樣 )
