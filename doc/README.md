@@ -1,4 +1,12 @@
-server
+# Servlet
+
+Base web server design reference.
+
+
+## Code Maintain and Modularization
+
+Keep common part in a base repo ( servlet ) but carefully design how to customize it.
+
 
 ## Error Handling
 

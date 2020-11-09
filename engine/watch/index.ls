@@ -111,7 +111,7 @@ ret = (backend) ->
   watch.on \unlink.ls, -> lsc.unlink it
   watch.custom do
     files: <[static config/bundle.ls]>
-    ignored: (f) ~> watch.ignores.filter(-> it.exec(f)).length or /static\/s\/|static\/(js|css)\/pack\//.exec(f)
+    ignored: (f) ~> watch.ignores.filter(-> it.exec(f)).length or /static\/(js|css)\/pack\//.exec(f)
     update: -> bundle.build [it]
     unlink: -> bundle.unlink [it]
 
