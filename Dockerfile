@@ -1,4 +1,4 @@
-FROM node:10.14.1
+FROM node:10.23-alpine
 WORKDIR /app
 ADD . /app
 # --unsafe-perm permit some actions to be run as root.
