@@ -11,4 +11,7 @@ list all api endpoint:
    - however, if we have to, we should:
      - setup a standalone server to do this
      - use different credentials for the standalone server
+     - alternatively, let us do the upload for them.
+       - don't provide the privileges to the admin even if it's customizable.
+       - ask for user's consent that this might be a possibly backdoor if user don't keep their account safe.
    - in above case, if admin got hacked and used to implant malicious code, at least it only affects that server.
