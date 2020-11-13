@@ -21,13 +21,16 @@ Keep common part in a base repo ( servlet ) but carefully design how to customiz
      - <error-name> should be simple, short, and matches [a-b0-9][a-b0-9-]*
 
 ## Code Check
+
  - ls-lint: https://github.com/eheitherd/ls-lint
+
 
 ## Route Sanity Check
 
  - authed
  - staff
  - recaptcha - should provide fallback for failure
+
 
 ## Backend
 
