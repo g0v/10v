@@ -12,3 +12,18 @@ a consistent and automated way to build, package, and test applications
    - https://fossa.com - open source vulnerability detection, license compliance
  - misc
    - packagequality.com
+
+# Testing cross / within browsers
+
+ - services - pricing usually above 29$ / month
+   - crossbrowsertesting, lambdatest, browserstack, etc
+ - framework
+   - cypress.io, selenium
+ - resources
+   - Test IE11 and Microsoft Edge Legacy using Win10 VM
+     - https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
+ - technology
+   - web driver
+     - https://github.com/webdriverio/webdriverio
+     - https://www.w3.org/TR/webdriver/
+ 
