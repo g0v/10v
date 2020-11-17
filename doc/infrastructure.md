@@ -13,6 +13,7 @@
    - OpenAPI
      - https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md
      - https://github.com/wesleytodd/express-openapi/
+   - Run script continuously: Forever ( https://github.com/foreversd/forever )
  - Nginx Configuration
    - can use tools like nginx-confgen to help.
  - SQL Server / Shading
