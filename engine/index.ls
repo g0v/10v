@@ -131,7 +131,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         # =============== USER DATA, VIA AJAX
         # Note: jsonp might lead to exploit since jsonp is not protected by CORS.
-        # * this cant be protected by CSRF, since it provides CSRF toke.
+        # * this cant be protected by CSRF, since it provides CSRF token.
         # * this must be protected by CORS Policy, otherwise 3rd website can get user info easily.
         # * this is passed via cookie too, but cookie won't be set if user doesn't get files served from express.
         #   so, for the first time user we still have to do ajax.
