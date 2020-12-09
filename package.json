@@ -35,7 +35,6 @@
     "@loadingio/ldquery": "^1.1.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.5.2",
     "bootstrap.build": "github:plotdb/bootstrap.build",
     "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
     "bootstrap.native": "^3.0.10",
@@ -73,7 +72,6 @@
   "frontendDependencies": {
     "root": "static/assets/lib",
     "modules": [
-      "bootstrap",
       "bootstrap.ldui",
       "bootstrap.native",
       "@loadingio/ldquery",
