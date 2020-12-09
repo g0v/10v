@@ -22,7 +22,7 @@ while [ 1 ]; do
      ./node_modules/.bin/pino-pretty \
        -c -o "[{module}] {msg} {responseTime}" \
        -i req,res,hostname,pid,module,responseTime \
-       -t "yyyy/mm/dd HH:MM:sso"
+       -t "yy/mm/dd HH:MM:sso"
 
   echo "server down; try to auto restart after 1s."
   sleep 1;
