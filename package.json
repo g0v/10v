@@ -20,7 +20,13 @@
     "try": "./node_modules/.bin/lsc log.ls",
     "prebuild": "node_modules/.bin/lsc -co .engine engine",
     "bootstrap": "npx bootstrap.build -c config/bootstrap/ -o static/assets/lib/bootstrap.custom/main/",
-    "cannon": "cd tool; ./cannon"
+    "docker-start": "docker-compose -f config/docker/compose.yaml up",
+    "docker-stop": "docker-compose -f config/docker/compose.yaml down",
+    "docker-build": "docker-compose -f server/docker/compose.yaml --build",
+    "docker-db": "docker-compose -f server/docker/compose.yaml up -d db",
+    "cannon": "cd tool; ./cannon",
+    "test": "npx mocha --require livescript ./test/index.ls",
+    "coverage": "npx nyc --reporter=text npm run test"
   },
   "devDependencies": {
     "LiveScript": ">=1.2.0",
@@ -54,6 +60,8 @@
     "ldview": "0.0.2",
     "ls-lint": "^0.1.2",
     "marked": "^1.1.1",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
