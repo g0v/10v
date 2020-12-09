@@ -164,7 +164,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         app.use \/, express.static(path.join(__dirname, '.')) # static file fallback
         app.use (req, res, next) ~> next new lderror(404)     # nothing match - 404
-        app.use backend.middleware.error-handler                     # error handler
+        app.use backend.middleware.error-handler              # error handler
 
         @listen!
       .then ~>
