@@ -1,2 +1,2 @@
 FROM postgres:10.15-alpine as base
-COPY config/db/*.sql /docker-entrypoint-initdb.d
+COPY config/db/* /docker-entrypoint-initdb.d/
