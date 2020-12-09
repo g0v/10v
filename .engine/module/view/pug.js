@@ -17,14 +17,15 @@
       return _log.debug(f + " served in " + t + "ms (" + type + (cache ? ' cached' : '') + ")");
     };
     return function(f, opt, cb){
-      var lc, viewdir, basedir, pc, t1, mtime, cache, ret, t2, e, p;
+      var lc, intl, viewdir, basedir, pc, t1, mtime, cache, ret, t2, e, p;
       lc = {};
       if (opt.settings.env === 'development') {
         lc.dev = true;
       }
       lc.cache = true || opt.settings['view cache'];
+      intl = opt.i18n ? path.join("intl", opt._locals.language) : '';
       viewdir = opt.viewdir, basedir = opt.basedir;
-      pc = path.join(viewdir, f.replace(basedir, '').replace(/\.pug$/, '.js'));
+      pc = path.join(viewdir, intl, f.replace(basedir, '').replace(/\.pug$/, '.js'));
       try {
         t1 = Date.now();
         mtime = fs.statSync(pc).mtime;
@@ -80,6 +81,17 @@
         });
       }
     };
+  };
+  engine.opt = function(opt){
+    opt == null && (opt = {});
+    if (opt.i18n) {
+      pugExtapi.i18n = function(it){
+        return opt.i18n.t(it);
+      };
+      return (pugExtapi.filters || (pugExtapi.filters = {})).i18n = function(t, o){
+        return opt.i18n.t(t);
+      };
+    }
   };
   module.exports = engine;
   function import$(obj, src){

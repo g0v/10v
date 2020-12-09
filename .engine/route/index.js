@@ -31,8 +31,12 @@
       req.log.info('hi');
       return next(new lderror(1005));
     });
-    return app.get('/x', function(req, res, next){
+    app.get('/x', function(req, res, next){
       return next(new Error());
+    });
+    return app.get('/i18n', function(req, res, next){
+      console.log(req.get("I18n-Locale"));
+      return res.send('ok');
     });
   });
 }).call(this);
