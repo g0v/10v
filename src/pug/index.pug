@@ -1,68 +1,62 @@
 //- view
-doctype html
-include /../../static/assets/lib/ldui/pug/ldui.pug
-html
-  head
-    +css("/assets/lib/bootstrap/4.5.2/css/bootstrap.min.css")
-    +css("/assets/lib/ldui/ldui.min.css")
-    +css("/assets/lib/ldcover/main/ldcv.effects.min.css")
-  body
-    .w-1024.mx-auto.rwd
-      .row
-        .col-md
-          h2 Sign Up
-          form(method="POST",action="/api/auth/signup")
-            .form-group
-              label username
-              input.form-control(type="text",name="username")
-            .form-group
-              label displayname
-              input.form-control(type="text",name="displayname")
-            .form-group
-              label password
-              input.form-control(type="password",name="password")
-            input(type="hidden",name="_csrf")
-            input.btn.btn-primary(type="submit")
-        .col-md
-          h2 Login
-          form(method="POST",action="/api/auth/login")
-            .form-group
-              label username
-              input.form-control(type="text",name="username")
-            .form-group
-              label password
-              input.form-control(type="password",name="password")
-            input(type="hidden",name="_csrf")
-            input.btn.btn-primary(type="submit")
-        .col-md
-          h2 Logout
-          a.btn.btn-primary(ld="logout") Logout
-      include /modules/cover/logout.pug
-      div
-        .btn.btn-outline-dark(onclick="ldcv.toggle(true)") Popup
-    //-
-      +script("/assets/lib/bootstrap.native/main/bootstrap-native.min.js")
-      +script("/assets/lib/ldui/ldui.min.js")
-    +script("/js/pack/vendor.min.js")
-    script: :lsc
-      view = new ldView do
-        root: document.body
-        action: click: do
-          logout: ->
-            ld$.fetch "/api/auth/logout", {method: "POST"}
-              .then -> console.log \logout.
-              .catch -> console.log \failed, it
-        handler: do
-          logout: -> console.log it
-      ld$.fetch \/api/auth/info, {method: \GET}, {type: \json}
-        .then (g = {}) ->
-          console.log g.user
-          ld$.find '[name=_csrf]' .map (f) -> f.value = g.csrfToken
-          ld$.fetch.{}headers['X-CSRF-Token'] = g.csrfToken
-        .catch -> console.log it
-      ldcv = new ldCover do
-        root: ld$.find('.ldcv[data-name=logout]',0)
+extends /base.pug
+block head
+block head
+  .w-1024.mx-auto.rwd
+    .row
+      .col-md
+        h2 Sign Up
+        form(method="POST",action="/api/auth/signup")
+          .form-group
+            label username
+            input.form-control(type="text",name="username")
+          .form-group
+            label displayname
+            input.form-control(type="text",name="displayname")
+          .form-group
+            label password
+            input.form-control(type="password",name="password")
+          input(type="hidden",name="_csrf")
+          input.btn.btn-primary(type="submit")
+      .col-md
+        h2 Login
+        form(method="POST",action="/api/auth/login")
+          .form-group
+            label username
+            input.form-control(type="text",name="username")
+          .form-group
+            label password
+            input.form-control(type="password",name="password")
+          input(type="hidden",name="_csrf")
+          input.btn.btn-primary(type="submit")
+      .col-md
+        h2 Logout
+        a.btn.btn-primary(ld="logout") Logout
+    include /modules/cover/logout.pug
+    div
+      .btn.btn-outline-dark(onclick="ldcv.toggle(true)") Popup
 
-      # detect locale
-      lng = if (ret = /\/intl\/([^\/]+)\//.exec(window.location.href)) => ret.1 else ''
-      console.log ">", lng
+block script
+  +script("/js/pack/vendor.min.js")
+  script: :lsc
+    view = new ldView do
+      root: document.body
+      action: click: do
+        logout: ->
+          ld$.fetch "/api/auth/logout", {method: "POST"}
+            .then -> console.log \logout.
+            .catch -> console.log \failed, it
+      handler: do
+        logout: -> console.log it
+    ld$.fetch \/api/auth/info, {method: \GET}, {type: \json}
+      .then (g = {}) ->
+        console.log g.user
+        ld$.find '[name=_csrf]' .map (f) -> f.value = g.csrfToken
+        ld$.fetch.{}headers['X-CSRF-Token'] = g.csrfToken
+      .catch -> console.log it
+    ldcv = new ldCover do
+      root: ld$.find('.ldcv[data-name=logout]',0)
+
+    # detect locale
+    lng = if (ret = /\/intl\/([^\/]+)\//.exec(window.location.href)) => ret.1 else ''
+    console.log ">", lng
