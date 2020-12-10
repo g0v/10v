@@ -16,4 +16,5 @@ module.exports = do
       /assets/lib/proxise/main/proxise.min.js
       /assets/lib/ldcover/main/ldcv.min.js
       /assets/lib/ldview/main/ldview.min.js
+      /assets/lib/lderror/main/lde.min.js
     ]>

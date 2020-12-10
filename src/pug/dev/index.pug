@@ -8,7 +8,7 @@ block body
       p(ld="status") Not login
     div
       b User Name
-      p(ld="email") n/a
+      p(ld="username") n/a
     div
       b User Id
       p(ld="userid") n/a
@@ -20,7 +20,7 @@ block body
       form(method="POST",action="/api/auth/signup")
         .form-group
           label email
-          input.form-control(ld="email",type="text",name="email",autocomplete="username")
+          input.form-control(ld="username",type="text",name="username",autocomplete="username")
         .form-group
           label displayname
           input.form-control(ld="displayname",type="text",name="displayname",autocomplete="displayname")
@@ -34,7 +34,7 @@ block body
       form(method="POST",action="/api/auth/login")
         .form-group
           label email
-          input.form-control(ld="email",type="text",name="email",autocomplete="username")
+          input.form-control(ld="username",type="text",name="username",autocomplete="username")
         .form-group
           label password
           input.form-control(ld="password",type="password",name="password",autocomplete="new-password")
@@ -55,7 +55,7 @@ block script
       action: click: do
         "inline-submit": ->
           data = {}
-          <[email displayname password]>.map -> data[it]= view.signup.get(it).value
+          <[username displayname password]>.map -> data[it]= view.signup.get(it).value
           ld$.fetch "/api/auth/signup", {method: \POST}, {type: \json, json: data}
             .then -> ldcv.signup.toggle false
             .catch -> console.log \failed, it
@@ -64,10 +64,16 @@ block script
       action: click: do
         "inline-submit": ->
           data = {}
-          <[email password]>.map -> data[it] = view.login.get(it).value
-          ld$.fetch "/api/auth/login", {method: \POST}, {type: \json, json: data}
+          <[username password]>.map -> data[it] = view.login.get(it).value
+          ld$.fetch "/api/auth/login", {method: \POST}, {json: data}
             .then -> ldcv.login.toggle false
-            .catch -> console.log \failed
+            .then -> lc.a.fetch!
+            .then (g) ->
+              lc.global = g
+              lc.user = g.user
+              view.panel.render!
+
+            .catch -> console.log \failed, it
 
     view.panel = new ldView do
       root: document.body
@@ -76,8 +82,11 @@ block script
         login: -> ldcv.login.toggle!
         logout: ->
           ld$.fetch "/api/auth/logout", {method: "POST"}
-            .then -> ld$.fetch \/api/auth/info, {method: \GET}, {type: \json}
-            .then -> view.panel.render!
+            .then -> lc.a.fetch!
+            .then (g={})->
+              lc.global = g
+              lc.user = g.user
+              view.panel.render!
             .catch -> console.log \failed, it
         reauth: ->
       text: do
@@ -102,8 +111,7 @@ block script
     ldcv.logout = new ldCover do
       root: ld$.find('.ldcv[data-name=logout]',0)
 
-    /*
-    a = new auth do
+    lc.a = a = new auth do
       ui:
         timeout: ->
         authpanel: -> ldcv.login.get!
@@ -113,4 +121,3 @@ block script
     a.fetch!then -> console.log it
     a.ensure!
       .then -> console.log ">", it
-    */

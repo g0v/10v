@@ -9,7 +9,7 @@ ret = (backend) ->
       .catch !-> done new lderror(1012), null, {message: ''}
 
   passport.use new passport-local.Strategy {
-    usernameField: \email, passwordField: \password
+    usernameField: \username, passwordField: \password
   }, (username,password,done) ~>
     get-user {username, password, method: \local, detail: null, create: false, done}
 
@@ -35,16 +35,15 @@ ret = (backend) ->
 
   route.auth
     ..post \/signup, (req, res, next) ->
-      {email,displayname,password,config} = req.body{email,displayname,password,config}
-      if !email or !displayname or password.length < 8 => return next(new lderror 400)
-      db.auth.user.create {username: email, password} <<< {
+      {username,displayname,password,config} = req.body{username,displayname,password,config}
+      if !username or !displayname or password.length < 8 => return next(new lderror 400)
+      db.auth.user.create {username, password} <<< {
         method: \local, detail: {displayname}, config: (config or {})
       }
         .then (user) !-> req.logIn user, !-> res.send!
         .catch !-> next(new lderror 403)
     ..post \/login, (req, res, next) -> 
       ((err,user,info) <- passport.authenticate \local, _
-      console.log err, user, info
       if err or !user => return next(err or new lderror(1000))
       req.logIn user, (err) !-> if err => next(err) else res.send!
       )(req, res, next)
