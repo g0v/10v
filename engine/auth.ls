@@ -4,7 +4,6 @@ require! <[./module/aux]>
 ret = (backend) ->
   {db,app,config,route} = backend
 
-
   # =============== USER DATA, VIA AJAX
   # Note: jsonp might lead to exploit since jsonp is not protected by CORS.
   # * this cant be protected by CSRF, since it provides CSRF token.
@@ -72,8 +71,6 @@ ret = (backend) ->
       req.logIn user, (err) !-> if err => next(err) else res.send!
       )(req, res, next)
     ..post \/logout, (req, res) -> req.logout!; res.send!
-
-
 
 module.exports = ret
 /*
