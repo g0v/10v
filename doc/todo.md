@@ -1,1 +1,1 @@
- - remove frontend dependencies ( make them optional )
+ - modularize frontend dependencies ( make them optional )
