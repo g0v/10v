@@ -9,13 +9,13 @@ block head
         form(method="POST",action="/api/auth/signup")
           .form-group
             label username
-            input.form-control(type="text",name="username")
+            input.form-control(type="text",name="username",autocomplete="username")
           .form-group
             label displayname
-            input.form-control(type="text",name="displayname")
+            input.form-control(type="text",name="displayname",autocomplete="displayname")
           .form-group
             label password
-            input.form-control(type="password",name="password")
+            input.form-control(type="password",name="password",autocomplete="new-password")
           input(type="hidden",name="_csrf")
           input.btn.btn-primary(type="submit")
       .col-md
@@ -23,10 +23,10 @@ block head
         form(method="POST",action="/api/auth/login")
           .form-group
             label username
-            input.form-control(type="text",name="username")
+            input.form-control(type="text",name="username",autocomplete="username")
           .form-group
             label password
-            input.form-control(type="password",name="password")
+            input.form-control(type="password",name="password",autocomplete="current-password")
           input(type="hidden",name="_csrf")
           input.btn.btn-primary(type="submit")
       .col-md
@@ -37,7 +37,6 @@ block head
       .btn.btn-outline-dark(onclick="ldcv.toggle(true)") Popup
 
 block script
-  +script("/js/pack/vendor.min.js")
   script: :lsc
     view = new ldView do
       root: document.body

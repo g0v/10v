@@ -35,15 +35,16 @@ ret = (backend) ->
 
   route.auth
     ..post \/signup, (req, res, next) ->
-      {username,displayname,password,config} = req.body{username,displayname,password,config}
-      if !username or !displayname or password.length < 8 => return next(new lderror 400)
-      db.auth.user.create {username, password} <<< {
+      {email,displayname,password,config} = req.body{email,displayname,password,config}
+      if !email or !displayname or password.length < 8 => return next(new lderror 400)
+      db.auth.user.create {username: email, password} <<< {
         method: \local, detail: {displayname}, config: (config or {})
       }
         .then (user) !-> req.logIn user, !-> res.send!
         .catch !-> next(new lderror 403)
     ..post \/login, (req, res, next) -> 
       ((err,user,info) <- passport.authenticate \local, _
+      console.log err, user, info
       if err or !user => return next(err or new lderror(1000))
       req.logIn user, (err) !-> if err => next(err) else res.send!
       )(req, res, next)

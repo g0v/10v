@@ -71,6 +71,7 @@
     "pino": "^6.6.0",
     "pino-http": "^5.2.0",
     "pino-pretty": "^4.2.1",
+    "proxise": "0.0.1",
     "pug": "^3.0.0",
     "redis": "^3.0.2",
     "redis-clustr": "^1.7.0",
@@ -84,6 +85,7 @@
       "bootstrap.native",
       "@loadingio/ldquery",
       "@loadingio/debounce.js",
+      "proxise",
       "ldiconfont",
       "ldcover",
       "ldview"
