@@ -97,30 +97,6 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @route.api = api = express.Router {mergeParams: true}
         @route.auth = express.Router {mergeParams: true}
 
-        # =============== USER DATA, VIA AJAX
-        # Note: jsonp might lead to exploit since jsonp is not protected by CORS.
-        # * this cant be protected by CSRF, since it provides CSRF token.
-        # * this must be protected by CORS Policy, otherwise 3rd website can get user info easily.
-        # * this is passed via cookie too, but cookie won't be set if user doesn't get files served from express.
-        #   so, for the first time user we still have to do ajax.
-        #   cookie will be checked in frontend to see if ajax is needed.
-        # * user could stil alter cookie's content, so it's necessary to force ajax call for important action
-        #   there is no way to prevent user from altering client side content,
-        #   so if we want to prevent user from editing our code, we have to go backend for the generation.
-        /*
-        api.get \/auth/info, (req, res) ~>
-          res.setHeader \content-type, \application/json
-          payload = JSON.stringify({
-            csrfToken: req.csrfToken!
-            production: @production
-            ip: aux.ip(req)
-            user: if req.user => req.user{key, config, displayname, verified, username} else {}
-            recaptcha: @config.{}grecaptcha{sitekey, enabled}
-          })
-          res.cookie 'global', payload, { path: '/', secure: true }
-          res.send payload
-        */
-
         # Authentication
         auth @  # Authenticate. must before any router ( e.g., /api )
 
