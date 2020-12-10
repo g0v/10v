@@ -6,18 +6,18 @@ trap "kill 0" exit
 #  -c : color
 #  -t : format timestamp
 
-# TODO This should be done via some kind of service
+# TODO We probably should do this via some kind of service / package
 while [ 1 ]; do
-  # production
-  #node ./.engine/index.js | \
-  #    tee -a ./server.log | \
-  #    ./node_modules/.bin/pino-pretty \
-  #      -c -o "[{module}] {msg} {responseTime}" \
-  #      -i req,res,hostname,pid,module,responseTime \
-  #      -t "yyyy/mm/dd HH:MM:sso"
 
-  # dev
-  ./node_modules/.bin/lsc ./engine/index | \
+  if [[ $NODE_ENV == "production" ]]; then
+    # production - use prebuilt js files
+    CMD="node ./.engine/index.js"
+  else
+    # dev - use livescript files
+    CMD="./node_modules/.bin/lsc ./engine/index"
+  fi
+
+  $CMD | \
      tee -a server.log | \
      ./node_modules/.bin/pino-pretty \
        -c -o "[{module}] {msg} {responseTime}" \
