@@ -1,4 +1,4 @@
-upstream servlet_api {
+upstream !{name}_api {
   server !{ip}:!{port};
 }
 
@@ -52,12 +52,12 @@ server {
 }
 
 server {
-  listen      80;
+  listen 80;
   server_name !{hostname};
   add_header Strict-Transport-Security "max-age=16070400; includeSubDomains";
   location / {
     if ($http_user_agent !~* (facebook) ) {
-	return 301 https://$server_name$request_uri;
+      return 301 https://$server_name$request_uri;
     }
     root !{root};
   }
