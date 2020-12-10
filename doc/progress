@@ -3,6 +3,8 @@
      - 考慮由 nginx 提供 default, server route 提供 overwrite, 透過 `map` + `$sent_http_*` 來實作.
    * cors
  - authenticate
+   - 考慮將 ldSite 的 auth.ls 包進來.
+     - 採用 event / plugin 方式處裡 recaptcha 與 consent, 並做介面抽離.
  - error handling
    * autocatch 待整理
    - 全面使用 lderror 處理錯誤. 
@@ -19,3 +21,8 @@
  - performance
    * 效能工具組
    - cannon 測時間
+ - test
+   - 使用 mocha + nyc, 其它待查.
+ - deploy
+   - 使用 docker + docker-compose. 檔案置於 config/docker 下.
+   - ( 待確認 volume 用法, config/secret/log 等如何管理, db 怎麼配置 )
