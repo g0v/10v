@@ -57,6 +57,7 @@
     "js-yaml": "^3.14.0",
     "ldcover": "^1.1.0",
     "lderror": "0.0.5",
+    "ldform": "0.0.1",
     "ldiconfont": "github:loadingio/ldiconfont",
     "ldview": "0.0.2",
     "ls-lint": "^0.1.2",
@@ -86,10 +87,12 @@
       "bootstrap.native",
       "@loadingio/ldquery",
       "@loadingio/debounce.js",
+      "curegex",
       "proxise",
       "ldiconfont",
       "ldcover",
       "lderror",
+      "ldform",
       "ldview"
     ]
   }
