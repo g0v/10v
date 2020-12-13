@@ -14,6 +14,7 @@ auth = function(opt){
     failed: 10000
   };
   this.evtHandler = {};
+  this.social = {};
   this.ui = {
     loader: {
       on: function(){},
@@ -159,9 +160,46 @@ auth.prototype = import$(Object.create(Object.prototype), {
       console.log(e);
       return new Promise(function(res, rej){});
     });
+  },
+  local: function(opt){
+    return this.ui.authpanel(true, opt);
+  },
+  authpanel: function(opt){},
+  social: function(arg$){
+    var name, div, this$ = this;
+    name = arg$.name;
+    div = null;
+    return this.get().then(function(g){
+      var form, login;
+      g == null && (g = {});
+      if ((g.user || (g.user = {})).key) {
+        return g;
+      }
+      this$.social.window = window.open('', 'social-login', 'height=640,width=560');
+      this$.social.form = form = ld$.create({
+        name: 'div'
+      });
+      form.innerHTML = "<form target=\"social-login\" action=\"" + this$.apiRoot() + "auth/" + name + "/\" method=\"post\">\n  <input type=\"hidden\" name=\"_csrf\" value=\"" + g.csrfToken + "\"/>\n</form>";
+      document.body.appendChild(form);
+      window.socialLogin = login = proxise(function(){
+        return ld$.find(div, 'form', 0).submit();
+      });
+      return login();
+    }).then(function(g){
+      g == null && (g = {});
+      if (!(g.user || (g.user = {})).key) {
+        return Promise.reject(new ldError(1000));
+      }
+    })['finally'](function(){
+      return this$.social.form.parentNode.removeChild(this$.social.form);
+    }).then(function(){}).then(function(){
+      return this$.fire('change');
+    })['catch'](function(){
+      this.fire('error', e);
+      return Promise.reject(e);
+    });
   }
 });
-window.auth = auth;
 function import$(obj, src){
   var own = {}.hasOwnProperty;
   for (var key in src) if (own.call(src, key)) obj[key] = src[key];

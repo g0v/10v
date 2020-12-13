@@ -10,6 +10,7 @@ get-global = proxise -> if lc.global => return Promise.resolve lc.global
 auth = (opt={}) ->
   @timeout = {loader: 1000, failed: 10000}
   @evt-handler = {}
+  @social = {}
 
   @ui = do
     loader: {on: ->, off: ->, on-later: ->, cancel: ->}
@@ -96,4 +97,27 @@ auth.prototype = Object.create(Object.prototype) <<< do
         # to stop further progress of current code.
         new Promise (res, rej) ->
 
-window.auth = auth
+  local: (opt) -> @ui.authpanel(true, opt)
+  authpanel: (opt) ->
+
+  social: ({name}) ->
+    div = null
+    @get!
+      .then (g = {}) ~>
+        if g.{}user.key => return g
+        # before social login
+        @social.window = window.open '', 'social-login', 'height=640,width=560'
+        @social.form = form = ld$.create name: \div
+        form.innerHTML = """
+        <form target="social-login" action="#{@api-root!}auth/#name/" method="post">
+          <input type="hidden" name="_csrf" value="#{g.csrf-token}"/>
+        </form>"""
+        document.body.appendChild form
+        window.social-login = login = proxise(-> ld$.find(div, 'form', 0).submit!)
+        login!
+      .then (g = {}) -> if !g.{}user.key => Promise.reject new ldError(1000)
+      .finally ~> @social.form.parentNode.removeChild @social.form
+      .then ~> # after social login
+      .then ~> @fire \change
+      .catch -> @fire \error, e; return Promise.reject(e)
+
