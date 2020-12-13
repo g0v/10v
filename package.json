@@ -59,6 +59,7 @@
     "lderror": "0.0.5",
     "ldform": "0.0.1",
     "ldiconfont": "github:loadingio/ldiconfont",
+    "ldloader": "^1.0.0",
     "ldview": "0.0.2",
     "ls-lint": "^0.1.2",
     "marked": "^1.1.1",
@@ -92,6 +93,7 @@
       "ldiconfont",
       "ldcover",
       "lderror",
+      "ldloader",
       "ldform",
       "ldview"
     ]

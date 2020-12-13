@@ -33,7 +33,7 @@ block body
           .flex-grow-1: .vertical-center: .w-100
             .form-group
               label 電子郵件
-              input.form-control.form-control-sm(name="email",
+              input.form-control.form-control-sm(name="username",
               placeholder="電子郵件即您的帳號名稱",autocomplete="username")
               .invalid-feedback(style="margin-bottom:-.75em") 無效的電子郵件
             .form-group(data-show="signup")
@@ -43,7 +43,7 @@ block body
               .invalid-feedback 不能留白
             .form-group
               label 密碼
-              input.form-control.form-control-sm(name="passwd",
+              input.form-control.form-control-sm(name="password",
               placeholder="密碼，至少八個字元",type="password",autocomplete="password")
               .invalid-feedback(style="margin-bottom:-.75em") 不合格的密碼
             .form-group
@@ -73,4 +73,5 @@ block body
   +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
   +script("/assets/lib/ldview/main/ldview.min.js")
   +script("/assets/lib/ldform/main/ldform.min.js")
+  +script("/assets/lib/ldloader/main/ldld.min.js")
   +script("/js/dev/authpanel.js")

@@ -6,27 +6,61 @@ authpanel = function(opt){
   this.root = typeof opt.root === 'string'
     ? document.querySelector(opt.root)
     : opt.root;
+  if (opt.isValid) {
+    this.isValid = opt.isValid;
+  }
+  this.action = 'signup';
+  this.auth = opt.auth;
   this.init();
   return this;
 };
 authpanel.prototype = import$(Object.create(Object.prototype), {
+  setAction: function(a){
+    return this.action = a;
+  },
   init: function(){
-    var form;
+    var form, this$ = this;
     this.view = new ldView({
-      root: this.root
+      root: this.root,
+      handler: {
+        submit: function(){}
+      },
+      action: {
+        keyup: {
+          password: function(arg$){
+            var evt;
+            evt = arg$.evt;
+            if (evt.keyCode === 13) {
+              return this$.form.check({
+                now: true
+              }).then(function(){
+                return this$.submit();
+              });
+            }
+          }
+        },
+        click: {
+          submit: function(){
+            return this$.submit();
+          }
+        }
+      }
     });
-    return lc.form = form = new ldForm({
+    this.ldld = new ldLoader({
+      root: this.view.get('submit')
+    });
+    this.form = form = new ldForm({
       names: function(){
-        return ['email', 'passwd', 'displayname'];
+        return ['username', 'password', 'displayname'];
       },
       afterCheck: function(s, f){
-        if (s.email !== 1 && !/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(f.email.value)) {
-          s.email = 2;
+        if (s.username !== 1 && !this$.isValid.username(f.username.value)) {
+          s.username = 2;
         }
-        if (s.passwd !== 1) {
-          s.passwd = !f.passwd.value
+        if (s.password !== 1) {
+          s.password = !f.password.value
             ? 1
-            : (f.passwd.value + "").length < 8 ? 2 : 0;
+            : !this$.isValid.password(f.password.value) ? 2 : 0;
         }
         if (auth.act === 'login') {
           return s.displayname = 0;
@@ -38,10 +72,57 @@ authpanel.prototype = import$(Object.create(Object.prototype), {
       },
       root: this.root
     });
+    return this.form.on('readystatechange', function(it){
+      return this$.view.get('submit').classList.toggle('disabled', !it);
+    });
+  },
+  submit: function(){
+    var val, body, ref$, this$ = this;
+    if (!this.form.ready()) {
+      return;
+    }
+    this.ldld.on();
+    val = this.form.values();
+    body = (ref$ = {}, ref$.username = val.username, ref$.password = val.password, ref$.displayname = val.displayname, ref$);
+    return Promise.resolve().then(function(){
+      var data;
+      data = {};
+      return ld$.fetch(this$.auth.apiRoot() + "" + this$.action, {
+        method: 'POST'
+      }, {
+        json: body
+      });
+    }).then(function(){
+      return this$.auth.fetch();
+    }).then(function(g){
+      this$.setInfo('default');
+      if (g.user) {
+        lda.auth.hide('ok');
+      }
+      this$.form.reset();
+      return this$.ldld.off();
+    })['catch'](function(){
+      this$.setInfo(this$.action === 'signup' ? 'signup-failed' : 'failed');
+      this$.form.fields.password.value = null;
+      this$.form.check({
+        n: 'password',
+        now: true
+      });
+      return this$.ldld.off();
+    });
+  },
+  isValid: {
+    username: function(u){
+      return /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(u);
+    },
+    password: function(p){
+      return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.exec(p + "");
+    }
   }
 });
 new authpanel({
-  root: '.authpanel'
+  root: '.authpanel',
+  auth: new auth()
 });
 function import$(obj, src){
   var own = {}.hasOwnProperty;
