@@ -8,18 +8,40 @@ authpanel = (opt={}) ->
   if opt.is-valid => @is-valid = opt.is-valid
   @action = \signup
   @auth = opt.auth
+  @ready = false
+  @info = \default
   @init!
   @
 
 authpanel.prototype = Object.create(Object.prototype) <<< do
   set-action: (a) -> @action = a
+  toggle: (name) ->
+    @action = name
+    @view.render <[form tab show]>
+  set-info: ->
+    @info = it
+    @view.render <[info]>
   init: ->
     @view = new ldView do
       root: @root
-      handler: submit: (->)
+      handler:
+        "forgot-password": ({node}) -> node.setAttribute \href, "/auth/reset/"
+        submit: ({node}) ~> node.classList.toggle \disabled, !@ready
+        form: ({node}) ~> <[login signup]>.map ~> node.classList.toggle it, @action == it
+        info: ({node}) ~>
+          node.classList.toggle \d-none, node.getAttribute(\data-name) != @info
+
+        tab: ({node}) ~>
+          n = node.getAttribute(\data-name)
+          node.classList.toggle \active, @action == n
+        show: ({node}) ~>
+          n = node.getAttribute(\data-tab)
+          node.classList.toggle \d-none, @action != n
       action:
         keyup: password: ({evt}) ~> if evt.keyCode == 13 => @form.check {now: true} .then ~> @submit!
-        click: submit: ~> @submit!
+        click:
+          submit: ~> @submit!
+          tab: ({node}) ~> @toggle(node.getAttribute(\data-name))
 
     @ldld = new ldLoader root: @view.get('submit')
 
@@ -33,7 +55,7 @@ authpanel.prototype = Object.create(Object.prototype) <<< do
         else s.displayname = if !f.displayname.value => 1 else if !!f.displayname.value => 0 else 2
       root: @root
 
-    @form.on \readystatechange, ~> @view.get('submit').classList.toggle \disabled, !it
+    @form.on \readystatechange, ~> @ready = it; @view.render <[submit]>
 
   submit: ->
     if !@form.ready! => return

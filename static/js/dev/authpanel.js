@@ -11,6 +11,8 @@ authpanel = function(opt){
   }
   this.action = 'signup';
   this.auth = opt.auth;
+  this.ready = false;
+  this.info = 'default';
   this.init();
   return this;
 };
@@ -18,12 +20,53 @@ authpanel.prototype = import$(Object.create(Object.prototype), {
   setAction: function(a){
     return this.action = a;
   },
+  toggle: function(name){
+    this.action = name;
+    return this.view.render(['form', 'tab', 'show']);
+  },
+  setInfo: function(it){
+    this.info = it;
+    return this.view.render(['info']);
+  },
   init: function(){
     var form, this$ = this;
     this.view = new ldView({
       root: this.root,
       handler: {
-        submit: function(){}
+        "forgot-password": function(arg$){
+          var node;
+          node = arg$.node;
+          return node.setAttribute('href', "/auth/reset/");
+        },
+        submit: function(arg$){
+          var node;
+          node = arg$.node;
+          return node.classList.toggle('disabled', !this$.ready);
+        },
+        form: function(arg$){
+          var node;
+          node = arg$.node;
+          return ['login', 'signup'].map(function(it){
+            return node.classList.toggle(it, this$.action === it);
+          });
+        },
+        info: function(arg$){
+          var node;
+          node = arg$.node;
+          return node.classList.toggle('d-none', node.getAttribute('data-name') !== this$.info);
+        },
+        tab: function(arg$){
+          var node, n;
+          node = arg$.node;
+          n = node.getAttribute('data-name');
+          return node.classList.toggle('active', this$.action === n);
+        },
+        show: function(arg$){
+          var node, n;
+          node = arg$.node;
+          n = node.getAttribute('data-tab');
+          return node.classList.toggle('d-none', this$.action !== n);
+        }
       },
       action: {
         keyup: {
@@ -42,6 +85,11 @@ authpanel.prototype = import$(Object.create(Object.prototype), {
         click: {
           submit: function(){
             return this$.submit();
+          },
+          tab: function(arg$){
+            var node;
+            node = arg$.node;
+            return this$.toggle(node.getAttribute('data-name'));
           }
         }
       }
@@ -73,7 +121,8 @@ authpanel.prototype = import$(Object.create(Object.prototype), {
       root: this.root
     });
     return this.form.on('readystatechange', function(it){
-      return this$.view.get('submit').classList.toggle('disabled', !it);
+      this$.ready = it;
+      return this$.view.render(['submit']);
     });
   },
   submit: function(){
