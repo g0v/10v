@@ -57,8 +57,8 @@ authpanel.prototype = Object.create(Object.prototype) <<< do
         @ldld.off!
 
   is-valid: 
-    username: (u) -> /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(u)
-    password: (p) -> /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.exec("#p")
+    username: (u) -> curegex.get('email').exec(u)
+    password: (p) -> p and p.length >= 8
 
 new authpanel do
   root: '.authpanel'

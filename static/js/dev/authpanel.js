@@ -113,10 +113,10 @@ authpanel.prototype = import$(Object.create(Object.prototype), {
   },
   isValid: {
     username: function(u){
-      return /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.exec(u);
+      return curegex.get('email').exec(u);
     },
     password: function(p){
-      return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.exec(p + "");
+      return p && p.length >= 8;
     }
   }
 });

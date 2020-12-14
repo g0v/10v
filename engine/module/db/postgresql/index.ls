@@ -1,6 +1,6 @@
-require! <[pg crypto bcrypt colors lderror re2]>
+require! <[pg crypto bcrypt colors lderror re2 curegex]>
 
-re-email = new re2 "^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.[a-z]{2,}|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$", re2.ignoreCase
+re-email = curegex.tw.get('email', re2)
 is-email = -> return re-email.exec(it)
 
 pg.defaults.poolSize = 30
