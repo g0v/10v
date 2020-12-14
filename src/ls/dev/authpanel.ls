@@ -73,7 +73,7 @@ authpanel.prototype = Object.create(Object.prototype) <<< do
         @form.reset!
         @ldld.off!
       .catch ~>
-        @set-info (if @action == \signup => \signup-failed else \failed)
+        @set-info (if @action == \signup => \signup-failed else \login-failed)
         @form.fields.password.value = null
         @form.check {n: \password, now: true}
         @ldld.off!

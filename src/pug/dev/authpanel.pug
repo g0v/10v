@@ -19,9 +19,33 @@ block body
       .vertical-center.p-4.info.position-absolute.h-100.w-50.text-light
         .position-absolute.w-100.h-100.bg-semi-dark(style="top:0;left:0")
         .text-left.position-relative.z-float.text-shadow
-          div(ld="info",data-name="default") 資訊
-          .d-none(ld="info",data-name="failed") 登入失敗
-          .d-none(ld="info",data-name="signup-failed") 註冊失敗
+          div(ld="info",data-name="default")
+            h3.mb-3.font-weight-bold(style="line-height:1em") 登入系統
+            p #[b 電子郵件]即為您的帳號。若您代表您的團隊註冊，建議您使用一個#[b 團隊可共用]的電子郵件。
+            p 登入之後即可進行提案、系統管理或評選工作。
+
+
+          .d-none(ld="info",data-name="signup-failed")
+            h2.mb-4.font-weight-bold 註冊失敗。
+            p 您可能先前已經註冊過了，或者您所填的資訊有問題。您可以試著：
+            ul
+              li 切換至登入模式後再試一次
+              li 試著使用更複雜的密碼
+              li 嘗試使用社群帳號登入
+              li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") 與我們聯絡]
+          .d-none(ld="info",data-name="login-failed")
+            h2.mb-4.font-weight-bold 登入失敗。
+            p 您之前可能用的是別組帳號或密碼、使用不同的登入方式、甚至尚未註冊過。您可以試著：
+            ul
+              li 換一組帳號、密碼或登入方式
+              li 確認您的 email 或密碼沒有打錯
+              li 切換至註冊模式後再試一次
+              li #[a(href="/dash/auth/reset/",style="color:#0ff",target="_blank",rel="noopener noreferrer") 重設密碼]
+              li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") 與我們聯絡]
+          .d-none(ld="info",data-name="token")
+            h2.mb-4.font-weight-bold 歡迎您！
+            p 您受邀成為我們的一員。不過，在繼續之前您需要先登入系統。
+
         .position-absolute.text-sm(style="bottom:20px;right:20px")
           span Powered by Grant Dash
           //-img(src="/assets/img/c/logo/battledash.svg",style="height:1.3em;vertical-align:-.2em")

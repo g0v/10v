@@ -151,7 +151,7 @@ authpanel.prototype = import$(Object.create(Object.prototype), {
       this$.form.reset();
       return this$.ldld.off();
     })['catch'](function(){
-      this$.setInfo(this$.action === 'signup' ? 'signup-failed' : 'failed');
+      this$.setInfo(this$.action === 'signup' ? 'signup-failed' : 'login-failed');
       this$.form.fields.password.value = null;
       this$.form.check({
         n: 'password',
