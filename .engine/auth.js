@@ -11,7 +11,7 @@
   ret = function(backend){
     var db, app, config, route, getUser, sessionStore, session, x$, this$ = this;
     db = backend.db, app = backend.app, config = backend.config, route = backend.route;
-    route.api.get('/auth/info', function(req, res){
+    route.auth.get('/info', function(req, res){
       var payload, ref$;
       res.setHeader('content-type', 'application/json');
       payload = JSON.stringify({

@@ -14,7 +14,7 @@ ret = (backend) ->
   # * user could stil alter cookie's content, so it's necessary to force ajax call for important action
   #   there is no way to prevent user from altering client side content,
   #   so if we want to prevent user from editing our code, we have to go backend for the generation.
-  route.api.get \/auth/info, (req, res) ~>
+  route.auth.get \/info, (req, res) ~>
     res.setHeader \content-type, \application/json
     payload = JSON.stringify({
       csrfToken: req.csrfToken!
