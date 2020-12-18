@@ -3,12 +3,17 @@
    - db        ( db schema. 所有機器應該都一樣 )
    - mail      ( mail template. 會需要 i18n. 所有機器應該都一樣 )
    - nginx     ( nginx 設定, 依機器路徑, ip, port, domain name 有所差異. 會需要動態生成 )
+   - bootstrap ( bootstrap customization. 也許要多做一層 ( e.g., css ) 父目錄？ )
+   - docker    ( docker/compose files. 是說, 也可以用 podman, 或 k8s 也許也有設定? )
    - key       ( 公私鑰對. 用來加密文字? 可能會需要隨網域而變更 )
    - site      ( 主機各項公開設定   )
    - secret.ls ( 主機各項不公開設定 )
    - dist      ( 生成的設定 )
  - 條件
-   - 可能需要對不同網域做設定
+   - 可能需要對不同條件做設定:
+     - 不同網域
+     - 不同主機 ( 同一個 cluster 中不同功能的主機 )
+     - 不同用戶 ?
    - 設定可能需要透過程式生成. 生成可能會在佈署時進行, 也可能在營運期間執行.
      - 營運期間執行的 config, 若為 UGC, 可能會需要備份與還原機制
    - 會有的差異包括:
