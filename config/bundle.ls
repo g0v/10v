@@ -13,8 +13,11 @@ module.exports = do
       /assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.js
       /assets/lib/@loadingio/ldquery/main/ldq.min.js
       /assets/lib/@loadingio/debounce.js/main/debounce.min.js
+      /assets/lib/@loadingio/ldc/main/ldc.min.js
       /assets/lib/proxise/main/proxise.min.js
+      /assets/lib/ldloader/main/ldld.min.js
       /assets/lib/ldcover/main/ldcv.min.js
+      /assets/lib/ldcvmgr/main/ldcvmgr.min.js
       /assets/lib/ldview/main/ldview.min.js
       /assets/lib/lderror/main/lde.min.js
     ]>

@@ -1,0 +1,1 @@
+ldc.register \notify, <[]>, -> ldnotify
