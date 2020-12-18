@@ -6,6 +6,7 @@ ldc.register('error', ['ldcvmgr'], function(arg$){
     opt == null && (opt = {});
     return function(e){
       var code;
+      console.log(e);
       code = e ? +(code || e.id || e.code) : null;
       if (code && !isNaN(code)) {
         if (in$(code, opt.ignore || [999])) {
@@ -14,7 +15,7 @@ ldc.register('error', ['ldcvmgr'], function(arg$){
         if (opt.custom && opt.custom[code]) {
           return opt.custom[code](e);
         }
-        if (ret['default'][code]) {
+        if ((ret['default'] || (ret['default'] = {}))[code]) {
           return ret['default'][code](e);
         }
       }

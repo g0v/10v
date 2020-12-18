@@ -4,8 +4,12 @@ module.exports = do
       /assets/lib/bootstrap.custom/main/css/bootstrap.min.css
       /assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css
       /assets/lib/ldiconfont/main/ldif.min.css
+      /assets/lib/ldloader/main/ldld.min.css
       /assets/lib/ldcover/main/ldcv.min.css
       /assets/lib/ldcover/main/ldcv.effects.min.css
+      /assets/lib/ldtab/main/ldtab.min.css
+      /assets/lib/ldfolder/main/ldfolder.min.css
+      /assets/lib/ldnotify/main/ldnotify.min.css
     ]>
   js: do
     vendor: <[
@@ -20,4 +24,7 @@ module.exports = do
       /assets/lib/ldcvmgr/main/ldcvmgr.min.js
       /assets/lib/ldview/main/ldview.min.js
       /assets/lib/lderror/main/lde.min.js
+      /assets/lib/ldtab/main/ldtab.min.js
+      /assets/lib/ldfolder/main/ldfolder.min.js
+      /assets/lib/ldnotify/main/ldnotify.min.js
     ]>

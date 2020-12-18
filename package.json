@@ -59,9 +59,12 @@
     "ldcover": "^1.1.1",
     "ldcvmgr": "~0.0.2",
     "lderror": "0.0.5",
+    "ldfolder": "0.0.2",
     "ldform": "0.0.1",
     "ldiconfont": "github:loadingio/ldiconfont",
     "ldloader": "^1.1.1",
+    "ldnotify": "0.0.1",
+    "ldtab": "0.0.2",
     "ldview": "0.0.2",
     "ls-lint": "^0.1.2",
     "marked": "^1.1.1",
@@ -100,6 +103,9 @@
       "lderror",
       "ldloader",
       "ldform",
+      "ldnotify",
+      "ldtab",
+      "ldfolder",
       "ldview"
     ]
   }
