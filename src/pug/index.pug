@@ -2,8 +2,6 @@
 extends /base.pug
 block head
 block script
-  +script("/js/site/error.js")
-  +script("/js/site/site.js")
   script: :lsc
     ldc.register <[error loader notify ldcvmgr]>, ({error, loader, notify, ldcvmgr}) ->
       loader.on!

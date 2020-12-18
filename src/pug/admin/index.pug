@@ -1,0 +1,13 @@
+extends /base.pug
+block body
+  .ldfd
+    .ldfd-item.ldfd-toggle Projects
+    .ldfd-menu
+      .ldfd-item Prj A
+      .ldfd-item Prj B
+      .ldfd-item Prj C
+      .ldfd-item Prj D
+block script
+  script: :lsc
+    ldfd = new ldfolder root: '.ldfd'
+    tab = new ldtab root: document.body
