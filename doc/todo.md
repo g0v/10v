@@ -1,6 +1,7 @@
 # TODO List
 
 ## pending
+ - bundle not rebuild even if some files listed inside are updated ( through symlink )
  ? alternative src-static tree
 
 ## working
