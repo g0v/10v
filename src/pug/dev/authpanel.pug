@@ -4,15 +4,6 @@ block head
 block body
   +script("/assets/lib/curegex/main/curegex.tw.min.js")
   .text-center
-    //-+scope("authpanel")
-      input(ld="username",name="username",autocomplete="username")
-      input(ld="displayname",name="displayname",autocomplete="displayname")
-      input(ld="password",name="password",type="password",autocomplete="password")
-      a(ld="forgot-password") 忘記密碼
-      button(ld="submit") 送出
-      button(ld="social",data-name="facebook") Facebook
-      button(ld="social",data-name="google") Google
-
   .w-640.mx-auto.rwd.my-4
     .iner.card.p-0.border-0.authpanel.signup: .card-body.p-0 
       .closebtn(data-ldcv-set="")
@@ -23,8 +14,6 @@ block body
             h3.mb-3.font-weight-bold(style="line-height:1em") 登入系統
             p #[b 電子郵件]即為您的帳號。若您代表您的團隊註冊，建議您使用一個#[b 團隊可共用]的電子郵件。
             p 登入之後即可進行提案、系統管理或評選工作。
-
-
           .d-none(ld="info",data-name="signup-failed")
             h2.mb-4.font-weight-bold 註冊失敗。
             p 您可能先前已經註冊過了，或者您所填的資訊有問題。您可以試著：

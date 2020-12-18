@@ -1,5 +1,10 @@
 extends /base.pug
 block body
+  .w-100.py-2.px-4.bg-dark.text-light.d-flex
+    .flex-grow-1
+    .clickable(ld="login") Login
+
+
   .w-1024.rwd.mx-auto.my-4
     h4 Authentication
     hr
@@ -119,5 +124,5 @@ block script
     a.on \server-down, -> console.log \server-down
     a.on \logout, ->
     a.fetch!then -> console.log it
-    a.ensure!
-      .then -> console.log ">", it
+    #a.ensure!
+    #  .then -> console.log ">", it
