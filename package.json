@@ -19,6 +19,7 @@
     "dev": "./start",
     "try": "./node_modules/.bin/lsc log.ls",
     "prebuild": "node_modules/.bin/lsc -co .engine engine",
+    "config": "cd config; ./build",
     "bootstrap": "npx bootstrap.build -c config/bootstrap/ -o static/assets/lib/bootstrap.custom/main/",
     "docker-start": "docker-compose -f config/docker/compose.yaml up",
     "docker-stop": "docker-compose -f config/docker/compose.yaml down",

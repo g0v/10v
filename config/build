@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# config structure are still under dev.
+# this might subject to change at any time.
+
+mkdir -p dist/nginx
+npx tt -c nginx/config.yaml -o dist/nginx/config.ngx nginx/config.ngx
+
