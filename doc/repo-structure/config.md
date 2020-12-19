@@ -1,3 +1,20 @@
+# 設定檔
+
+ - 分類
+   - 依階段分
+     - 同一主機需通用的設定
+       - 開發時期 ( bundle.ls, bootstrap )
+       - 建構階段 ( package.json, schema.sql )
+       - 啟動階段 ( nginx, secret.ls, docker )
+     - 可以依用戶不同做切換的設定
+       - 執行階段, 透過程式讀取/快取 ( mail, key )
+   - 依版控分
+     - 不應該進入 version control 的設定
+       - 任何階段都有可能. (e.g., key, secret.ls )
+       - 可以按用戶區分的設定
+     - 可以進 version control 的設定 ( 主要跟開發有關的 )
+
+
  - 目前架構 / 需要的設定
    - bundle.ls ( build 用. 所有機器應該都一樣 )
    - db        ( db schema. 所有機器應該都一樣 )
@@ -19,12 +36,32 @@
    - 會有的差異包括:
      - domain
      - node ( 同一 cluster 中的不同 node )
-     - cluster 
+     - cluster
    - 會需要有程式庫外部的設定架構, 以貼合各種情境 ( staging, different customer, etc ) 來佈署主機.
      - 以舊架構來說, 就是 secret.ls
- - 可能的架構 
+ - 可能的架構
+   - 提案 2
+     - repo
+       - private ( 不進 git )
+         - secret.ls
+         - key
+       - config ( 進 git )
+         - docker, bootstrap, build, db, nginx, mail
+       - <user-cfg> ( 用戶提供的設定, 未定 )
+     - 任何動態時期設定都可以透過 `<user-cfg>/... -> config/...` 的方式來做替換.
+     - 需要一個 module 來做 wrapper. 例如:
+       - config({name, scope, option})
+         - params
+           - name: config name. e.g., 'mail/reset'
+           - scope: alternative config namespace. fallback to default if not found.
+           - option: json for template replacement.
+             - 要注意, 這裡我們不能用 template-text 來實作, 否則會有 code injection 的風險.
+         - return object with following functions:
+           - content: return content of config
+           - path(): return absolute path to config
+
    - 提案 1
-     - repo 
+     - repo
        - config
          - src ( 不因 domain, node, cluster 改變而有所不同. 進 git )
            - build
@@ -39,7 +76,7 @@
        - user ... 存放 UGC config. 比方說 mail template, nginx config for specific domain
      - external
        - 另外一個服務來管理..? 比方說:
-         - 存在 google data storage 
+         - 存在 google data storage
          - 依 customer id, domain name 來存放
          - private key 什麼的通通扔進來
          - 由另外的 deploy script 透過程序化方式來取用
