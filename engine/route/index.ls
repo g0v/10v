@@ -1,24 +1,8 @@
-require! <[lderror]>
-
+require! <[fs path lderror ../module/aux]>
 (backend) <- (->module.exports = it)  _
-db = backend.db
-{api, app} = backend.route
+{db,config,route:{api,app}} = backend
 
-autocatch = (handler) -> (req, res, next) -> handler req, res, next .catch -> next it
-
-app.get \/, autocatch (req, res, next) ->
-  db.query "select count(key) as count from users"
-    .then (r={}) ->
-      count = (r.[]rows.0 or {count: 0}).count
-      res.render \index.pug, {count}
-
-api.get \/x, (req, res, next) ->
-  req.log.info \hi
-  return next new lderror(1005)
-app.get \/x, (req, res, next) ->
-  return next new Error!
-
-app.get \/i18n, (req, res, next) ->
-  console.log req.get("I18n-Locale")
-  return res.send('ok')
-
+fs.readdir-sync __dirname
+  .filter -> !/index\./.exec(it)
+  .map -> path.join(__dirname, it)
+  .map -> require(it) backend
