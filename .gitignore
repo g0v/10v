@@ -3,3 +3,4 @@ node_modules
 secret.*
 .*.swp
 .swp
+config/private

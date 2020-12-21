@@ -2,7 +2,7 @@ require! <[express colors path pino lderror pino-http redis util body-parser csu
 require! <[i18next-http-middleware]>
 require! <[./auth ./error-handler ./route ./watch ./redis-node]>
 require! <[./module/i18n ./module/aux ./module/view/pug ./module/db/postgresql]>
-require! <[../secret]>
+require! <[../config/private/secret]>
 
 default-config = do
   limit: '10mb'

@@ -42,11 +42,11 @@
  - 可能的架構
    - 提案 2
      - repo
-       - private ( 不進 git )
-         - secret.ls
-         - key
-       - config ( 進 git )
+       - config ( 除 private 之外都進 git )
          - docker, bootstrap, build, db, nginx, mail
+         - private ( 不進 git )
+           - secret.ls
+           - key
        - <user-cfg> ( 用戶提供的設定, 未定 )
      - 任何動態時期設定都可以透過 `<user-cfg>/... -> config/...` 的方式來做替換.
      - 需要一個 module 來做 wrapper. 例如:

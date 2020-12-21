@@ -21,7 +21,7 @@
   aux = require('./module/aux');
   pug = require('./module/view/pug');
   postgresql = require('./module/db/postgresql');
-  secret = require('../secret');
+  secret = require('../config/private/secret');
   defaultConfig = {
     limit: '10mb',
     port: 3000
