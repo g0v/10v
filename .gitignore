@@ -4,3 +4,7 @@ secret.*
 .*.swp
 .swp
 config/private
+module/**/node_modules
+module/**/web/static/assets/lib/
+web/.view
+module/**/web/.view
