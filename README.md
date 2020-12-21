@@ -1,3 +1,3 @@
-# servlet
+# server
 
 TBD
