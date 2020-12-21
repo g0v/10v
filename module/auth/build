@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+echo "prepare..."
+rm -rf dist
+mkdir -p dist
+
+echo "building auth.ls -> auth.js ..."
+npx lsc -cp src/auth.ls > dist/auth.js
+echo "minify auth.js -> auth.min.js ..."
+npx uglifyjs dist/auth.js > dist/auth.min.js
+
+#echo "build src/ldtab.styl -> dist/ldtab.css ..."
+#./node_modules/.bin/stylus -p src/ldtab.styl > dist/ldtab.css
+#echo "minifying ldtab.css ..."
+#./node_modules/.bin/uglifycss dist/ldtab.css > dist/ldtab.min.css
+
+echo "copy dist to web ..."
+rm -rf web/static/assets/lib/auth/dev/
+mkdir -p web/static/assets/lib/auth/dev/
+cp -R dist/* web/static/assets/lib/auth/dev/
