@@ -4,5 +4,7 @@ require! <[fs path lderror ../module/aux]>
 
 fs.readdir-sync __dirname
   .filter -> !/index\./.exec(it)
+  .filter -> !/^\./.exec(it)
+  .filter -> /\.(ls|js)$/.exec(it)
   .map -> path.join(__dirname, it)
   .map -> require(it) backend

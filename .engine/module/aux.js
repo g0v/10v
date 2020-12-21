@@ -4,6 +4,13 @@
   base = {
     ip: function(req){
       return req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.headers['X-Real-IP'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
+    },
+    autocatch: function(handler){
+      return function(req, res, next){
+        return handler(req, res, next)['catch'](function(it){
+          return next(it);
+        });
+      };
     }
   };
   module.exports = base;
