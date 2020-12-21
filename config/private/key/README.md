@@ -1,1 +1,1 @@
-# This folder contains all key files. 
+This folder is used to hold key files. Never commit/push files here.
