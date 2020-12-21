@@ -1,13 +1,13 @@
 {
   "author": "zbryikt",
-  "name": "servlet",
+  "name": "servebase",
   "license": "MIT",
-  "description": "servlet upgrade",
+  "description": "base server for constructing services",
   "version": "0.0.1",
-  "homepage": "https://github.com/plotdb/servlet",
+  "homepage": "https://github.com/plotdb/servebase",
   "repository": {
     "type": "git",
-    "url": "https://github.com/plotdb/servlet"
+    "url": "https://github.com/plotdb/servebase"
   },
   "engines": {
     "node": "=14.11.0",
