@@ -15,3 +15,10 @@ list all api endpoint:
        - don't provide the privileges to the admin even if it's customizable.
        - ask for user's consent that this might be a possibly backdoor if user don't keep their account safe.
    - in above case, if admin got hacked and used to implant malicious code, at least it only affects that server.
+
+# Headers
+
+ - Helmet ( https://helmetjs.github.io/ )
+   - `Helmet helps you secure your Express apps by setting various HTTP headers`
+   - we should set headers manually but is worth a look.
+

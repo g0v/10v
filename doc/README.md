@@ -43,3 +43,7 @@ Keep common part in a base repo ( servlet ) but carefully design how to customiz
 ## Security
 
  - recaptcha - should provide fallback for failure
+
+# Reference
+
+ - https://github.com/mikesparr/typescript-postgres-auth-example

@@ -5,13 +5,14 @@
      - commit trigger backup repo to data storage.
    - 製作 docker image 供 instance group 使用
  - data
-   - db: 使用 Google SQL
+   - db: 使用 Google SQL ( 好像很慢.. 也可以自架 )
      - backup to data storage
    - uploaded files: 使用 Data Storage
      - backup to other service. 做法待設計.
    - local data ( config, log, etc ): 存於 disk 中
      - config disk: 做 boiledplate disk image, 並備份 image ( TBD ) 供 instance group 使用
      - log 進 data storage ( 方便做問題追蹤 )
+       - 由 docker -> volume -> daily rsync -> data storage -> retent for 360 / 180 days.
      - disk 做 snapshot ( 方便做近況回復 )
 
 # restore
