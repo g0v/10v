@@ -35,15 +35,16 @@ This document describes how we manage versions, releases and different customiza
 
 init:
 
-    git clone <src-repo-url> # now we have origin yet pointing to source repo
-    git remote set-url origin <customer-repo-git-url> # so we re-set it to customer repo
-    git remote add source <src-repo-url> # and keep the original repo as `source`.
-    git reset --hard source/release/x.x.x # use specific release. TODO check if this is correct.
-    # or alternatively if no branch but only tag...
-    git reset --hard tagname # TODO check what's the correct way to do this.
+    git init # create a new, empty repo
+    git remote add servebase <servebase-repo-url> # and keep the `servebase` repo with local name `servebase`.
+    git reset --hard servebase/master # alternatively to specific tag / release.
+    git remote add origin <our-repo-url> # repo we are going to use
+    git push -u origin master # populate data into remote repo
+    npm i # and any other necessary initializing commands
 
 update:
 
-    git fetch source/<specific-branch>
-    git merge source/<specific-branch>
-
+    # ... make some changes ... and then commit + push ...
+    git fetch servebase # pull in newly update from servebase
+    git merge servebase/master # or specific branches, to update our codebase
+    git push # update our remote repo
