@@ -69,6 +69,9 @@
     apiRoot: function(){
       return lc.apiRoot;
     },
+    setUi: function(it){
+      return import$(this.ui, it || {});
+    },
     logout: function(){
       var this$ = this;
       this.ui.loader.on();
@@ -162,10 +165,9 @@
         return new Promise(function(res, rej){});
       });
     },
-    local: function(opt){
+    prompt: function(v, opt){
       return this.ui.authpanel(true, opt);
     },
-    authpanel: function(opt){},
     social: function(arg$){
       var name, div, this$ = this;
       name = arg$.name;

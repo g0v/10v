@@ -90,7 +90,8 @@
     "redis": "^3.0.2",
     "redis-clustr": "^1.7.0",
     "require-reload": "^0.2.2",
-    "template-text": "^0.1.0"
+    "template-text": "^0.1.0",
+    "zmgr": "0.0.3"
   },
   "frontendDependencies": {
     "root": "static/assets/lib",
@@ -112,6 +113,7 @@
       "ldtab",
       "ldfolder",
       "ldbutton",
+      "zmgr",
       "ldview"
     ]
   }

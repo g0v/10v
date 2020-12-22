@@ -1,12 +1,30 @@
 lc = {}
 
+lc.z = new zmgr init: 1000
+ldCover.set-zmgr lc.z
+ldLoader.set-zmgr lc.z
+
+ldc.register 'authpanel', <[auth]>, ({auth}) ->
+  if lc.authpanel => return that
+  lc.authpanel = ap = new authpanel do
+    root: '.authpanel'
+    auth: auth
+  cover = ld$.parent lc.authpanel.root, '.ldcv'
+  if cover => ldcv = new ldCover root: cover
+  auth.set-ui do
+    authpanel: (v,opt) ->
+      ap.switch opt.tab
+      if ldcv? => ldcv.get v
+  lc.auth.on \change, -> ldcv.set!
+  return ap
+
 ldc.register 'auth', <[ldcvmgr]>, ({ldcvmgr}) ->
   if lc.auth => return that
   lc.auth = new auth do
-    ui:
-      timeout: -> ldcvmgr.toggle('timeout')
-      authpanel: -> ldcvmgr.get('authpanel')
+    ui: timeout: -> ldcvmgr.toggle('timeout')
   lc.auth.on \error, -> ldcvmgr.toggle('error')
+  lc.auth.on \logout, -> ldcvmgr.toggle('logout')
+  lc.auth.fetch!
   return lc.auth
 
 ldc.register 'ldcvmgr', <[]>, ->

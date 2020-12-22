@@ -29,6 +29,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
   inject: -> {}
   api-root: ->
     return lc.api-root
+  set-ui: -> @ui <<< (it or {})
   logout: ->
     @ui.loader.on!
     ld$.fetch "#{@api-root!}/logout", {method: \post}, {}
@@ -97,9 +98,8 @@ auth.prototype = Object.create(Object.prototype) <<< do
         # to stop further progress of current code.
         new Promise (res, rej) ->
 
-  local: (opt) -> @ui.authpanel(true, opt)
-  authpanel: (opt) ->
-
+  prompt: (v, opt) ->
+    @ui.authpanel(true, opt)
   social: ({name}) ->
     div = null
     @get!
