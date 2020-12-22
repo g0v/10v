@@ -1,5 +1,9 @@
 extends /base.pug
+block head
+  +css("/assets/lib/auth/main/authpanel.css")
 block body
+  .ldcv.ldcvmgr(data-name="authpanel"): .base: .inner(style="background:none")
+    include /../../static/assets/lib/auth/main/authpanel.pug
   .w-100.py-2.px-4.bg-dark.text-light.d-flex
     .flex-grow-1
     .clickable(ld="login") Login
@@ -48,7 +52,9 @@ block body
         .btn.btn-primary(ld="inline-submit") Submit ( no reload )
 
 block script
-  +script("/js/dev/auth.js")
+  //-+script("/js/dev/auth.js")
+  +script("/assets/lib/auth/main/auth.min.js")
+  +script("/assets/lib/auth/main/authpanel.min.js")
   script: :lsc
     lc = {}
     ldcv = {}
@@ -126,3 +132,5 @@ block script
     a.fetch!then -> console.log it
     #a.ensure!
     #  .then -> console.log ">", it
+    ldcvmgr = new ldcvmgr!
+    ldcvmgr.toggle \authpanel

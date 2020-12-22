@@ -1,7 +1,3 @@
-#type = \login or \signup
-#ld$.fetch "#{@api-root!}auth/#type", {method: \POST}, {json: data, type: \text}
-#  .then ->
-
 authpanel = (opt={}) ->
   @opt = opt
   @root = if typeof(opt.root) == \string => document.querySelector(opt.root) else opt.root

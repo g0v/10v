@@ -20,6 +20,7 @@ module.exports = do
       /assets/lib/@loadingio/ldc/main/ldc.min.js
       /assets/lib/proxise/main/proxise.min.js
       /assets/lib/ldloader/main/ldld.min.js
+      /assets/lib/ldform/main/ldform.min.js
       /assets/lib/ldcover/main/ldcv.min.js
       /assets/lib/ldcvmgr/main/ldcvmgr.min.js
       /assets/lib/ldview/main/ldview.min.js
