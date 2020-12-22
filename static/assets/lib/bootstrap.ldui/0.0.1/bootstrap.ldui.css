@@ -244,6 +244,56 @@
 .input-group .dropdown-menu {
   width: 100%;
 }
+.sep {
+  margin: 1em auto;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  width: 100%;
+  height: 0;
+}
+.sep:before,
+.sep:after {
+  border-top: 0px solid rgba(0,0,0,0.1);
+}
+.sep.sep-dashed {
+  border-top-style: dashed;
+}
+.sep.sep-dashed:before,
+.sep.sep-dashed:after {
+  border-top-style: dashed;
+}
+.sep.sep-light {
+  border-top-color: rgba(255,255,255,0.1);
+}
+.sep.sep-light:before,
+.sep.sep-light:after {
+  border-top-color: rgba(255,255,255,0.1);
+}
+.sep.sep-dark {
+  border-top-color: rgba(0,0,0,0.5);
+}
+.sep.sep-dark:before,
+.sep.sep-dark:after {
+  border-top-color: rgba(0,0,0,0.5);
+}
+.sep.sep-text {
+  display: flex;
+  flex-wrap: nowrap;
+  border: none;
+}
+.sep.sep-text span {
+  position: relative;
+  top: -0.76em;
+  padding: 0 0.5em;
+  display: inline-block;
+  white-space: nowrap;
+}
+.sep.sep-text:before,
+.sep.sep-text:after {
+  content: " ";
+  display: block;
+  border-top-width: 1px;
+  width: 50%;
+}
 .btn.btn-text {
   cursor: default;
 }

@@ -28,4 +28,5 @@ module.exports = do
       /assets/lib/ldtab/main/ldtab.min.js
       /assets/lib/ldfolder/main/ldfolder.min.js
       /assets/lib/ldnotify/main/ldnotify.min.js
+      /assets/lib/curegex/main/curegex.min.js
     ]>
