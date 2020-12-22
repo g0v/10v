@@ -1,5 +1,14 @@
 lc = {}
 
+ldc.register 'auth', <[ldcvmgr]>, ({ldcvmgr}) ->
+  if lc.auth => return that
+  lc.auth = new auth do
+    ui:
+      timeout: -> ldcvmgr.toggle('timeout')
+      authpanel: -> ldcvmgr.get('authpanel')
+  lc.auth.on \error, -> ldcvmgr.toggle('error')
+  return lc.auth
+
 ldc.register 'ldcvmgr', <[]>, ->
   return (lc.ldcvmgr or lc.ldcvmgr = new ldcvmgr!)
 

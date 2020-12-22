@@ -47,7 +47,7 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap.build": "github:plotdb/bootstrap.build",
-    "bootstrap.ldui": "^0.0.1",
+    "bootstrap.ldui": "github:loadingio/bootstrap.ldui#396fc6c23c6319348a461a35e1cf181b9e6c1f90",
     "bootstrap.native": "^3.0.10",
     "chokidar": "^3.4.2",
     "csurf": "^1.11.0",
@@ -60,6 +60,7 @@
     "i18next-fs-backend": "^1.0.7",
     "i18next-http-middleware": "^3.0.6",
     "js-yaml": "^3.14.0",
+    "ldbutton": "^1.0.2",
     "ldcover": "^1.1.1",
     "ldcvmgr": "~0.0.2",
     "lderror": "0.0.5",
@@ -110,6 +111,7 @@
       "ldnotify",
       "ldtab",
       "ldfolder",
+      "ldbutton",
       "ldview"
     ]
   }

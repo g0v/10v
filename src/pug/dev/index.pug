@@ -52,10 +52,40 @@ block body
         .btn.btn-primary(ld="inline-submit") Submit ( no reload )
 
 block script
-  //-+script("/js/dev/auth.js")
   +script("/assets/lib/auth/main/auth.min.js")
   +script("/assets/lib/auth/main/authpanel.min.js")
+  +script("/js/index.js")
   script: :lsc
+    ({ldcvmgr, auth}) <- ldc.register <[ldcvmgr auth]>, _
+    lc = {}
+    ldcv = {}
+    view = {}
+    ldcv.logout = new ldCover do
+      root: ld$.find('.ldcv[data-name=logout]',0)
+
+    view.panel = new ldView do
+      root: document.body
+      action: click: do
+        # we need an approch to control authpanel. should be done via auth.
+        signup: -> auth.local! #ldcv.signup.toggle!
+        login: -> auth.local! #ldcv.login.toggle!
+        logout: -> auth.logout!
+        reauth: ->
+      text: do
+        username: -> lc.{}user.username or 'n/a'
+        userid: -> lc.{}user.key or 'n/a'
+      handler: do
+        signed: ({node}) -> node.classList.toggle \d-none, !lc.{}user.username
+        "not-signed": ({node}) -> node.classList.toggle \d-none, !!lc.{}user.username
+        status: ({node}) ->
+          node.innerText = if lc.{}user.username => 'Signed in' else 'Not login'
+          node.classList.toggle \text-danger, !lc.{}user.username
+    auth.fetch!then (g) ->
+      lc.global = g
+      lc.user = g.user
+      view.panel.render!
+
+  //-script: :lsc
     lc = {}
     ldcv = {}
     view = {} 
@@ -66,7 +96,7 @@ block script
       action: click: do
         "inline-submit": ->
           data = {}
-          <[username displayname password]>.map -> data[it]= view.signup.get(it).value
+          <[username displayname password]>.map -> data[it] = view.signup.get(it).value
           ld$.fetch "/api/auth/signup", {method: \POST}, {type: \json, json: data}
             .then -> ldcv.signup.toggle false
             .catch -> console.log \failed, it
@@ -132,5 +162,5 @@ block script
     a.fetch!then -> console.log it
     #a.ensure!
     #  .then -> console.log ">", it
-    ldcvmgr = new ldcvmgr!
-    ldcvmgr.toggle \authpanel
+    #ldcvmgr = new ldcvmgr!
+    #ldcvmgr.toggle \authpanel

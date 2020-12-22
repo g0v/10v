@@ -10,6 +10,7 @@ module.exports = do
       /assets/lib/ldtab/main/ldtab.min.css
       /assets/lib/ldfolder/main/ldfolder.min.css
       /assets/lib/ldnotify/main/ldnotify.min.css
+      /assets/lib/ldbutton/main/ldbtn.min.css
     ]>
   js: do
     vendor: <[
