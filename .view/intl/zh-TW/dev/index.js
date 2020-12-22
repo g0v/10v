@@ -200,7 +200,7 @@ if (sub.info) {
 sub.info()
 }
 ;pug_debug_line = 18;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
-pug_html = pug_html + "\u003Cdiv ld=\"info\" data-name=\"default\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"ld ld-float-rtl-in\" ld=\"info\" data-name=\"default\"\u003E";
 ;pug_debug_line = 19;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003Ch3 class=\"mb-3 font-weight-bold\" style=\"line-height:1em\"\u003E";
 ;pug_debug_line = 19;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
@@ -226,7 +226,7 @@ pug_html = pug_html + "\u003Cp\u003E";
 ;pug_debug_line = 21;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "登入之後即可進行提案、系統管理或評選工作。\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 22;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
-pug_html = pug_html + "\u003Cdiv class=\"d-none\" ld=\"info\" data-name=\"signup-failed\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"d-none ld ld-float-rtl-in\" ld=\"info\" data-name=\"signup-failed\"\u003E";
 ;pug_debug_line = 23;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003Ch2 class=\"mb-4 font-weight-bold\"\u003E";
 ;pug_debug_line = 23;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
@@ -260,7 +260,7 @@ pug_html = pug_html + "與我們聯絡\u003C\u002Fa\u003E";
 ;pug_debug_line = 29;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 30;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
-pug_html = pug_html + "\u003Cdiv class=\"d-none\" ld=\"info\" data-name=\"login-failed\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"d-none ld ld-float-rtl-in\" ld=\"info\" data-name=\"login-failed\"\u003E";
 ;pug_debug_line = 31;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003Ch2 class=\"mb-4 font-weight-bold\"\u003E";
 ;pug_debug_line = 31;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
@@ -304,7 +304,7 @@ pug_html = pug_html + "與我們聯絡\u003C\u002Fa\u003E";
 ;pug_debug_line = 38;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 39;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
-pug_html = pug_html + "\u003Cdiv class=\"d-none\" ld=\"info\" data-name=\"token\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"d-none ld ld-float-rtl-in\" ld=\"info\" data-name=\"token\"\u003E";
 ;pug_debug_line = 40;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003Ch2 class=\"mb-4 font-weight-bold\"\u003E";
 ;pug_debug_line = 40;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";

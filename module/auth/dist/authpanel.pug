@@ -15,11 +15,11 @@ mixin authpanel
         .text-left.position-relative.z-float.text-shadow
           if sub.info
             - sub.info()
-          div(ld="info",data-name="default")
+          .ld.ld-float-rtl-in(ld="info",data-name="default")
             h3.mb-3.font-weight-bold(style="line-height:1em") 登入系統
             p #[b 電子郵件]即為您的帳號。若您代表您的團隊註冊，建議您使用一個#[b 團隊可共用]的電子郵件。
             p 登入之後即可進行提案、系統管理或評選工作。
-          .d-none(ld="info",data-name="signup-failed")
+          .d-none.ld.ld-float-rtl-in(ld="info",data-name="signup-failed")
             h2.mb-4.font-weight-bold 註冊失敗。
             p 您可能先前已經註冊過了，或者您所填的資訊有問題。您可以試著：
             ul
@@ -27,7 +27,7 @@ mixin authpanel
               li 試著使用更複雜的密碼
               li 嘗試使用社群帳號登入
               li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") 與我們聯絡]
-          .d-none(ld="info",data-name="login-failed")
+          .d-none.ld.ld-float-rtl-in(ld="info",data-name="login-failed")
             h2.mb-4.font-weight-bold 登入失敗。
             p 您之前可能用的是別組帳號或密碼、使用不同的登入方式、甚至尚未註冊過。您可以試著：
             ul
@@ -36,7 +36,7 @@ mixin authpanel
               li 切換至註冊模式後再試一次
               li #[a(href="/dash/auth/reset/",style="color:#0ff",target="_blank",rel="noopener noreferrer") 重設密碼]
               li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") 與我們聯絡]
-          .d-none(ld="info",data-name="token")
+          .d-none.ld.ld-float-rtl-in(ld="info",data-name="token")
             h2.mb-4.font-weight-bold 歡迎您！
             p 您受邀成為我們的一員。不過，在繼續之前您需要先登入系統。
 

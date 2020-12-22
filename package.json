@@ -91,6 +91,7 @@
     "redis-clustr": "^1.7.0",
     "require-reload": "^0.2.2",
     "template-text": "^0.1.0",
+    "@loadingio/transition.css": "2.0.1",
     "zmgr": "0.0.3"
   },
   "frontendDependencies": {
@@ -100,6 +101,7 @@
       "bootstrap.native",
       "@loadingio/ldquery",
       "@loadingio/debounce.js",
+      "@loadingio/transition.css",
       "@loadingio/ldc",
       "curegex",
       "proxise",
