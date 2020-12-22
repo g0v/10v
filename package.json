@@ -55,7 +55,7 @@
     "debounce.js": "github:loadingio/debounce.js",
     "express-list-endpoints": "^5.0.0",
     "express-session": "^1.17.1",
-    "fedep": "0.0.10",
+    "fedep": "^0.0.11",
     "i18next": "^19.8.3",
     "i18next-fs-backend": "^1.0.7",
     "i18next-http-middleware": "^3.0.6",
