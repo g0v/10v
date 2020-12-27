@@ -1,0 +1,44 @@
+doctype html
+html
+  include /../../static/assets/lib/bootstrap.ldui/main/index.pug
+  head
+    +css("assets/lib/bootstrap/main/css/bootstrap.min.css")
+    +css("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
+    +css("assets/lib/ldloader/main/ldld.min.css")
+    +css("assets/lib/ldcover/main/ldcv.min.css")
+    +css("assets/lib/consent/dev/consent.min.css")
+    +css("css/index.css")
+  body
+    .w-1024.mx-auto.rwd.my-4
+    .ldcv.mini.bottom.left.right(data-name="cookie-consent"): .base: .inner.p-2.px-3
+      .d-flex.justify-content-center.align-items-center
+        .mr-1 By continuing to browse, you agree to our use of cookies.
+        .d-none.d-lg-block For more details please check our privacy policy.
+        .d-none.d-md-block.ml-4
+        div
+          a.btn.border.mr-2.my-1.py-0(href="/privacy/") Details
+          .btn.border.my-1.py-0(data-ldcv-set="") OK
+
+    .ldcv(data-name="consent",data-lock="true")
+      .base.w-1024.rwd.h-100: .inner.card: .card-body.text-center.h-100
+        .d-flex.flex-column.w-100.h-100
+          .text-left
+            h4 在繼續之前...
+            p 請先確認您同意我們的使用條款
+          object.w-100.h-100.flex-grow-1.border.mb-2.d-none(data="about:blank",type="application/pdf")
+            embed.w-100.h-100.border(src="about:blank",type="application/pdf")
+          iframe.d-none.w-100.h-100.flex-grow-1.mb-2(src="about:blank")
+          .d-flex.justify-content-between
+            //-a.btn.btn-lg.btn-outline-primary(href="about:blank",download="consent.pdf") 下載此文件
+            .btn.btn-lg.btn-outline-primary(data-ldcv-set="") 我不同意
+            .btn.btn-lg.btn-primary(data-ldcv-set="true") 我已詳讀並同意此條款
+
+
+
+
+    +script("assets/lib/@loadingio/ldquery/main/ldq.min.js")
+    +script("assets/lib/ldloader/main/ldld.min.js")
+    +script("assets/lib/ldcover/main/ldcv.min.js")
+    +script("assets/lib/consent/dev/consent.min.js")
+    +script("js/index.js")
+
