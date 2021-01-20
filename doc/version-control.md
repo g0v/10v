@@ -37,6 +37,7 @@ init:
 
     git init # create a new, empty repo
     git remote add servebase <servebase-repo-url> # and keep the `servebase` repo with local name `servebase`.
+    git fetch servebase
     git reset --hard servebase/master # alternatively to specific tag / release.
     git remote add origin <our-repo-url> # repo we are going to use
     git push -u origin master # populate data into remote repo
