@@ -16,7 +16,7 @@ mixin authpanel
           if sub.info
             - sub.info()
           .ld.ld-float-rtl-in(ld="info",data-name="default")
-            h3.mb-3.font-weight-bold(style="line-height:1em") 登入系統
+            h3.mb-3.font-weight-bold(style="line-height:1em"): :i18n login service
             p #[b 電子郵件]即為您的帳號。若您代表您的團隊註冊，建議您使用一個#[b 團隊可共用]的電子郵件。
             p 登入之後即可進行提案、系統管理或評選工作。
           .d-none.ld.ld-float-rtl-in(ld="info",data-name="signup-failed")

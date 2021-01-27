@@ -204,7 +204,7 @@ pug_html = pug_html + "\u003Cdiv class=\"ld ld-float-rtl-in\" ld=\"info\" data-n
 ;pug_debug_line = 19;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003Ch3 class=\"mb-3 font-weight-bold\" style=\"line-height:1em\"\u003E";
 ;pug_debug_line = 19;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
-pug_html = pug_html + "登入系統\u003C\u002Fh3\u003E";
+pug_html = pug_html + "Login\u003C\u002Fh3\u003E";
 ;pug_debug_line = 20;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
 pug_html = pug_html + "\u003Cp\u003E";
 ;pug_debug_line = 20;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fstatic\u002Fassets\u002Flib\u002Fauth\u002Fmain\u002Fauthpanel.pug";
