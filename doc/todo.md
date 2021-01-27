@@ -6,6 +6,7 @@
  - dependency issue
    - frontend modules might use different packages. how could we better manage all of them?
      - e.g., authpanel.ls use `curegex`, and authpanel is itself in local module `auth`.
+   - use `@plotdb/block`
 
 ## working
 
