@@ -1,3 +1,23 @@
+# Progress
+
+
+## Status of each component
+
+ [v] Version Control
+ [ ] Infrastructure
+ [ ] Architecture
+ [ ] Repo Structure
+ [ ] Customer Flexibility
+ [ ] Account Management 
+ [ ] I18n
+ [ ] Modules
+ [ ] API
+ [ ] Security
+ [ ] Test Integration
+
+
+## Note
+
  - 基本 server 啟動碼
    * csp
      - 考慮由 nginx 提供 default, server route 提供 overwrite, 透過 `map` + `$sent_http_*` 來實作.
