@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+rm -rf dist bin
+mkdir -p dist bin
+npx lsc -cbp --no-header src/main.ls > dist/main.js
+echo "#!/usr/bin/env node" > ./bin/cli.js
+npx lsc -cbp --no-header src/main.ls >> bin/cli.js

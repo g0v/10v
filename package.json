@@ -14,7 +14,8 @@
     "npm": "=7.0.15"
   },
   "workspaces": [
-    "module/auth"
+    "module/auth",
+    "module/pugext"
   ],
   "scripts": {
     "postinstall": "./node_modules/.bin/fedep",
@@ -44,6 +45,7 @@
     "@loadingio/debounce.js": "0.0.1",
     "@loadingio/ldc": "0.0.2",
     "@loadingio/ldquery": "^1.1.1",
+    "@loadingio/transition.css": "2.0.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap.build": "github:plotdb/bootstrap.build",
@@ -91,7 +93,6 @@
     "redis-clustr": "^1.7.0",
     "require-reload": "^0.2.2",
     "template-text": "^0.1.0",
-    "@loadingio/transition.css": "2.0.1",
     "zmgr": "0.0.3"
   },
   "frontendDependencies": {
