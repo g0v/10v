@@ -2,12 +2,16 @@
 
 ## pending
 
- - 將 src build 模組化, 運用在 module 的 intl ( i18n ) 生成
-   - 在這之後, 再看有沒有需要把 pugext ./cli.js 做完?
-   ? alternative src-static tree
+ - srctree 生成
+   - 將 src build 模組化, 運用在 module 的 intl ( i18n ) 生成
+     - 在這之後, 再看有沒有需要把 pugext ./cli.js 做完?
+     ? alternative src-static tree
+ - i18n - 各模組自己的 locales 要管理一定不方便. 有什麼辦法?
+   - 各模組自定義, 但外部可 override? 用 namespace 切, 再用程式整理所有 locale 檔? 同時實現 locale 的 extend?
+     - 可能會需要去改 i18next
  - 思考, 甚至嘗試使用 @plotdb/block 做為前端套件模組控制器的可能
    - @plotdb/block server bundler
- - @plotdb/block i18n 怎麼做?
+   - @plotdb/block i18n 怎麼做?
  - bundle not rebuild even if some files listed inside are updated ( through symlink )
  - dependency issue
    - frontend modules might use different packages. how could we better manage all of them?
