@@ -2,8 +2,8 @@
 doctype html
 html
   block vars
-  include /../../static/assets/lib/bootstrap.ldui/main/index.pug
-  include /../../static/assets/lib/ldview/main/ldview.pug
+  include @/bootstrap.ldui/dist/index.pug
+  include @/ldview/dist/ldview.pug
   head
     block prehead
     +css("/css/pack/vendor.min.css")

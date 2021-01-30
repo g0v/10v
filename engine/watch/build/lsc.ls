@@ -1,4 +1,4 @@
-require! <[fs fs-extra LiveScript path colors uglify-js ./aux]>
+require! <[fs fs-extra livescript path colors uglify-js ./aux]>
 
 cwd = path.resolve process.cwd!
 
@@ -19,7 +19,7 @@ main = do
         code = fs.read-file-sync src .toString!
         desdir = path.dirname(des)
         fs-extra.ensure-dir-sync desdir
-        code = LiveScript.compile(fs.read-file-sync(src)toString!,{bare:true})
+        code = livescript.compile(fs.read-file-sync(src)toString!,{bare:true,header:false})
         code-min = uglify-js.minify(code).code
         fs.write-file-sync des, code
         fs.write-file-sync des-min, code-min
