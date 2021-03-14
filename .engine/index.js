@@ -57,12 +57,20 @@
       var this$ = this;
       return new Promise(function(res, rej){
         if (!this$.server) {
-          return this$.server = this$.app.listen(this$.config.port, function(){
-            return res(this$.server);
+          return this$.server = this$.app.listen(this$.config.port, function(e){
+            if (e) {
+              return rej(e);
+            } else {
+              return res(this$.server);
+            }
           });
         } else {
-          return server.listen(this$.config.port, function(){
-            return res(this.server);
+          return server.listen(this$.config.port, function(e){
+            if (e) {
+              return rej(e);
+            } else {
+              return res(this.server);
+            }
           });
         }
       });
