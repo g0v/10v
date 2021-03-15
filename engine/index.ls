@@ -1,6 +1,7 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
 require! <[i18next-http-middleware]>
-require! <[./auth ./error-handler ./route ./watch ./redis-node]>
+require! <[@plotdb/srcbuild]>
+require! <[./auth ./error-handler ./route ./redis-node]>
 require! <[./module/i18n ./module/aux ./module/view/pug ./module/db/postgresql]>
 require! <[../config/private/secret]>
 
@@ -32,7 +33,9 @@ backend.prototype = Object.create(Object.prototype) <<< do
     if !@server => @server = @app.listen @config.port, ((e) ~> if e => rej e else res @server)
     else server.listen @config.port, ((e) -> if e => rej e else res @server)
 
-  watch: -> if @config.build and @config.build.enabled => watch(@).init @config{build, i18n}
+  watch: ({logger, i18n}) ->
+    if !(@config.build and @config.build.enabled) => return
+    srcbuild.lsp (@config.build or {}) <<< {logger, i18n, base: '.', bundle: {configFile: 'config/bundle.json'}}
 
   start: ->
     Promise.resolve!
@@ -42,6 +45,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
           return Promise.reject new Error("pino log level incorrect. please fix secret.ls: log.level")
         @log = log = pino level: log-level
         @log-server = log.child {module: \server}
+        @log-build = log.child {module: \build}
 
         process.on \uncaughtException, (err, origin) ~>
           @log-server.error {err}, "uncaught exception ocurred, outside express routes".red
@@ -115,7 +119,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @listen!
       .then ~>
         @log-server.info "listening on port #{@server.address!port}".cyan
-        @watch!
+        @watch {logger: @log-build, i18n}
       .catch (err) ~>
         try
           @log-server.error {err}, "failed to start server. ".red
