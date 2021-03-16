@@ -29,7 +29,7 @@
     "ldloader": "^1.2.0",
     "ldview": "0.0.2",
     "stylus": "^0.54.5",
-    "template": "github:zbryikt/template#v2.1.8",
+    "template": "github:zbryikt/template#v2.3.7",
     "template-text": "^0.1.0",
     "uglify-js": "=3.2.0",
     "uglifycss": "0.0.29"
