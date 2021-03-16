@@ -10,8 +10,8 @@
     "url": "https://github.com/plotdb/servebase"
   },
   "engines": {
-    "node": "=15.4.0",
-    "npm": "=7.0.15"
+    "node": ">=15.4.0",
+    "npm": ">=7.0.15"
   },
   "workspaces": [
     "module/auth",
@@ -45,7 +45,7 @@
     "@loadingio/ldc": "0.0.2",
     "@loadingio/ldquery": "^1.1.1",
     "@loadingio/transition.css": "2.0.1",
-    "@plotdb/srcbuild": "0.0.5",
+    "@plotdb/srcbuild": "^0.0.7",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap.build": "github:plotdb/bootstrap.build",
