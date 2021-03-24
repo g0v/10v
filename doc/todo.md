@@ -2,7 +2,7 @@
 
 ## pending
 
- - srctree 生成
+ - srctree 生成 ( 已完成 )
    - 將 src build 模組化, 運用在 module 的 intl ( i18n ) 生成
      - 在這之後, 再看有沒有需要把 pugext ./cli.js 做完?
      ? alternative src-static tree
