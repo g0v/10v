@@ -7,9 +7,15 @@
     },
     autocatch: function(handler){
       return function(req, res, next){
-        return handler(req, res, next)['catch'](function(it){
-          return next(it);
-        });
+        var ret;
+        ret = handler(req, res, next);
+        if (!(ret instanceof Promise)) {
+          return next(new Error('autocatch is used yet return value of callback is not a Promise.'));
+        } else {
+          return ret['catch'](function(it){
+            return next(it);
+          });
+        }
       };
     }
   };
