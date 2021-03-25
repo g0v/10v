@@ -1,8 +1,8 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
-require! <[./auth ./error-handler ./route ./redis-node]>
-require! <[./module/i18n ./module/aux ./module/view/pug ./module/db/postgresql]>
+require! <[./error-handler ./route ./redis-node]>
+require! <[./module/auth ./module/i18n ./module/aux ./module/view/pug ./module/db/postgresql]>
 require! <[../config/private/secret]>
 
 default-config = do
@@ -57,8 +57,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
           process.exit -1
 
         i18n(@config.i18n or {})
-      .then (i18n) ~>
-
+      .then ~> @i18n = it
+      .then ~>
         @db = new postgresql @
 
         @app = @route.app = app = express!
@@ -88,11 +88,10 @@ backend.prototype = Object.create(Object.prototype) <<< do
         # TODO invalidate cache after view updated
         if app.get(\env) != \development => app.enable 'view cache'
 
-        app.use i18next-http-middleware.handle i18n, {ignoreRoutes: <[]>}
+        app.use i18next-http-middleware.handle @i18n, {ignoreRoutes: <[]>}
 
-        pug.opt({i18n})
         # also, we precompile all view pug into .view folder, which can be used by our custom pug view engine.
-        app.engine 'pug', pug(@)
+        app.engine 'pug', pug({logger: @log.child({module: \view}), i18n: @i18n})
         app.set 'view engine', 'pug'
         app.set 'views', path.join(__dirname, '../src/pug/')
         app.locals.viewdir = path.join(__dirname, '../.view/')
@@ -119,7 +118,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @listen!
       .then ~>
         @log-server.info "listening on port #{@server.address!port}".cyan
-        @watch {logger: @log-build, i18n}
+        @watch {logger: @log-build, i18n: @i18n}
       .catch (err) ~>
         try
           @log-server.error {err}, "failed to start server. ".red

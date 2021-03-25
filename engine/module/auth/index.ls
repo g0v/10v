@@ -1,5 +1,43 @@
 require! <[express-session passport passport-local passport-facebook passport-google-oauth20 lderror]>
-require! <[./module/aux]>
+require! <[../../module/aux]>
+
+get-user = ({username, password, method, detail, create, done}) ->
+  db.auth.user.get {username, password, method, detail, create}
+    .then (user) !-> done null, user
+    .catch !-> done new lderror(1012), null, {message: ''}
+
+strategy = do
+  local: (opt) ->
+    passport.use new passport-local.Strategy {
+      usernameField: \username, passwordField: \password
+    }, (username,password,done) ~>
+      get-user {username, password, method: \local, detail: null, create: false, done}
+
+  google: (opt) ->
+    passport.use new passport-google-oauth20.Strategy(
+      do
+        clientID: opt.clientID
+        clientSecret: opt.clientSecret
+        callbackURL: "/dash/api/u/auth/google/callback"
+        passReqToCallback: true
+        userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+        profileFields: ['id', 'displayName', 'link', 'emails']
+      , (request, access-token, refresh-token, profile, done) !->
+        if !profile.emails => done null, false, {}
+        else get-user profile.emails.0.value, null, false, profile, true, done
+    )
+
+  facebook: (opt) ->
+    passport.use new passport-facebook.Strategy(
+      do
+        clientID: opt.clientID
+        clientSecret: opt.clientSecret
+        callbackURL: "/dash/api/u/auth/facebook/callback"
+        profileFields: ['id', 'displayName', 'link', 'emails']
+      , (access-token, refresh-token, profile, done) !->
+        if !profile.emails => done null, false, {}
+        else get-user profile.emails.0.value, null, false, profile, true, done
+    )
 
 ret = (backend) ->
   {db,app,config,route} = backend
@@ -26,15 +64,7 @@ ret = (backend) ->
     res.cookie 'global', payload, { path: '/', secure: true }
     res.send payload
 
-  get-user = ({username, password, method, detail, create, done}) ->
-    db.auth.user.get {username, password, method, detail, create}
-      .then (user) !-> done null, user
-      .catch !-> done new lderror(1012), null, {message: ''}
-
-  passport.use new passport-local.Strategy {
-    usernameField: \username, passwordField: \password
-  }, (username,password,done) ~>
-    get-user {username, password, method: \local, detail: null, create: false, done}
+  <[local google facebook]>.map -> if config[it] => strategy[it](config[it])
 
   passport.serializeUser (u,done) !->
     db.auth.user.serialize u .then (v) !-> done null, v
@@ -73,35 +103,3 @@ ret = (backend) ->
     ..post \/logout, (req, res) -> req.logout!; res.send!
 
 module.exports = ret
-/*
-
-passport.use new passport-google-oauth20.Strategy(
-  do
-    clientID: config.google.clientID
-    clientSecret: config.google.clientSecret
-    callbackURL: "/dash/api/u/auth/google/callback"
-    passReqToCallback: true
-    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-    profileFields: ['id', 'displayName', 'link', 'emails']
-  , (request, access-token, refresh-token, profile, done) ~>
-    if !profile.emails =>
-      done null, false, do
-        message: "We can't get email address from your Google account. Please try signing up with email."
-      return null
-    get-user profile.emails.0.value, null, false, profile, true, done
-)
-
-passport.use new passport-facebook.Strategy(
-  do
-    clientID: config.facebook.clientID
-    clientSecret: config.facebook.clientSecret
-    callbackURL: "/dash/api/u/auth/facebook/callback"
-    profileFields: ['id', 'displayName', 'link', 'emails']
-  , (access-token, refresh-token, profile, done) ~>
-    if !profile.emails =>
-      done null, false, do
-        message: "We can't get email address from your Facebook account. Please try signing up with email."
-      return null
-    get-user profile.emails.0.value, null, false, profile, true, done
-)
-*/
