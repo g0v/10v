@@ -1,5 +1,19 @@
 # Infrastructure
 
+## Daemon
+
+Node server should run as a Daemon with auto-restart mechanism. This can be done via:
+
+ - managed by Container - default option
+ - as a service - outside container
+   - use `sysvinit` or `systemd`:
+     - systemd: https://nodesource.com/blog/running-your-node-js-app-with-systemd-part-1
+ - as a process, through `screen` - not reboot-proof but it's acceptable.
+   - auto restart when process crashed with bash while loop.
+
+
+## Note
+
  - Load Balancing
    - https://blog.gcp.expert/gcp-http-load-balancer-console/
    - https://blog.gcp.expert/gcp-instance-autoscaling/

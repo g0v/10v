@@ -6,7 +6,7 @@ trap "kill 0" exit
 #  -c : color
 #  -t : format timestamp
 
-# TODO We probably should do this via some kind of service / package
+# see infrastructure.md -> daemon
 while [ 1 ]; do
 
   if [[ $NODE_ENV == "production" ]]; then
@@ -26,6 +26,7 @@ while [ 1 ]; do
 
   echo "server down; try to auto restart after 1s."
   sleep 1;
+
 done
 
 wait
