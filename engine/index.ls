@@ -1,8 +1,9 @@
 require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
+require! <[@plotdb/srcbuild/dist/view/pug]>
 require! <[./error-handler ./route ./redis-node]>
-require! <[./module/auth ./module/i18n ./module/aux ./module/view/pug ./module/db/postgresql]>
+require! <[./module/auth ./module/i18n ./module/aux ./module/db/postgresql]>
 require! <[../config/private/secret]>
 
 default-config = do
@@ -91,11 +92,11 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.use i18next-http-middleware.handle @i18n, {ignoreRoutes: <[]>}
 
         # also, we precompile all view pug into .view folder, which can be used by our custom pug view engine.
-        app.engine 'pug', pug({logger: @log.child({module: \view}), i18n: @i18n})
+        app.engine 'pug', pug({logger: @log.child({module: \view}), i18n: @i18n, viewdir: '.view', srcdir: 'src/pug'})
         app.set 'view engine', 'pug'
         app.set 'views', path.join(__dirname, '../src/pug/')
-        app.locals.viewdir = path.join(__dirname, '../.view/')
         app.locals.basedir = app.get \views
+        #app.locals.viewdir = path.join(__dirname, '../.view/')
 
         @route.api = api = express.Router {mergeParams: true}
         @route.auth = express.Router {mergeParams: true}
