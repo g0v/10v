@@ -6,3 +6,4 @@ root: /Users/tkirby/workspace/zbryikt/plotdb/projects/servebase/static/
 cert:
   crt: /Users/tkirby/workspace/zbryikt/projects/cert/servebase.local/server.crt
   key: /Users/tkirby/workspace/zbryikt/projects/cert/servebase.local/server.key
+nginxCfgDir: /usr/local/etc/nginx

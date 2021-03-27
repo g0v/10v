@@ -4,7 +4,7 @@ upstream !{name}_api {
 
 server {
   listen 443;
-  include /usr/local/etc/nginx/mime.types;
+  include !{nginxCfgDir}/mime.types;
   server_name !{hostname};
   ssl on;
   ssl_certificate !{cert.crt};
