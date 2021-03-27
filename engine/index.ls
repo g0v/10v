@@ -98,11 +98,14 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.locals.basedir = app.get \views
         #app.locals.viewdir = path.join(__dirname, '../.view/')
 
+        @route.extapi = express.Router {mergeParams: true}
         @route.api = api = express.Router {mergeParams: true}
         @route.auth = express.Router {mergeParams: true}
 
         # Authentication
         auth @  # Authenticate. must before any router ( e.g., /api )
+
+        app.use \/extapi/, @route.extapi
 
         # CSRF Protection. must after session
         app.use @middleware.csrf = csurf!

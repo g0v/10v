@@ -163,6 +163,9 @@
         app.set('view engine', 'pug');
         app.set('views', path.join(__dirname, '../src/pug/'));
         app.locals.basedir = app.get('views');
+        this$.route.extapi = express.Router({
+          mergeParams: true
+        });
         this$.route.api = api = express.Router({
           mergeParams: true
         });
@@ -170,6 +173,7 @@
           mergeParams: true
         });
         auth(this$);
+        app.use('/extapi/', this$.route.extapi);
         app.use(this$.middleware.csrf = csurf());
         app.use('/api', this$.route.api);
         app.use('/api/auth', this$.route.auth);

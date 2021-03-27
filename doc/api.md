@@ -12,3 +12,8 @@ use concept similar to ORM.
 plugin? 
  - 使用 alternative server?
  - 獨立模組拆出? 
+
+## External API
+
+ - for accessing without CSRF protection.
+ - /extapi/ route ( @route.extapi )
