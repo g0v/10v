@@ -11,13 +11,13 @@
     var db, config, ref$, api, app;
     db = backend.db, config = backend.config, ref$ = backend.route, api = ref$.api, app = ref$.app;
     return fs.readdirSync(__dirname).filter(function(it){
-      return !/index\./.exec(it);
+      return !/^index\./.exec(it);
     }).filter(function(it){
       return !/^\./.exec(it);
-    }).filter(function(it){
-      return /\.(ls|js)$/.exec(it);
     }).map(function(it){
       return path.join(__dirname, it);
+    }).filter(function(it){
+      return /\.(ls|js)$/.exec(it) || fs.statSync(it).isDirectory();
     }).map(function(it){
       return require(it)(backend);
     });

@@ -3,8 +3,8 @@ require! <[fs path lderror ../module/aux]>
 {db,config,route:{api,app}} = backend
 
 fs.readdir-sync __dirname
-  .filter -> !/index\./.exec(it)
+  .filter -> !/^index\./.exec(it)
   .filter -> !/^\./.exec(it)
-  .filter -> /\.(ls|js)$/.exec(it)
   .map -> path.join(__dirname, it)
+  .filter -> /\.(ls|js)$/.exec(it) or fs.stat-sync(it).is-directory!
   .map -> require(it) backend
