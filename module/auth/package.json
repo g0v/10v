@@ -20,12 +20,12 @@
     "bootstrap": "^4.5.2",
     "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
     "bootstrap.native": "^3.0.13",
-    "fedep": "0.0.10",
-    "ldview": "0.0.2",
+    "fedep": "^0.0.10",
+    "ldview": "^0.0.2",
     "stylus": "^0.54.5",
-    "template": "github:zbryikt/template#v2.3.7",
-    "uglify-js": "=3.2.0",
-    "uglifycss": "0.0.29"
+    "template": "github:zbryikt/template#v2.3.9",
+    "uglify-js": "^3.2.0",
+    "uglifycss": "^0.0.29"
   },
   "frontendDependencies": {
     "root": "web/static/assets/lib",
@@ -40,7 +40,7 @@
     ]
   },
   "peerDependencies": {
-    "@loadingio/debounce.js": "0.0.1",
-    "proxise": "0.0.1"
+    "@loadingio/debounce.js": "^0.0.1",
+    "proxise": "^0.1.2"
   }
 }
