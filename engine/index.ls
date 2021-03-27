@@ -79,7 +79,9 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         app.use body-parser.json do
           limit: @config.limit
-          # github webhook use `x-hub-signature` for hmac digest
+          # sometimes service such as github webhook access to `req.body` and expect it to be in raw format.
+          # these services usually provide additional headers, like `x-hub-signature` for hmac digest in github.
+          # following below pattern to add additional case ( e.g., x-line-signature ) as needed.
           verify: (req, res, buf, encoding) ->
             if req.headers["x-hub-signature"] => req.raw-body = buf.toString!
         app.use body-parser.urlencoded extended: true, limit: @config.limit
