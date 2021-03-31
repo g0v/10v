@@ -21,4 +21,13 @@ module.exports = do
     enabled: false
   log:
     level: \info
-
+  auth:
+    google:
+      clientID: '...'
+      clientSecret: '...'
+    facebook:
+      clientID: '...'
+      clientSecret: '...'
+    line:
+      channelID: '...'
+      channelSecret: '...'

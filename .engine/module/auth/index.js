@@ -104,8 +104,8 @@
     });
     ['local', 'google', 'facebook'].map(function(name){
       var x$;
-      if (config[name]) {
-        strategy[name](config[name]);
+      if ((config.auth || (config.auth = {}))[name]) {
+        strategy[name](config.auth[name]);
       }
       x$ = route.auth;
       x$.post("/" + name, passport.authenticate(name, {

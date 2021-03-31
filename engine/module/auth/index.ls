@@ -65,7 +65,7 @@ ret = (backend) ->
     res.send payload
 
   <[local google facebook]>.map (name) ->
-    if config[name] => strategy[name](config[name])
+    if config{}auth.[name] => strategy[name](config.auth[name])
     route.auth
       ..post "/#name", passport.authenticate name, {scope: ['email']}
       ..get "/#name/callback", passport.authenticate name, do
