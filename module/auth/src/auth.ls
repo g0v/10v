@@ -10,7 +10,6 @@ get-global = proxise -> if lc.global => return Promise.resolve lc.global
 auth = (opt={}) ->
   @timeout = {loader: 1000, failed: 10000}
   @evt-handler = {}
-  @social = {}
 
   @ui = do
     loader: {on: ->, off: ->, on-later: ->, cancel: ->}
