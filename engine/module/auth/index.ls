@@ -18,7 +18,7 @@ strategy = do
       do
         clientID: opt.clientID
         clientSecret: opt.clientSecret
-        callbackURL: "/api/u/auth/google/callback"
+        callbackURL: "/api/auth/google/callback"
         passReqToCallback: true
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
         profileFields: ['id', 'displayName', 'link', 'emails']
@@ -32,7 +32,7 @@ strategy = do
       do
         clientID: opt.clientID
         clientSecret: opt.clientSecret
-        callbackURL: "/api/u/auth/facebook/callback"
+        callbackURL: "/api/auth/facebook/callback"
         profileFields: ['id', 'displayName', 'link', 'emails']
       , (access-token, refresh-token, profile, done) !->
         if !profile.emails => done null, false, {}
