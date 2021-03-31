@@ -64,7 +64,13 @@ ret = (backend) ->
     res.cookie 'global', payload, { path: '/', secure: true }
     res.send payload
 
-  <[local google facebook]>.map -> if config[it] => strategy[it](config[it])
+  <[local google facebook]>.map ->
+    if config[it] => strategy[it](config[it])
+    route.auth
+      ..post "/#name", passport.authenticate name, {scope: ['email']}
+      ..get "/#name/callback", passport.authenticate name, do
+        successRedirect: \/auth/done/
+        failureRedirect: \/auth/failed/social.html
 
   passport.serializeUser (u,done) !->
     db.auth.user.serialize u .then (v) !-> done null, v

@@ -103,9 +103,19 @@
       return res.send(payload);
     });
     ['local', 'google', 'facebook'].map(function(it){
+      var x$;
       if (config[it]) {
-        return strategy[it](config[it]);
+        strategy[it](config[it]);
       }
+      x$ = route.auth;
+      x$.post("/" + name, passport.authenticate(name, {
+        scope: ['email']
+      }));
+      x$.get("/" + name + "/callback", passport.authenticate(name, {
+        successRedirect: '/auth/done/',
+        failureRedirect: '/auth/failed/social.html'
+      }));
+      return x$;
     });
     passport.serializeUser(function(u, done){
       db.auth.user.serialize(u).then(function(v){
