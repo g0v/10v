@@ -118,6 +118,6 @@ auth.prototype = Object.create(Object.prototype) <<< do
       .finally ~> @social.form.parentNode.removeChild @social.form
       .then ~> # after social login
       .then ~> @fire \change
-      .catch -> @fire \error, e; return Promise.reject(e)
+      .catch (e) ~> @fire \error, e; return Promise.reject(e)
 
 if window? => window.auth = auth

@@ -200,8 +200,8 @@
         return this$.social.form.parentNode.removeChild(this$.social.form);
       }).then(function(){}).then(function(){
         return this$.fire('change');
-      })['catch'](function(){
-        this.fire('error', e);
+      })['catch'](function(e){
+        this$.fire('error', e);
         return Promise.reject(e);
       });
     }
