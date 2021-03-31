@@ -107,7 +107,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
         @social.window = window.open '', 'social-login', 'height=640,width=560'
         @social.form = form = ld$.create name: \div
         form.innerHTML = """
-        <form target="social-login" action="#{@api-root!}auth/#name/" method="post">
+        <form target="social-login" action="#{@api-root!}#name/" method="post">
           <input type="hidden" name="_csrf" value="#{g.csrf-token}"/>
         </form>"""
         document.body.appendChild form

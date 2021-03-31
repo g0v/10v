@@ -184,7 +184,7 @@
         this$.social.form = form = ld$.create({
           name: 'div'
         });
-        form.innerHTML = "<form target=\"social-login\" action=\"" + this$.apiRoot() + "auth/" + name + "/\" method=\"post\">\n  <input type=\"hidden\" name=\"_csrf\" value=\"" + g.csrfToken + "\"/>\n</form>";
+        form.innerHTML = "<form target=\"social-login\" action=\"" + this$.apiRoot() + name + "/\" method=\"post\">\n  <input type=\"hidden\" name=\"_csrf\" value=\"" + g.csrfToken + "\"/>\n</form>";
         document.body.appendChild(form);
         window.socialLogin = login = proxise(function(){
           return ld$.find(form, 'form', 0).submit();
