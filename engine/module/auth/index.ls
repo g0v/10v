@@ -64,8 +64,8 @@ ret = (backend) ->
     res.cookie 'global', payload, { path: '/', secure: true }
     res.send payload
 
-  <[local google facebook]>.map ->
-    if config[it] => strategy[it](config[it])
+  <[local google facebook]>.map (name) ->
+    if config[name] => strategy[name](config[name])
     route.auth
       ..post "/#name", passport.authenticate name, {scope: ['email']}
       ..get "/#name/callback", passport.authenticate name, do

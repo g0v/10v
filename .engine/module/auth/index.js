@@ -102,10 +102,10 @@
       });
       return res.send(payload);
     });
-    ['local', 'google', 'facebook'].map(function(it){
+    ['local', 'google', 'facebook'].map(function(name){
       var x$;
-      if (config[it]) {
-        strategy[it](config[it]);
+      if (config[name]) {
+        strategy[name](config[name]);
       }
       x$ = route.auth;
       x$.post("/" + name, passport.authenticate(name, {
