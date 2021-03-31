@@ -100,7 +100,6 @@ auth.prototype = Object.create(Object.prototype) <<< do
   prompt: (v, opt) ->
     @ui.authpanel(true, opt)
   social: ({name}) ->
-    div = null
     @get!
       .then (g = {}) ~>
         if g.{}user.key => return g
@@ -112,7 +111,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
           <input type="hidden" name="_csrf" value="#{g.csrf-token}"/>
         </form>"""
         document.body.appendChild form
-        window.social-login = login = proxise(-> ld$.find(div, 'form', 0).submit!)
+        window.social-login = login = proxise(-> ld$.find(form, 'form', 0).submit!)
         login!
       .then (g = {}) -> if !g.{}user.key => Promise.reject new ldError(1000)
       .finally ~> @social.form.parentNode.removeChild @social.form

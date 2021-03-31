@@ -172,9 +172,8 @@
       return this.ui.authpanel(true, opt);
     },
     social: function(arg$){
-      var name, div, this$ = this;
+      var name, this$ = this;
       name = arg$.name;
-      div = null;
       return this.get().then(function(g){
         var form, login;
         g == null && (g = {});
@@ -188,7 +187,7 @@
         form.innerHTML = "<form target=\"social-login\" action=\"" + this$.apiRoot() + "auth/" + name + "/\" method=\"post\">\n  <input type=\"hidden\" name=\"_csrf\" value=\"" + g.csrfToken + "\"/>\n</form>";
         document.body.appendChild(form);
         window.socialLogin = login = proxise(function(){
-          return ld$.find(div, 'form', 0).submit();
+          return ld$.find(form, 'form', 0).submit();
         });
         return login();
       }).then(function(g){
