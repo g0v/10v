@@ -54,6 +54,7 @@ ret = (backend) ->
 
       create: ({username, password, method, detail, config}) ~>
         username = username.toLowerCase!
+        if !config => config = {}
         if !is-email(username) => return Promise.reject new lderror(1015)
         Promise.resolve!
           .then ~> if method == \local => @auth.user.hashing(password) else password

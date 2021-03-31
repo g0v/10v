@@ -117,6 +117,9 @@
           var username, password, method, detail, config;
           username = arg$.username, password = arg$.password, method = arg$.method, detail = arg$.detail, config = arg$.config;
           username = username.toLowerCase();
+          if (!config) {
+            config = {};
+          }
           if (!isEmail(username)) {
             return Promise.reject(new lderror(1015));
           }
