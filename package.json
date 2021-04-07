@@ -27,7 +27,7 @@
     "bootstrap": "npx bootstrap.build -c config/bootstrap/ -o static/assets/lib/bootstrap.custom/main/",
     "docker-start": "docker-compose -f config/docker/compose.yaml up",
     "docker-stop": "docker-compose -f config/docker/compose.yaml down",
-    "docker-build": "docker-compose -f config/docker/compose.yaml --build",
+    "docker-build": "docker-compose -f config/docker/compose.yaml build",
     "docker-db": "docker-compose -f config/docker/compose.yaml up -d db",
     "cannon": "cd tool; ./cannon",
     "test": "npx mocha --require livescript ./test/index.ls",
