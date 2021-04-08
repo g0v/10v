@@ -114,7 +114,9 @@ auth.prototype = Object.create(Object.prototype) <<< do
         window.social-login = login = proxise(-> ld$.find(form, 'form', 0).submit!)
         login!
       .then (g = {}) -> if !g.{}user.key => Promise.reject new ldError(1000)
-      .finally ~> @social.form.parentNode.removeChild @social.form
+      .finally ~>
+        if !(@social.form and @social.form.parentNode) => return
+        @social.form.parentNode.removeChild @social.form
       .then ~> # after social login
       .then ~> @fire \change
       .catch (e) ~> @fire \error, e; return Promise.reject(e)

@@ -196,6 +196,9 @@
           return Promise.reject(new ldError(1000));
         }
       })['finally'](function(){
+        if (!(this$.social.form && this$.social.form.parentNode)) {
+          return;
+        }
         return this$.social.form.parentNode.removeChild(this$.social.form);
       }).then(function(){}).then(function(){
         return this$.fire('change');
