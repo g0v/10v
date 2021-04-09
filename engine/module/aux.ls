@@ -17,4 +17,3 @@ base = do
     Promise.reject new Error(if typeof(msg) == typeof({}) => JSON.stringify(msg) else msg) <<< {code, name: 'lderror'}
 
 module.exports = base
-
