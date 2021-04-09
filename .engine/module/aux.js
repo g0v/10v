@@ -17,6 +17,18 @@
           });
         }
       };
+    },
+    authedView: function(req, res, next){
+      if (req.user && req.user.key > 0) {
+        return next();
+      }
+      return res.status(403).redirect("/auth/?nexturl=/" + req.originalUrl);
+    },
+    reject: function(code, msg){
+      var ref$;
+      code == null && (code = 403);
+      msg == null && (msg = "");
+      return Promise.reject((ref$ = new Error(typeof msg === typeof {} ? JSON.stringify(msg) : msg), ref$.code = code, ref$.name = 'lderror', ref$));
     }
   };
   module.exports = base;
