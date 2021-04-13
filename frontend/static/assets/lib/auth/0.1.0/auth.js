@@ -113,7 +113,7 @@
         return p.then(function(g){
           g == null && (g = {});
           if (opt.authedOnly && !(g.user || (g.user = {})).key) {
-            return Promise.reject(new ldError(1000));
+            return Promise.reject(new lderror(1000));
           }
           return g;
         });
@@ -193,7 +193,7 @@
       }).then(function(g){
         g == null && (g = {});
         if (!(g.user || (g.user = {})).key) {
-          return Promise.reject(new ldError(1000));
+          return Promise.reject(new lderror(1000));
         }
       })['finally'](function(){
         if (!(this$.social.form && this$.social.form.parentNode)) {

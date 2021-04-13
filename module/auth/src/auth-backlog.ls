@@ -167,7 +167,7 @@ auth = do
         window.social-login = login = proxise(-> ld$.find(div, 'form', 0).submit!)
         login!
       .then ~> @fetch!
-      .then ({user}) -> if !(user and user.key) => Promise.reject new ldError(1000)
+      .then ({user}) -> if !(user and user.key) => Promise.reject new lderror(1000)
       .then ->
         if !ldcvmgr.is-on(\authpanel) => return window.location.reload!
         lda.auth.hide \ok
@@ -196,7 +196,7 @@ auth = do
       if opt.authed =>
         p = if !(g and g.{}user.key) => lda.auth.show(opt.tab, opt.info, opt) else Promise.resolve(g)
         p.then (g) ->
-          if !(g and g.{}user.key) => return Promise.reject(new ldError(1000))
+          if !(g and g.{}user.key) => return Promise.reject(new lderror(1000))
           lda.auth.hide \ok
           return g
       else return g
@@ -312,7 +312,7 @@ auth = do
                     ldcvmgr.get cover
             else Promise.resolve true
 
-            p = p.then -> if !it => return Promise.reject new ldError(1018)
+            p = p.then -> if !it => return Promise.reject new lderror(1018)
             # if user exists and consent time is empty, we should update the consent time
             # TODO: if consent is prompted before user sign in/up ?
             if g.user.key and !g.user.{}config.{}consent[type] =>

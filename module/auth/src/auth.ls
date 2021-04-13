@@ -46,7 +46,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
       if !opt.authed-only => return g
       p = (if !g.{}user.key => @ui.authpanel(true, opt) else Promise.resolve(g))
       p.then (g = {}) ->
-        if opt.authed-only and !g.{}user.key => return Promise.reject(new ldError(1000))
+        if opt.authed-only and !g.{}user.key => return Promise.reject(new lderror(1000))
         return g
 
   # for retrieving global object from server ( or cookie ). this won't trigger sign up ui.
@@ -113,7 +113,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
         document.body.appendChild form
         window.social-login = login = proxise(-> ld$.find(form, 'form', 0).submit!)
         login!
-      .then (g = {}) -> if !g.{}user.key => Promise.reject new ldError(1000)
+      .then (g = {}) -> if !g.{}user.key => Promise.reject new lderror(1000)
       .finally ~>
         if !(@social.form and @social.form.parentNode) => return
         @social.form.parentNode.removeChild @social.form
