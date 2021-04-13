@@ -10,7 +10,7 @@
   })(function(backend){
     var db, config, ref$, api, app;
     db = backend.db, config = backend.config, ref$ = backend.route, api = ref$.api, app = ref$.app;
-    app.get('/', aux.autocatch(function(req, res, next){
+    app.get('/', function(req, res, next){
       return db.query("select count(key) as count from users").then(function(r){
         var count;
         r == null && (r = {});
@@ -21,7 +21,7 @@
           count: count
         });
       });
-    }));
+    });
     api.get('/x', function(req, res, next){
       req.log.info('hi');
       return next(new lderror(1005));

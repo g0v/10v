@@ -5,11 +5,15 @@
     ip: function(req){
       return req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.headers['X-Real-IP'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
     },
-    autocatch: function(handler){
+    autocatch: function(handler, silence){
+      silence == null && (silence = false);
       return function(req, res, next){
         var ret;
         ret = handler(req, res, next);
         if (!(ret instanceof Promise)) {
+          if (silence) {
+            return;
+          }
           return next(new Error('autocatch is used yet return value of callback is not a Promise.'));
         } else {
           return ret['catch'](function(it){
@@ -17,6 +21,28 @@
           });
         }
       };
+    },
+    routecatch: function(route){
+      ['get', 'post', 'put', 'delete'].map(function(n){
+        route["_" + n] = route[n];
+        return route[n] = function(){
+          var args, res$, i$, to$;
+          res$ = [];
+          for (i$ = 0, to$ = arguments.length; i$ < to$; ++i$) {
+            res$.push(arguments[i$]);
+          }
+          args = res$;
+          args = args.map(function(d, i){
+            if (d instanceof Function && i === args.length - 1) {
+              return base.autocatch(d, true);
+            } else {
+              return d;
+            }
+          });
+          return this["_" + n].apply(this, args);
+        };
+      });
+      return route;
     },
     authedView: function(req, res, next){
       if (req.user && req.user.key > 0) {

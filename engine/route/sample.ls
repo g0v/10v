@@ -2,7 +2,7 @@ require! <[fs path lderror ../module/aux]>
 (backend) <- (->module.exports = it)  _
 {db,config,route:{api,app}} = backend
 
-app.get \/, aux.autocatch (req, res, next) ->
+app.get \/, (req, res, next) ->
   db.query "select count(key) as count from users"
     .then (r={}) ->
       count = (r.[]rows.0 or {count: 0}).count
