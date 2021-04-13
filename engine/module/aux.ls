@@ -10,6 +10,7 @@ base = do
   #  - deprecate when express 5 releases.
   # autocatch: for wrapping functions
   # try using routecatch instead of autocatch for easier migration to express 5 in the future.
+  #  - todo: will it be better to keep consistency by removing silence param?
   autocatch: (handler, silence = false) -> (req, res, next) ->
     ret = handler req, res, next
     if !(ret instanceof Promise) =>
