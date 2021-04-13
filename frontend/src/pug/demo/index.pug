@@ -1,0 +1,13 @@
+//- view
+extends /demo/base.pug
+block head
+block body
+block script
+  script: :lsc
+    ldc.register <[error loader notify ldcvmgr]>, ({error, loader, notify, ldcvmgr}) ->
+      loader.on!
+        .then -> debounce 1000
+        .then -> notify.send \warning, "something seems not right ..."
+        .then -> debounce 2000
+        .then -> error! new ldError(1005)
+

@@ -1,0 +1,27 @@
+extends /demo/base.pug
+block body
+  .w-1024.rwd.mx-auto.my-4.d-flex
+    div
+      .ldfd
+        .ldfd-item.ldfd-toggle Projects
+        .ldfd-menu(ldtab-group="main",type="tab")
+          .ldfd-item(ldtab="prj-a",default) Prj A
+          .ldfd-item(ldtab="prj-b") Prj B
+          .ldfd-item(ldtab="prj-c") Prj C
+          .ldfd-item(ldtab="prj-d") Prj D
+
+    .flex-grow-1
+      div(ldtab-group="main",type="panel")
+        div(ldtab="prj-a",default) Prj A
+        div(ldtab="prj-b") Prj B
+        div(ldtab="prj-c") Prj C
+        div(ldtab="prj-d") Prj D
+
+block script
+  script: :lsc
+    ldfd = new ldfolder root: '.ldfd'
+    tab = new ldtab do
+      root: document.body
+      panel: delay: 0
+      tab: delay: 0
+
