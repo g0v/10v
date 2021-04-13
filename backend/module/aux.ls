@@ -23,12 +23,12 @@ base = do
       route["_#n"] = route[n]
       route[n] = (...args) ->
         args = args.map (d,i) -> if d instanceof Function and (i == args.length - 1) => base.autocatch(d,true) else d
-        @["_#n"].apply @, args#args.map -> if it instanceof Function => base.autocatch(it) else it
+        @["_#n"].apply @, args
     return route
 
   signedin: (req, res, next) ->
     if req.user and req.user.key => return next!
-    next(new Error! <<< {name: 'lderror', id: 1000, redirect: "/auth/?nexturl=/#{req.originalUrl}"})
+    next(new Error! <<< {name: 'lderror', id: 1000, redirect: "/auth/?nexturl=#{req.originalUrl}"})
 
   reject: (code=403,msg="") ->
     Promise.reject new Error(if typeof(msg) == typeof({}) => JSON.stringify(msg) else msg) <<< {code, name: 'lderror'}
