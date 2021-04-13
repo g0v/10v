@@ -21,7 +21,7 @@
     "start": "NODE_ENV=production ./start",
     "dev": "./start",
     "try": "./node_modules/.bin/lsc log.ls",
-    "prebuild": "node_modules/.bin/lsc -co .engine engine",
+    "prebuild": "node_modules/.bin/lsc -co .backend backend",
     "config": "cd config; ./build",
     "bootstrap": "npx bootstrap.build -c config/bootstrap/ -o static/assets/lib/bootstrap.custom/main/",
     "docker-start": "docker-compose -f config/docker/compose.yaml up",
@@ -97,7 +97,7 @@
     "zmgr": "^0.0.3"
   },
   "frontendDependencies": {
-    "root": "static/assets/lib",
+    "root": "frontend/static/assets/lib",
     "modules": [
       "bootstrap.ldui",
       "bootstrap.native",
@@ -118,6 +118,7 @@
       "ldfolder",
       "ldbutton",
       "zmgr",
+      "auth",
       "ldview"
     ]
   }

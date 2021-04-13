@@ -11,10 +11,10 @@ while [ 1 ]; do
 
   if [[ $NODE_ENV == "production" ]]; then
     # production - use prebuilt js files
-    CMD="node ./.engine/index.js"
+    CMD="node ./.backend/index.js"
   else
     # dev - use livescript files
-    CMD="./node_modules/.bin/lsc ./engine/index"
+    CMD="./node_modules/.bin/lsc ./backend/index"
   fi
 
   $CMD | \

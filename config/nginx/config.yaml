@@ -2,7 +2,7 @@ name: servebase
 ip: 127.0.0.1
 port: 8901
 hostname: servebase.v2
-root: /Users/tkirby/workspace/zbryikt/plotdb/projects/servebase/static/
+root: /Users/tkirby/workspace/zbryikt/plotdb/projects/servebase/frontend/static/
 cert:
   crt: /Users/tkirby/workspace/zbryikt/projects/cert/servebase.local/server.crt
   key: /Users/tkirby/workspace/zbryikt/projects/cert/servebase.local/server.key
