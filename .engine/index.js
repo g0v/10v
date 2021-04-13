@@ -31,7 +31,7 @@
     this.opt = opt;
     import$(this, {
       mode: process.env.NODE_ENV,
-      production: process.env.NODE_ENVT === 'production',
+      production: process.env.NODE_ENV === 'production',
       middleware: {},
       config: import$(import$({}, defaultConfig), opt.config),
       server: null,

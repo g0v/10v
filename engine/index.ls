@@ -14,7 +14,7 @@ backend = (opt = {}) ->
   @opt = opt
   @ <<< do
     mode: process.env.NODE_ENV # 'production' or other
-    production: process.env.NODE_ENVT == \production
+    production: process.env.NODE_ENV == \production
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: ({} <<< default-config <<< opt.config) # backend configuration
     server: null # http.Server object, either created by express or from other lib
