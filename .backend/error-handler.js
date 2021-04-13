@@ -16,8 +16,10 @@
         if (!/^\/api/.exec(req.url)) {
           res.set({
             "Content-Type": "text/html",
-            "X-Accel-Redirect": "/err/490"
+            "X-Accel-Redirect": err.redirect || "/err/490"
           });
+        } else {
+          delete err.redirect;
         }
         res.cookie("lderror", JSON.stringify(err), {
           maxAge: 60000,

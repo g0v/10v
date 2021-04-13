@@ -44,17 +44,12 @@
       });
       return route;
     },
-    signedIn: {
-      api: function(req, res, next){
-        return req.user && req.user.key > 0
-          ? next()
-          : res.status(403).send({});
-      },
-      view: function(req, res, next){
-        return req.user && req.user.key > 0
-          ? next()
-          : res.status(403).redirect("/auth/?nexturl=/" + req.originalUrl);
+    signedin: function(req, res, next){
+      var ref$;
+      if (req.user && req.user.key) {
+        return next();
       }
+      return next((ref$ = new error(), ref$.name = 'lderror', ref$.id = 1000, ref$.redirect = "/auth/?nexturl=/" + req.originalUrl, ref$));
     },
     reject: function(code, msg){
       var ref$;

@@ -13,7 +13,9 @@ handler = (err, req, res, next) ->
       # customized error - pass to frontend for them to handle
       delete err.stack
       # serve a friendly error page if it's not an API
-      if !/^\/api/.exec(req.url) => res.set {"Content-Type": "text/html", "X-Accel-Redirect": "/err/490"}
+      if !/^\/api/.exec(req.url) =>
+        res.set {"Content-Type": "text/html", "X-Accel-Redirect": err.redirect or "/err/490"}
+      else delete err.redirect
       # cookie domain: webmasters.stackexchange.com/questions/55790
       #  - no domain: request-host will be used
       #  - with domain: start with a dot. similar to *.some.site
