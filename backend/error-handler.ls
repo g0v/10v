@@ -12,14 +12,17 @@ handler = (err, req, res, next) ->
     if lderror.id(err) =>
       # customized error - pass to frontend for them to handle
       delete err.stack
-      # serve a friendly error page if it's not an API
-      if !/^\/api/.exec(req.url) =>
-        res.set {"Content-Type": "text/html", "X-Accel-Redirect": err.redirect or "/err/490"}
+      # serve a friendly error page if it's not an API and prevent looping error
+      if !/^\/api/.exec(req.originalUrl) and !/^\/err\/490/.exec(req.originalUrl) =>
+        # cookie domain: webmasters.stackexchange.com/questions/55790
+        #  - no domain: request-host will be used
+        #  - with domain: start with a dot. similar to *.some.site
+        ## with http header - rely on browsers to redirect. cookie ignored.
+        # if err.redirect => return res.redirect 302, err.redirect
+        ## with reversed proxy - will need a reversed proxy to take affect
+        res.set {"Content-Type": "text/html", "X-Accel-Redirect": err.redirect or \/err/490}
       else delete err.redirect
-      # cookie domain: webmasters.stackexchange.com/questions/55790
-      #  - no domain: request-host will be used
-      #  - with domain: start with a dot. similar to *.some.site
-      res.cookie "lderror", JSON.stringify(err), {maxAge: 60000, httpOnly: false, secure: true, sameSite: 'Strict'}
+      res.cookie \lderror, JSON.stringify(err), {maxAge: 60000, httpOnly: false, secure: true, sameSite: \Strict}
       return res.status 490 .send err
     else if (err instanceof URIError) and "#{err.stack}".startsWith('URIError: Failed to decode param') =>
       # errors to be ignored, due to un-skippable error like body json parsing issue

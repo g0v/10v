@@ -13,15 +13,15 @@
       }
       if (lderror.id(err)) {
         delete err.stack;
-        if (!/^\/api/.exec(req.url)) {
+        if (!/^\/api/.exec(req.originalUrl) && !/^\/err\/490/.exec(req.originalUrl)) {
           res.set({
             "Content-Type": "text/html",
-            "X-Accel-Redirect": err.redirect || "/err/490"
+            "X-Accel-Redirect": err.redirect || '/err/490'
           });
         } else {
           delete err.redirect;
         }
-        res.cookie("lderror", JSON.stringify(err), {
+        res.cookie('lderror', JSON.stringify(err), {
           maxAge: 60000,
           httpOnly: false,
           secure: true,
