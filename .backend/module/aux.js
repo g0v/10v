@@ -49,7 +49,7 @@
       if (req.user && req.user.key) {
         return next();
       }
-      return next((ref$ = new error(), ref$.name = 'lderror', ref$.id = 1000, ref$.redirect = "/auth/?nexturl=/" + req.originalUrl, ref$));
+      return next((ref$ = new Error(), ref$.name = 'lderror', ref$.id = 1000, ref$.redirect = "/auth/?nexturl=/" + req.originalUrl, ref$));
     },
     reject: function(code, msg){
       var ref$;

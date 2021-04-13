@@ -28,7 +28,7 @@ base = do
 
   signedin: (req, res, next) ->
     if req.user and req.user.key => return next!
-    next(new error! <<< {name: 'lderror', id: 1000, redirect: "/auth/?nexturl=/#{req.originalUrl}"})
+    next(new Error! <<< {name: 'lderror', id: 1000, redirect: "/auth/?nexturl=/#{req.originalUrl}"})
 
   reject: (code=403,msg="") ->
     Promise.reject new Error(if typeof(msg) == typeof({}) => JSON.stringify(msg) else msg) <<< {code, name: 'lderror'}
