@@ -1,8 +1,8 @@
 require! <[lderror]>
 
 handler = (err, req, res, next) ->
-  # 1. custom error by various package - handle by case and wrapped in ldError
-  # 2. custom error from this codebase ( wrapped in ldError ) - pass to frontend with ldError
+  # 1. custom error by various package - handle by case and wrapped in lderror
+  # 2. custom error from this codebase ( wrapped in lderror ) - pass to frontend with lderror
   # 3. trivial, unskippable error - ignore
   # 4. log all unexpected error.
   try
