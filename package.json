@@ -14,8 +14,7 @@
     "npm": ">=7.0.15"
   },
   "workspaces": [
-    "module/auth",
-    "module/pugext"
+    "module/auth"
   ],
   "scripts": {
     "postinstall": "./node_modules/.bin/fedep",
