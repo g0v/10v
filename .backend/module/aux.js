@@ -44,11 +44,17 @@
       });
       return route;
     },
-    authedView: function(req, res, next){
-      if (req.user && req.user.key > 0) {
-        return next();
+    signedIn: {
+      api: function(req, res, next){
+        return req.user && req.user.key > 0
+          ? next()
+          : res.status(403).send({});
+      },
+      view: function(req, res, next){
+        return req.user && req.user.key > 0
+          ? next()
+          : res.status(403).redirect("/auth/?nexturl=/" + req.originalUrl);
       }
-      return res.status(403).redirect("/auth/?nexturl=/" + req.originalUrl);
     },
     reject: function(code, msg){
       var ref$;

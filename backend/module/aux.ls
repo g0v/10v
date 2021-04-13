@@ -26,9 +26,14 @@ base = do
         @["_#n"].apply @, args#args.map -> if it instanceof Function => base.autocatch(it) else it
     return route
 
-  authed-view: (req, res, next) ->
-    if req.user and req.user.key > 0 => return next!
-    return res.status(403).redirect "/auth/?nexturl=/#{req.originalUrl}"
+
+  signed-in:
+    api: (req, res, next) ->
+      return if req.user and req.user.key > 0 => next!
+      else res.status(403).send {}
+    view: (req, res, next) ->
+      return if req.user and req.user.key > 0 => next!
+      else res.status(403).redirect "/auth/?nexturl=/#{req.originalUrl}"
 
   reject: (code=403,msg="") ->
     Promise.reject new Error(if typeof(msg) == typeof({}) => JSON.stringify(msg) else msg) <<< {code, name: 'lderror'}
