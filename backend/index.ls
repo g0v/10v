@@ -96,6 +96,14 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.use i18next-http-middleware.handle @i18n, {ignoreRoutes: <[]>}
 
         # also, we precompile all view pug into .view folder, which can be used by our custom pug view engine.
+        app.engine 'pug', pug({
+          logger: @log.child({module: \view})
+          i18n: @i18n
+          viewdir: '.view'
+          srcdir: 'src/pug'
+          desdir: 'static'
+          base: 'frontend'
+        })
         app.engine 'pug', pug({logger: @log.child({module: \view}), i18n: @i18n, viewdir: 'frontend/.view', srcdir: 'frontend/src/pug'})
         app.set 'view engine', 'pug'
         app.set 'views', path.join(__dirname, '../frontend/src/pug/')
