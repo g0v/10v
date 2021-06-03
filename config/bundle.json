@@ -26,7 +26,7 @@
       "frontend/static/assets/lib/ldform/main/ldform.min.js",
       "frontend/static/assets/lib/ldcover/main/ldcv.min.js",
       "frontend/static/assets/lib/ldcvmgr/main/ldcvmgr.min.js",
-      "frontend/static/assets/lib/ldview/main/ldview.min.js",
+      "frontend/static/assets/lib/ldview/main/index.min.js",
       "frontend/static/assets/lib/lderror/main/lde.min.js",
       "frontend/static/assets/lib/ldtab/main/ldtab.min.js",
       "frontend/static/assets/lib/ldfolder/main/ldfolder.min.js",
