@@ -1,10 +1,21 @@
-require! <[express colors path pino lderror pino-http redis util body-parser csurf]>
+require! <[yargs express colors path pino lderror pino-http redis util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
 require! <[./error-handler ./route ./redis-node]>
 require! <[./module/auth ./module/i18n ./module/aux ./module/db/postgresql]>
-require! <[../config/private/secret]>
+
+argv = yargs
+  .option \config-name, do
+    alias: \c
+    description: "config file name. `secret` if omitted. for accessing `private/config/[config].ls`"
+    type: \string
+  .help \help
+  .alias \help, \h
+  .check (argv, options) -> return true
+  .argv
+cfg-name = argv.c
+secret = require "../config/private/#{cfg-name or 'secret'}"
 
 default-config = do
   limit: '10mb'
@@ -17,8 +28,8 @@ backend = (opt = {}) ->
     production: process.env.NODE_ENV == \production
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: ({} <<< default-config <<< opt.config) # backend configuration
+    base: opt.config.base or 'frontned'
     server: null # http.Server object, either created by express or from other lib
-    base: opt.frontend-base or 'frontend'
     app: null    # express application
     log: null    # obj for logging, in pino / winston interface 
     route: {}    # all default routes

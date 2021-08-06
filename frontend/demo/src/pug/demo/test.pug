@@ -1,0 +1,46 @@
+doctype html
+html
+  include @/bootstrap.ldui/dist/index.pug
+  head
+    +css("/css/pack/vendor.min.css")
+    .w-1024.rwd.mx-auto
+      br
+      .nav.nav-pills.mb-2
+        .nav-item(ld-each="item"): .nav-link(ld="name")
+        //-
+          .nav-item: .nav-link.active(ld="item",data-name="item1") Active
+          .nav-item: .nav-link(ld="item",data-name="item2") Item
+          .nav-item: .nav-link(ld="item",data-name="item3") Item
+          .nav-item: .nav-link(ld="item",data-name="item4") Item
+        .flex-grow-1.no-select
+        .nav-item: .nav-link(ld="item-add") add
+      .card: .card-body
+        h3 hi
+
+  body
+    +script("/js/pack/vendor.min.js")
+    +script("/assets/lib/ldview/ldview.min.js")
+    script: :lsc
+      items = [0 to 5].map -> {key: it, active: (it == 0)}
+      view = new ldView do
+        root: document.body
+
+        action:
+          click: 
+            "item-add": ({node, evt}) ->
+              key = items.length
+              items.splice (items.length), 0, {key}
+              view.render {name: \item, key: key}
+
+        handler:
+          item: do
+            key: -> it.key
+            list: -> items
+            action: click: ({data}) ->
+              items.map -> it.active = (data.key == it.key); view.render \item
+            view: 
+              init-render: false
+              handler:
+                name: ({node, context}) ->
+                  node.innerText = "Item #{context.key}!"
+                  node.classList.toggle \active, !!context.active

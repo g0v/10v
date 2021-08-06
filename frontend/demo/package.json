@@ -1,0 +1,62 @@
+{
+  "name": "servebase-frontend-demo",
+  "version": "0.0.1",
+  "description": "servebase frontend demo code",
+  "author": "zbryikt",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "./node_modules/.bin/fedep"
+  },
+  "workspaces": [
+    "../../module/auth"
+  ],
+  "dependencies": {
+    "@loadingio/debounce.js": "^0.0.1",
+    "@loadingio/ldc": "^0.0.2",
+    "@loadingio/ldquery": "^2.1.0",
+    "@loadingio/transition.css": "^2.0.1",
+    "bootstrap.build": "github:plotdb/bootstrap.build",
+    "bootstrap.ldui": "github:loadingio/bootstrap.ldui#396fc6c23c6319348a461a35e1cf181b9e6c1f90",
+    "bootstrap.native": "^3.0.10",
+    "curegex": "^0.0.3",
+    "fedep": "^0.0.12",
+    "ldbutton": "^1.0.2",
+    "ldcover": "^1.3.2",
+    "ldcvmgr": "~0.0.3",
+    "ldfolder": "^0.0.4",
+    "ldform": "^0.0.1",
+    "ldiconfont": "^0.1.5",
+    "ldloader": "^1.2.1",
+    "ldnotify": "^0.0.1",
+    "ldtab": "^0.1.0",
+    "ldview": "^0.2.0",
+    "lderror": "^1.0.0",
+    "zmgr": "^0.0.3"
+  },
+  "frontendDependencies": {
+    "root": "static/assets/lib",
+    "modules": [
+      "bootstrap.ldui",
+      "bootstrap.native",
+      "@loadingio/ldquery",
+      "@loadingio/debounce.js",
+      "@loadingio/transition.css",
+      "@loadingio/ldc",
+      "curegex",
+      "proxise",
+      "ldiconfont",
+      "ldcvmgr",
+      "ldcover",
+      "lderror",
+      "ldloader",
+      "ldform",
+      "ldnotify",
+      "ldtab",
+      "ldfolder",
+      "ldbutton",
+      "zmgr",
+      "auth",
+      "ldview"
+    ]
+  }
+}

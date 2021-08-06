@@ -1,0 +1,20 @@
+doctype html
+html
+  include @/bootstrap.ldui/dist/index.pug
+  head
+    +css("/css/folder.css")
+    +css("/assets/lib/bootstrap/main/css/bootstrap.min.css")
+    br
+    .mx-auto(style="width:480px")
+      .folder.bg-dark.text-white
+        .folder-toggle hi
+        .folder-menu
+          .folder-item hi
+          .folder-item hi
+          .folder-item hi
+  body
+    script: :lsc
+      ldui = {}
+    +script("/js/folder.js")
+    script: :lsc
+      Array.from(document.querySelectorAll \.folder).map -> new ldui.Folder {root: it}
