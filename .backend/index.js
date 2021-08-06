@@ -35,6 +35,7 @@
       middleware: {},
       config: import$(import$({}, defaultConfig), opt.config),
       server: null,
+      base: opt.frontendBase || 'frontend',
       app: null,
       log: null,
       route: {},
@@ -81,7 +82,7 @@
       if (!(this.config.build && this.config.build.enabled)) {
         return;
       }
-      return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = 'frontend', ref$.bundle = {
+      return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = this.base, ref$.bundle = {
         configFile: 'config/bundle.json'
       }, ref$));
     },
@@ -157,11 +158,13 @@
             module: 'view'
           }),
           i18n: this$.i18n,
-          viewdir: 'frontend/.view',
-          srcdir: 'frontend/src/pug'
+          viewdir: '.view',
+          srcdir: 'src/pug',
+          desdir: 'static',
+          base: this$.base
         }));
         app.set('view engine', 'pug');
-        app.set('views', path.join(__dirname, '../frontend/src/pug/'));
+        app.set('views', path.join(__dirname, '..', this$.base, 'src/pug'));
         app.locals.basedir = app.get('views');
         this$.route.extapi = aux.routecatch(express.Router({
           mergeParams: true
@@ -178,7 +181,7 @@
         app.use('/api', this$.route.api);
         app.use('/api/auth', this$.route.auth);
         route(this$);
-        app.use('/', express['static'](path.join(__dirname, '../frontend/static')));
+        app.use('/', express['static'](path.join(__dirname, '..', this$.base, 'static')));
         app.use(function(req, res, next){
           return next(new lderror(404));
         });

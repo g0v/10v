@@ -18,6 +18,7 @@ backend = (opt = {}) ->
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: ({} <<< default-config <<< opt.config) # backend configuration
     server: null # http.Server object, either created by express or from other lib
+    base: opt.frontend-base or 'frontend'
     app: null    # express application
     log: null    # obj for logging, in pino / winston interface 
     route: {}    # all default routes
@@ -37,7 +38,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
   watch: ({logger, i18n}) ->
     if !(@config.build and @config.build.enabled) => return
     srcbuild.lsp (@config.build or {}) <<< {
-      logger, i18n, base: 'frontend', bundle: {configFile: 'config/bundle.json'}
+      logger, i18n, base: @base, bundle: {configFile: 'config/bundle.json'}
     }
 
   start: ->
@@ -102,11 +103,10 @@ backend.prototype = Object.create(Object.prototype) <<< do
           viewdir: '.view'
           srcdir: 'src/pug'
           desdir: 'static'
-          base: 'frontend'
+          base: @base
         })
-        app.engine 'pug', pug({logger: @log.child({module: \view}), i18n: @i18n, viewdir: 'frontend/.view', srcdir: 'frontend/src/pug'})
         app.set 'view engine', 'pug'
-        app.set 'views', path.join(__dirname, '../frontend/src/pug/')
+        app.set 'views', path.join(__dirname, '..', @base, 'src/pug')
         app.locals.basedir = app.get \views
 
         @route.extapi = aux.routecatch express.Router {mergeParams: true}
@@ -126,7 +126,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         route @ # APIs
 
-        app.use \/, express.static(path.join(__dirname, '../frontend/static')) # static file fallback
+        app.use \/, express.static(path.join __dirname, '..', @base, 'static') # static file fallback
         app.use (req, res, next) ~> next new lderror(404) # nothing match - 404
         app.use error-handler # error handler
 
