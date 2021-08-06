@@ -115,28 +115,28 @@ var loremtext = {
 
 
 
-;pug_debug_line = 1;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 1;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 prefix = function(n) { return (!n?[]:(Array.isArray(n)?n:[n])).map(function(it){ return `${prefix.currentName}$${it}`; }).join(' ');}
-;pug_debug_line = 2;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 2;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 pug_mixins["scope"] = pug_interp = function(name){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
-;pug_debug_line = 3;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 3;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 var prentName = prefix.currentName;
-;pug_debug_line = 4;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 4;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 prefix.currentName = name;
-;pug_debug_line = 5;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 5;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 if (attributes.class && /naked-scope/.exec(attributes.class)) {
-;pug_debug_line = 6;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 6;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 block && block();
 }
 else {
-;pug_debug_line = 8;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 8;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv" + (pug_attrs(pug_merge([{"ld-scope": pug_escape(name || '')},attributes]), true)) + "\u003E";
-;pug_debug_line = 9;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 9;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 block && block();
 pug_html = pug_html + "\u003C\u002Fdiv\u003E";
 }
-;pug_debug_line = 10;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Fldview.pug";
+;pug_debug_line = 10;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Fnode_modules\u002Fldview\u002Fdist\u002Findex.pug";
 prefix.currentName = parentName;
 };
 ;pug_debug_line = 7;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fzbryikt\u002Fplotdb\u002Fprojects\u002Fservebase\u002Ffrontend\u002Fsrc\u002Fpug\u002Fdemo\u002Fbase.pug";
