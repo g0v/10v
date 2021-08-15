@@ -22,3 +22,6 @@ list all api endpoint:
    - `Helmet helps you secure your Express apps by setting various HTTP headers`
    - we should set headers manually but is worth a look.
 
+# Supply Chain Attack
+
+ - https://tech-blog.cymetrics.io/posts/huli/front-end-supply-chain-attack-cdnjs/
