@@ -43,7 +43,7 @@
       production: process.env.NODE_ENV === 'production',
       middleware: {},
       config: import$(import$({}, defaultConfig), opt.config),
-      base: opt.config.base || 'frontned',
+      base: opt.config.base || 'frontend',
       server: null,
       app: null,
       log: null,
