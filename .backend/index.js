@@ -34,7 +34,7 @@
     secret = require("../config/private/" + (cfgName || 'secret'));
   } catch (e$) {
     e = e$;
-    console.log("failed to load config file `config/private/" + (cfgName || 'secret') + "`.");
+    console.log(("failed to load config file `config/private/" + (cfgName || 'secret') + "`.").red);
     console.log("if this file doesn't exist, you should add one. check config/private/demo.ls for reference");
     process.exit(-1);
   }

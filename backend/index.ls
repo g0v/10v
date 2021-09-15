@@ -18,7 +18,7 @@ cfg-name = argv.c
 try
   secret = require "../config/private/#{cfg-name or 'secret'}"
 catch e
-  console.log "failed to load config file `config/private/#{cfg-name or 'secret'}`."
+  console.log "failed to load config file `config/private/#{cfg-name or 'secret'}`.".red
   console.log "if this file doesn't exist, you should add one. check config/private/demo.ls for reference"
   process.exit -1
 
