@@ -15,7 +15,12 @@ argv = yargs
   .check (argv, options) -> return true
   .argv
 cfg-name = argv.c
-secret = require "../config/private/#{cfg-name or 'secret'}"
+try
+  secret = require "../config/private/#{cfg-name or 'secret'}"
+catch e
+  console.log "failed to load config file `config/private/#{cfg-name or 'secret'}`."
+  console.log "if this file doesn't exist, you should add one. check config/private/demo.ls for reference"
+  process.exit -1
 
 default-config = do
   limit: '10mb'
