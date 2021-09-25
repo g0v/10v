@@ -5,7 +5,7 @@
      - e.g., `frontend/demo` is the demo site for servebase.
      - you should add the folder name in the `base` field of your secret config ( `config/private/secret` )
      - you can manage frontend as a submodule or workspace with npm, to separate backend and frontend dependency.
-   - subfolder under `frontend/xxx`:
+   - subfolder under `frontend/xxx`: follow `@plotdb/srcbuild` structure.
      - `.view`: prebuilt pug js files.
      - `src`
        - ls, styl, pug
