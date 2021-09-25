@@ -49,7 +49,7 @@ backend <<< do
 backend.prototype = Object.create(Object.prototype) <<< do
   listen: -> new Promise (res, rej) ~>
     if !@server => @server = @app.listen @config.port, ((e) ~> if e => rej e else res @server)
-    else server.listen @config.port, ((e) -> if e => rej e else res @server)
+    else @server.listen @config.port, ((e) -> if e => rej e else res @server)
 
   watch: ({logger, i18n}) ->
     if !(@config.build and @config.build.enabled) => return
