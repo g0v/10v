@@ -40,7 +40,7 @@
     "uglifycss": "^0.0.29"
   },
   "dependencies": {
-    "@plotdb/srcbuild": "^0.0.14",
+    "@plotdb/srcbuild": "^0.0.20",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "chokidar": "^3.4.2",
