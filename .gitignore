@@ -14,3 +14,6 @@ frontend/*
 !frontend/README.md
 frontend/demo/static
 frontend/demo/.view
+!frontend/auth
+frontend/auth/static
+frontend/auth/.view
