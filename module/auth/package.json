@@ -13,17 +13,17 @@
     "npm": ">=7.0.15"
   },
   "scripts": {
-    "start": "npx server -r web -o true"
+    "start": "npx server -r . -o true"
   },
   "devDependencies": {
-    "@loadingio/ldquery": "^1.1.1",
-    "bootstrap": "^4.5.2",
-    "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
+    "@loadingio/ldquery": "^2.1.0",
+    "bootstrap": "^4.5.3",
+    "@loadingio/bootstrap.ext": "^0.0.1",
     "bootstrap.native": "^3.0.13",
-    "fedep": "^0.0.10",
-    "ldview": "^0.0.2",
-    "stylus": "^0.54.5",
-    "template": "github:zbryikt/template#v2.3.9",
+    "fedep": "^0.0.15",
+    "ldview": "^0.2.3",
+    "stylus": "^0.55.0",
+    "@zbryikt/template": "^2.3.20",
     "uglify-js": "^3.2.0",
     "uglifycss": "^0.0.29"
   },
