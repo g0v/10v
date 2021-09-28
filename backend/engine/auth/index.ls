@@ -98,7 +98,7 @@ route.auth.get \/info, (req, res) ~>
   res.send payload
 
 <[local google facebook line]>.map (name) ->
-  if config{}auth.[name] => strategy[name](config.auth[name])
+  if config{}auth[name] => strategy[name](config.auth[name])
   route.auth
     ..post "/#name", passport.authenticate name, {scope: <[profile openid email]>}
     ..get "/#name/callback", passport.authenticate name, do
