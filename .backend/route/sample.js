@@ -4,7 +4,7 @@
   fs = require('fs');
   path = require('path');
   lderror = require('lderror');
-  aux = require('../module/aux');
+  aux = require('backend/aux');
   (function(it){
     return module.exports = it;
   })(function(backend){

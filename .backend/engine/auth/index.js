@@ -9,7 +9,7 @@
   passportLineAuth = require('passport-line-auth');
   lderror = require('lderror');
   jsonwebtoken = require('jsonwebtoken');
-  aux = require('../../module/aux');
+  aux = require('../aux');
   (function(f){
     var authModule;
     return module.exports = authModule = function(it){
