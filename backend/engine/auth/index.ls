@@ -3,7 +3,7 @@ require! <[passport-facebook]>
 require! <[passport-google-oauth20]>
 require! <[passport-line-auth]>
 require! <[lderror jsonwebtoken]>
-require! <[../../module/aux]>
+require! <[../aux]>
 
 (backend) <- ((f) -> module.exports = auth-module = -> f it) _
 {db,app,config,route} = backend

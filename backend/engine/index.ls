@@ -1,9 +1,16 @@
-require! <[yargs express colors path pino lderror pino-http redis util body-parser csurf]>
+require! <[fs yargs express colors path pino lderror pino-http redis util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
-require! <[./error-handler ./route ./redis-node]>
-require! <[./module/auth ./module/i18n ./module/aux ./module/db/postgresql]>
+require! <[./error-handler ./redis-node]>
+require! <[backend/auth backend/i18n backend/aux backend/db/postgresql]>
+
+libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
+routes = fs.readdir-sync path.join(libdir, '..')
+  .filter -> it != \engine 
+  .map -> path.join(libdir, '..', it)
+  .map -> require it
+
 
 argv = yargs
   .option \config-name, do
@@ -16,7 +23,7 @@ argv = yargs
   .argv
 cfg-name = argv.c
 try
-  secret = require "../config/private/#{cfg-name or 'secret'}"
+  secret = require "../../config/private/#{cfg-name or 'secret'}"
 catch e
   console.log "failed to load config file `config/private/#{cfg-name or 'secret'}`.".red
   console.log "if this file doesn't exist, you should add one. check config/private/demo.ls for reference"
@@ -140,7 +147,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.use \/api, @route.api
         app.use \/api/auth, @route.auth
 
-        route @ # APIs
+        routes.map ~> it @ # APIs
 
         app.use \/, express.static(path.join __dirname, '..', @base, 'static') # static file fallback
         app.use (req, res, next) ~> next new lderror(404) # nothing match - 404

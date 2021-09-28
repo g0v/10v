@@ -14,7 +14,8 @@
     "npm": ">=7.0.15"
   },
   "workspaces": [
-    "module/auth"
+    "module/auth",
+    "backend/engine"
   ],
   "scripts": {
     "start": "NODE_ENV=production ./start",
