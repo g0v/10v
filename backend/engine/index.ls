@@ -129,7 +129,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
           base: @base
         })
         app.set 'view engine', 'pug'
-        app.set 'views', path.join(__dirname, '..', @base, 'src/pug')
+        app.set 'views', path.join(__dirname, '../..', @base, 'src/pug')
         app.locals.basedir = app.get \views
 
         @route.extapi = aux.routecatch express.Router {mergeParams: true}
@@ -149,7 +149,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         routes.map ~> it @ # APIs
 
-        app.use \/, express.static(path.join __dirname, '..', @base, 'static') # static file fallback
+        app.use \/, express.static(path.join __dirname, '../..', @base, 'static') # static file fallback
         app.use (req, res, next) ~> next new lderror(404) # nothing match - 404
         app.use error-handler # error handler
 
