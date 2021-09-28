@@ -18,24 +18,26 @@ auth = (opt={}) ->
     timeout: -> new Promise (res, rej) -> # do nothing
     
   [k for k of @ui].map (k) ~> if opt.{}ui[k] => @ui[k] = opt.ui[k]
-  if !@api-root =>
-    @api-root = opt.api or "/api/auth"
-    if @api-root[* - 1] != \/ => @api-root += \/
+  if !@_api-root => @_api-root = opt.api or "/api/auth"
+  if @_api-root[* - 1] != \/ => @_api-root += \/
+  @fetch!
   @
 
 auth.prototype = Object.create(Object.prototype) <<< do
-  on: (n, cb) -> @evt-handler.[][n].push cb
+  on: (n, cb) -> (if Array.isArray(n) => n else [n]).map (n) ~> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   inject: -> {}
-  api-root: ->
-    return @api-root
-  set-ui: -> @ui <<< (it or {})
+  api-root: -> return @_api-root
+  set-ui: ->
+    @ui <<< (it or {})
   logout: ->
     @ui.loader.on!
     ld$.fetch "#{@api-root!}/logout", {method: \post}, {}
       .then ~> @fetch {renew: true}
       .then ~> @fire \logout
-      .then ~> @ui.loader.off!
+      .then ~>
+        console.log \here
+        @ui.loader.off!
       .catch ~> @fire \error
 
   # ensure user is authed. shorthand and for readbility for auth.get({authed:true})
@@ -53,7 +55,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
   # for retrieving global object from server ( or cookie ). this won't trigger sign up ui.
   fetch: (opt = {renew: true}) ->
     # if d/global response later then 1000ms, popup a loader
-    @ui.loader.on-later @timeout.loader
+    @ui.loader.on @timeout.loader
     # if it took too long to respond, just hint user about possibly server issue
     @watchdog = debounce(@timeout.failed, ~>
       @ui.loader.off!
@@ -98,8 +100,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
         # to stop further progress of current code.
         new Promise (res, rej) ->
 
-  prompt: (v, opt) ->
-    @ui.authpanel(true, opt)
+  prompt: (v, opt) -> @ui.authpanel(true, opt)
   social: ({name}) ->
     @get!
       .then (g = {}) ~>

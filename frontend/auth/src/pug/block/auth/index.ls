@@ -28,60 +28,75 @@ pkg:
       "Switch to Password Login": "切換回帳號登入 / 註冊"
       "by Invitation": "使用邀請碼"
 init: ({root, data}) ->
-  ldcv = {}
+  <-(~>it.apply @mod) _
+  @ldcv = ldcv = {}
+  @frontend = data.frontend
   ldcv.authpanel = new ldcover root: ld$.find(root, '.ldcv[data-name=authpanel]', 0), base-z: 1
-  ldcv.authpanel.toggle \true
-  console.log \inited.
   @ldld = new ldloader class-name: "ldld full z-fixed"
-  @ <<< {action: 'login'}
+  @ <<< {_tab: 'login', _info: \default}
 
   @view = view = new ldview do
     root: root
     action: click:
       submit: ({node}) ~> @submit!
       switch: ({node}) ~>
-        @action = node.getAttribute \data-name
-        view.render!
+        @tab node.getAttribute \data-name
     handler:
       submit: ({node}) ~> node.classList.toggle \disabled, !(@ready)
-      displayname: ({node}) ~> node.classList.toggle \d-none, @action == \login
+      displayname: ({node}) ~> node.classList.toggle \d-none, @_tab == \login
+      info: ({node}) ~> node.classList.toggle \d-none, (node.getAttribute(\data-name) != @_info)
       switch: ({node}) ~>
         name = node.getAttribute \data-name
-        node.classList.toggle \btn-text, (@action != name)
-        node.classList.toggle \btn-primary, (@action == name)
+        node.classList.toggle \btn-text, (@_tab != name)
+        node.classList.toggle \btn-primary, (@_tab == name)
   @form = form = new ldform do
     names: -> <[username password displayname]>
     after-check: (s, f) ~>
       if s.username != 1 and !@is-valid.username(f.username.value) => s.username = 2
       if s.password != 1 =>
         s.password = if !f.password.value => 1 else if !@is-valid.password(f.password.value) => 2 else 0
-      if @action == \login => s.displayname = 0
+      if @_tab == \login => s.displayname = 0
       else s.displayname = if !f.displayname.value => 1 else if !!f.displayname.value => 0 else 2
     root: root
   @form.on \readystatechange, ~> @ready = it; @view.render \submit
 
-is-valid:
-  username: (u) -> curegex.get('email').exec(u)
-  password: (p) -> p and p.length >= 8
+interface: -> (toggle = true, opt = {}) ~>
+  @mod.view.get('username').focus!
+  if opt.tab => @mod.tab opt.tab
+  if toggle => @mod.ldcv.authpanel.get!
+  else @mod.frontend.auth.fetch!then (g) -> @mod.ldcv.authpanel.set g
 
+mod:
+  tab: (tab) ->
+    @_tab = tab
+    @view.render!
+  is-valid:
+    username: (u) -> curegex.get('email').exec(u)
+    password: (p) -> p and p.length >= 8
 
-submit: ->
-  if !@form.ready! => return
-  val = @form.values!
-  body = {} <<< val{username, password, displayname}
-  @ldld.on!
-    .then -> debounce 1000
-    .then ~>
-      data = {}
-      #ld$.fetch "#{@auth.api-root!}#{@action}", {method: \POST}, {json: body}
-    #.then ~> @auth.fetch!
-    .finally ~> @ldld.off!
-    .then (g) ~>
-      #@set-info \default
-      @form.reset!
-    .catch (e) ~>
-      console.log e
-      #@set-info "#{@action}-failed"
-      @form.fields.password.value = null
-      @form.check {n: \password, now: true}
+  info: ->
+    @_info = it
+    @view.render \info
+
+  submit: ->
+    if !@form.ready! => return
+    val = @form.values!
+    body = {} <<< val{username, password, displayname}
+    @ldld.on!
+      .then -> debounce 1000
+      .then ~>
+        data = {}
+        ld$.fetch "#{@frontend.auth.api-root!}#{@_tab}", {method: \POST}, {json: body}
+      .then ~> @frontend.auth.fetch!
+      .finally ~> @ldld.off!
+      .then (g) ~>
+        @info \default
+        @form.reset!
+        @ldcv.authpanel.set g
+        return g
+      .catch (e) ~>
+        console.log e
+        @info "#{@_tab}-failed"
+        @form.fields.password.value = null
+        @form.check {n: \password, now: true}
 

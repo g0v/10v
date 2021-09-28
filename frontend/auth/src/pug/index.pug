@@ -17,14 +17,35 @@ html
       }
       
   body
+
+    .w-100.py-2.px-4.bg-dark.text-light.d-flex
+      .flex-grow-1
+      .clickable(ld="login") Login
+    .w-1024.rwd.mx-auto.my-4
+      h4 Authentication
+      hr
+      div
+        b Current Status
+        p(ld="status") Not login
+      div
+        b User Name
+        p(ld="username") n/a
+      div
+        b User Id
+        p(ld="userid") n/a
+      .btn.btn-primary.mr-2(ld="signup not-signed") Sign Up
+      .btn.btn-primary.mr-2(ld="login not-signed") Login
+      .btn.btn-primary.mr-2.d-none(ld="logout signed") Logout
+      .btn.btn-primary(ld="reauth") Re-auth
+
     +script("/assets/lib/i18next/main/umd/i18next.min.js")
+    +script("assets/lib/zmgr/main/index.min.js")
     +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
     +script("/assets/lib/proxise/main/proxise.min.js")
     +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
     +script("/assets/lib/@plotdb/rescope/main/rescope.min.js")
     +script("/assets/lib/@plotdb/csscope/main/csscope.min.js")
     +script("/assets/lib/@plotdb/block/main/block.min.js")
-    +script("assets/lib/zmgr/main/index.min.js")
     +script("assets/lib/ldcover/main/index.min.js")
     +script("assets/lib/ldform/main/index.min.js")
     +script("assets/lib/curegex/main/curegex.min.js")
