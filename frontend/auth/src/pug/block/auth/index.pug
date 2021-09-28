@@ -1,7 +1,7 @@
 div
   .ldcv(data-name="consent"): .base: .inner
   .ldcv(data-name="authpanel"): .base: .inner
-    .w-100.h-100.d-flex.align-items-center.justify-content-center
+    form.w-100.h-100.d-flex.align-items-center.justify-content-center
       .d-flex.shadow.sm.rounded.border.mx-auto(style="width:700px;height:580px;") 
         .mx-auto.flex-grow-1.bg-light(style="width:50%")
           .w-100.h-100.position-relative.d-flex.flex-column.p-4
@@ -46,44 +46,47 @@ div
                 h3(t) by Invitation
                 p.my-4 若您持有我們另外發給您的邀請碼，您可以於下方輸入該邀請碼直接登入系統。
                 .form-group
-                  label(t="invitation code")
+                  label(t) invitation code
                   input.form-control(ld="invite-code",name="invite-code",t
                   t-placeholder="code we sent you for using this service",autocomplete="invite-code")
-                  .invalid-feedback(style="margin-bottom:-.75em",t="invalid invitation code")
-              .btn.btn-primary.d-block.my-2(ld="action",t="Login")
+                  .invalid-feedback(style="margin-bottom:-.75em",t) invalid invitation code
+              .btn.btn-primary.d-block.my-2(ld="submit",t) Login
               .text-center.my-2: a(ld="switch-login",href="#") #[span(t) Switch to Password Login] »
           .d-flex.align-items-stretch.flex-column.justify-content-center.h-100.p-4
             div
               .d-flex.mb-4(style="gap:1em")
-                .btn.btn-sm.btn-primary.flex-grow-1(ld="switch",data-name="login",t="Login")
-                .btn.btn-sm.btn-text.flex-grow-1(ld="switch",data-name="signup",t="Signup")
+                .btn.btn-sm.btn-primary.flex-grow-1(ld="switch",data-name="login",t) Login
+                .btn.btn-sm.btn-text.flex-grow-1(ld="switch",data-name="signup",t) Signup
             .flex-grow-1.d-flex.flex-column.justify-content-center
               div
                 .form-group
-                  span(t="email")
+                  span(t) email
                   input.form-control(ld="username",name="username",t
                   t-placeholder="your email address, as account name",autocomplete="username")
-                  .invalid-feedback(style="margin-bottom:-.75em",t="invalid email address")
+                  .invalid-feedback(style="margin-bottom:-.75em",t) invalid email address
                 .form-group(ld="displayname")
-                  span(t="display name")
+                  span(t) display name
                   input.form-control(name="displayname",t,
                   t-placeholder="such as 'Paris Hillton'",autocomplete="displayname")
-                  .invalid-feedback(t="required field")
+                  .invalid-feedback(t) required field
                 .form-group
-                  span(t="password")
-                  input.form-control(ld="password",name="password",t,
-                  t-placeholder="at least 8 characters")
-                  .invalid-feedback(style="margin-bottom:-.75em",t="password too short")
-                  //-.invalid-feedback(style="margin-bottom:-.75em",t="password incorrect")
-              .text-center.text-sm.mb-4
-                span(t) by sign-in, you agree to our
-                a.mx-1(href="#",t,target="_blank",rel="noopener noreferrer") Terms
-                span(t) and
-                a.mx-1(href="#",t="Privacy Policy",target="_blank",rel="noopener noreferrer")
-              .btn.btn-primary.d-block.my-2(ld="action",t="Login")
+                  span(t) password
+                  input.form-control(type="password",ld="password",name="password",
+                  autocomplete="password",t,t-placeholder="at least 8 characters")
+                  .invalid-feedback(style="margin-bottom:-.75em",t) password too short
+                  //-.invalid-feedback(style="margin-bottom:-.75em",t) password incorrect
+              .text-center.text-sm.mb-4(t)
+                span by sign-in, you agree to our
+                span 
+                a.mx-1(href="#",target="_blank",rel="noopener noreferrer") Terms
+                span 
+                span and
+                span 
+                a.mx-1(href="#",target="_blank",rel="noopener noreferrer") Privacy Policy
+              .btn.btn-primary.d-block.my-2(ld="submit",t) Login
               .text-right.my-2: a(ld="forget-password",href="#") #[span(t) Forget Password]? »
             div
-              .sep.sep-text.mb-4.text-sm.text-secondary: span(t) or
+              .sep.sep-text.mb-4.text-sm.text-secondary: span(t) or login with
               .d-flex
                 .btn.btn-primary.mr-1.flex-grow-1.d-flex.justify-content-between.align-items-center(
                 ld="social",data-name="fb") #[span Facebook] #[i.i-fb]

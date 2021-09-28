@@ -15,7 +15,7 @@ pkg:
       "at least 8 characters": "至少八個字元"
       "by sign-in, you agree to our": "登入即代表您同意我們的"
       "and": "和"
-      "or": "或"
+      "or login with": "或使用下列登入"
       "Terms": "使用條款"
       "Privacy Policy": "隱私權政策"
       "Login": "登入"
@@ -27,36 +27,28 @@ pkg:
       "invalid invitation code": "無效的邀請碼"
       "Switch to Password Login": "切換回帳號登入 / 註冊"
       "by Invitation": "使用邀請碼"
-init: ({root}) ->
+init: ({root, data}) ->
   ldcv = {}
   ldcv.authpanel = new ldcover root: ld$.find(root, '.ldcv[data-name=authpanel]', 0), base-z: 1
   ldcv.authpanel.toggle \true
   console.log \inited.
   @ldld = new ldloader class-name: "ldld full z-fixed"
-  lc = {switch: 'login'}
-  view = new ldview do
+  @ <<< {action: 'login'}
+
+  @view = view = new ldview do
     root: root
     action: click:
-      action: ({node}) ~>
-        list = <[default signup-failed login-failed token]>
-        name = list[Math.floor(Math.random! * list.length)]
-        @ldld.on!
-          .then -> debounce 1000
-          .then ->
-            name = "login-failed"
-            view.getAll('info').map (n) ->
-              n.classList.toggle \d-none, (n.getAttribute(\data-name) != name)
-          .finally ~> @ldld.off!
-      switch: ({node}) ->
-        lc.switch = node.getAttribute \data-name
+      submit: ({node}) ~> @submit!
+      switch: ({node}) ~>
+        @action = node.getAttribute \data-name
         view.render!
     handler:
-      displayname: ({node}) -> node.classList.toggle \d-none, lc.switch == \login
-      switch: ({node}) ->
+      submit: ({node}) ~> node.classList.toggle \disabled, !(@ready)
+      displayname: ({node}) ~> node.classList.toggle \d-none, @action == \login
+      switch: ({node}) ~>
         name = node.getAttribute \data-name
-        node.classList.toggle \btn-text, lc.switch != name
-        node.classList.toggle \btn-primary, lc.switch == name
-
+        node.classList.toggle \btn-text, (@action != name)
+        node.classList.toggle \btn-primary, (@action == name)
   @form = form = new ldform do
     names: -> <[username password displayname]>
     after-check: (s, f) ~>
@@ -66,9 +58,30 @@ init: ({root}) ->
       if @action == \login => s.displayname = 0
       else s.displayname = if !f.displayname.value => 1 else if !!f.displayname.value => 0 else 2
     root: root
+  @form.on \readystatechange, ~> @ready = it; @view.render \submit
 
 is-valid:
   username: (u) -> curegex.get('email').exec(u)
   password: (p) -> p and p.length >= 8
 
+
+submit: ->
+  if !@form.ready! => return
+  val = @form.values!
+  body = {} <<< val{username, password, displayname}
+  @ldld.on!
+    .then -> debounce 1000
+    .then ~>
+      data = {}
+      #ld$.fetch "#{@auth.api-root!}#{@action}", {method: \POST}, {json: body}
+    #.then ~> @auth.fetch!
+    .finally ~> @ldld.off!
+    .then (g) ~>
+      #@set-info \default
+      @form.reset!
+    .catch (e) ~>
+      console.log e
+      #@set-info "#{@action}-failed"
+      @form.fields.password.value = null
+      @form.check {n: \password, now: true}
 
