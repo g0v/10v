@@ -1,0 +1,2 @@
+ - auto signout ( by timeout )
+ - account lock after failure attempts
