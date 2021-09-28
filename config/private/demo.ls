@@ -32,3 +32,6 @@ module.exports = do
     line:
       channelID: '...'
       channelSecret: '...'
+    local:
+      usernameField: \email
+      passwordField: \passwd
