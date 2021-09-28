@@ -17,12 +17,15 @@
 
  - .backend: prebuilt backend js
  - backend
+   - engine
+     - utilities modules including
+       - db, auth, etc
+       - other util # 額外的工具模組
+     - server code:
+       - index.ls, error-handler.ls, ...
    - route
-   - module
-     - db, auth, etc
-     - other util # 額外的工具模組
-   - other files
-     - index.ls, error-handler.ls, ...
+     - router / api handler. use utilitis vis `require("backend/...")`
+
  - locales - for i18n
    - intl
      - zh-TW, en , ... etc 
