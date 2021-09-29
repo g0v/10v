@@ -46,6 +46,7 @@ backend = (opt = {}) ->
     log: null    # obj for logging, in pino / winston interface 
     route: {}    # all default routes
     store: {}    # redis like data store, with get / set function
+    session: {}  # express-session object
   @
 
 backend <<< do

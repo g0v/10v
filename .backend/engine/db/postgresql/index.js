@@ -14,13 +14,13 @@
   };
   pg.defaults.poolSize = 30;
   ret = function(backend){
-    var config, log, ref$, user, password, host, database, auth, this$ = this;
+    var config, log, ref$, user, password, host, database, port, auth, this$ = this;
     this.config = config = backend.config;
     this.log = log = backend.log.child({
       module: 'DB'
     });
-    ref$ = config.db.postgresql, user = ref$.user, password = ref$.password, host = ref$.host, database = ref$.database;
-    this.uri = "postgres://" + user + ":" + password + "@" + host + "/" + database;
+    ref$ = config.db.postgresql, user = ref$.user, password = ref$.password, host = ref$.host, database = ref$.database, port = ref$.port;
+    this.uri = "postgres://" + user + ":" + password + "@" + host + (port ? ':' + port : '') + "/" + database;
     this.pool = new pg.Pool({
       connectionString: this.uri,
       max: config.db.postgresql.poolSize || 20,

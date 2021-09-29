@@ -6,7 +6,8 @@ module.exports = do
   base: 'frontend/demo'
   db:
     postgresql:
-      host: \localhost:15432 # host.docker.internal
+      host: \localhost # host.docker.internal
+      port: 15432
       database: \pg
       user: \pg
       password: \pg

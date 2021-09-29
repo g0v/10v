@@ -8,8 +8,8 @@ pg.defaults.poolSize = 30
 ret = (backend) ->
   @config = config = backend.config
   @log = log = backend.log.child {module: 'DB'}
-  {user, password, host, database} = config.db.postgresql
-  @uri = "postgres://#{user}:#{password}@#{host}/#{database}"
+  {user, password, host, database, port} = config.db.postgresql
+  @uri = "postgres://#{user}:#{password}@#{host}#{if port => ':' + port else ''}/#{database}"
 
   @pool = new pg.Pool do
     connectionString: @uri

@@ -63,7 +63,8 @@
       app: null,
       log: null,
       route: {},
-      store: {}
+      store: {},
+      session: {}
     });
     return this;
   };
