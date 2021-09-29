@@ -2,8 +2,8 @@
 @zmgr = new zmgr init: 1000
 @auth = new auth!
 manager = new block.manager registry: ({name,version,path,type}) ->
-  if type == \block => return "/block/#name/index.html"
-  return "/assets/lib/#name/#version/#path"
+  if type == \block => return "/assets/lib/#name/#{version or \main}/#{path or \index.html}"
+  return "/assets/lib/#name/#version/#{path or \index.min.js}"
 
 ldld = new ldloader class-name: "ldld full", zmgr: @zmgr
 frontend = do

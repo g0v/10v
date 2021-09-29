@@ -52,6 +52,7 @@
       "@plotdb/rescope",
       "@plotdb/csscope",
       "@plotdb/block",
+      "auth",
       "curegex",
       "proxise",
       "ldiconfont",
@@ -65,7 +66,6 @@
       "ldbutton",
       "ldview",
       "zmgr",
-      "auth",
       "i18next",
       "curegex"
     ]
