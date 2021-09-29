@@ -112,7 +112,7 @@ passport.deserializeUser (v,done) !->
 
 session-store = -> @ <<< db.auth.session
 session-store.prototype = express-session.Store.prototype
-app.use session = express-session do
+app.use backend.session = session = express-session do
   secret: config.session.secret
   resave: true
   saveUninitialized: true

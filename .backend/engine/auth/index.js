@@ -184,7 +184,7 @@
       return import$(this, db.auth.session);
     };
     sessionStore.prototype = expressSession.Store.prototype;
-    app.use(session = expressSession({
+    app.use(backend.session = session = expressSession({
       secret: config.session.secret,
       resave: true,
       saveUninitialized: true,
