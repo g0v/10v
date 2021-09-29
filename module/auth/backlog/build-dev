@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+echo "prepare..."
+rm -rf dist
+mkdir -p dist
+
+echo "build auth.ls -> auth.js ..."
+npx lsc -cp src/auth.ls > dist/auth.js
+echo "minify auth.js -> auth.min.js ..."
+npx uglifyjs dist/auth.js > dist/auth.min.js
+
+echo "build authpanel.ls -> authpanel.js ..."
+npx lsc -cp src/authpanel.ls > dist/authpanel.js
+echo "minify authpanel.js -> authpanel.min.js ..."
+npx uglifyjs dist/authpanel.js > dist/authpanel.min.js
+
+echo "build authpanel.style -> authpanel.css ..."
+npx stylus -p src/authpanel.styl > dist/authpanel.css
+echo "minify authpanel.css ..."
+npx uglifycss dist/authpanel.css > dist/authpanel.min.css
+
+echo "copy authpanel.pug -> dist/authpanel.pug ..."
+cp src/authpanel.pug dist/authpanel.pug
+
+echo "build authpanel.pug -> dist/authpanel.html ..."
+npx pug -s -o dist src/authpanel.pug

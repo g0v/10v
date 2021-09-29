@@ -1,80 +1,102 @@
-main = (opt={}) ->
-  @opt = opt
-  @root = if typeof(opt.root) == \string => document.querySelector(opt.root) else opt.root
-  if opt.is-valid => @is-valid = opt.is-valid
-  @action = \signup
-  @auth = opt.auth
-  @ready = false
-  @info = \default
-  @init!
-  @
+pkg:
+  name: "auth", version: "0.0.1"
+  i18n:
+    "zh-TW":
+      "email": "電子郵件"
+      "your email address, as account name": "您的電子郵件地址做為帳戶名"
+      "invalid email address": "無效的電子郵件"
+      "display name": "顯示名稱"
+      "such as 'Paris Hillton'": "例如: 王小明"
+      "requried field": "不能留白"
+      "password too short": "密碼不能太短"
+      "password incorrect": "密碼不正確"
+      "how shuold we call you": "您希望我們如何稱呼您?"
+      "password": "密碼"
+      "at least 8 characters": "至少八個字元"
+      "by sign-in, you agree to our": "登入即代表您同意我們的"
+      "and": "和"
+      "or login with": "或使用下列登入"
+      "Terms": "使用條款"
+      "Privacy Policy": "隱私權政策"
+      "Login": "登入"
+      "Signup": "註冊"
+      "Sign Up": "註冊"
+      "Forget Password": "忘記密碼"
+      "code we sent you for using this service": "由我們另外發給您的邀請碼"
+      "invitation code": "邀請碼"
+      "invalid invitation code": "無效的邀請碼"
+      "Switch to Password Login": "切換回帳號登入 / 註冊"
+      "by Invitation": "使用邀請碼"
+init: ({root, data}) ->
+  <-(~>it.apply @mod) _
+  @ldcv = ldcv = {}
+  @frontend = data.frontend
+  ldcv.authpanel = new ldcover root: ld$.find(root, '.ldcv[data-name=authpanel]', 0), base-z: 1
+  @ldld = new ldloader class-name: "ldld full z-fixed"
+  @ <<< {_tab: 'login', _info: \default}
 
-main.prototype = Object.create(Object.prototype) <<< do
-  set-action: (a) -> @action = a
-  switch: (name = 'signup') ->
-    @action = name
-    @view.render <[form tab show]>
-  set-info: ->
-    @info = it
-    @view.render <[info]>
-  init: ->
-    @view = new ldView do
-      root: @root
-      handler:
-        "forgot-password": ({node}) -> node.setAttribute \href, "/auth/reset/"
-        submit: ({node}) ~> node.classList.toggle \disabled, !@ready
-        form: ({node}) ~> <[login signup]>.map ~> node.classList.toggle it, @action == it
-        info: ({node}) ~>
-          node.classList.toggle \d-none, node.getAttribute(\data-name) != @info
+  @view = view = new ldview do
+    root: root
+    action: click:
+      submit: ({node}) ~> @submit!
+      switch: ({node}) ~>
+        @tab node.getAttribute \data-name
+    handler:
+      submit: ({node}) ~> node.classList.toggle \disabled, !(@ready)
+      displayname: ({node}) ~> node.classList.toggle \d-none, @_tab == \login
+      info: ({node}) ~> node.classList.toggle \d-none, (node.getAttribute(\data-name) != @_info)
+      switch: ({node}) ~>
+        name = node.getAttribute \data-name
+        node.classList.toggle \btn-text, (@_tab != name)
+        node.classList.toggle \btn-primary, (@_tab == name)
+  @form = form = new ldform do
+    names: -> <[username password displayname]>
+    after-check: (s, f) ~>
+      if s.username != 1 and !@is-valid.username(f.username.value) => s.username = 2
+      if s.password != 1 =>
+        s.password = if !f.password.value => 1 else if !@is-valid.password(f.password.value) => 2 else 0
+      if @_tab == \login => s.displayname = 0
+      else s.displayname = if !f.displayname.value => 1 else if !!f.displayname.value => 0 else 2
+    root: root
+  @form.on \readystatechange, ~> @ready = it; @view.render \submit
 
-        tab: ({node}) ~>
-          n = node.getAttribute(\data-name)
-          node.classList.toggle \active, @action == n
-        show: ({node}) ~>
-          n = node.getAttribute(\data-tab)
-          node.classList.toggle \d-none, @action != n
-      action:
-        keyup: password: ({evt}) ~> if evt.keyCode == 13 => @form.check {now: true} .then ~> @submit!
-        click:
-          submit: ~> @submit!
-          tab: ({node}) ~> @switch(node.getAttribute(\data-name))
+interface: -> (toggle = true, opt = {}) ~>
+  @mod.view.get('username').focus!
+  if opt.tab => @mod.tab opt.tab
+  if toggle => @mod.ldcv.authpanel.get!
+  else @mod.frontend.auth.fetch!then (g) -> @mod.ldcv.authpanel.set g
 
-    @ldld = new ldLoader root: @view.get('submit')
-
-    @form = form = new ldForm do
-      names: -> <[username password displayname]>
-      after-check: (s, f) ~>
-        if s.username != 1 and !@is-valid.username(f.username.value) => s.username = 2
-        if s.password != 1 =>
-          s.password = if !f.password.value => 1 else if !@is-valid.password(f.password.value) => 2 else 0
-        if @action == \login => s.displayname = 0
-        else s.displayname = if !f.displayname.value => 1 else if !!f.displayname.value => 0 else 2
-      root: @root
-
-    @form.on \readystatechange, ~> @ready = it; @view.render <[submit]>
-
-  submit: ->
-    if !@form.ready! => return
-    @ldld.on!
-    val = @form.values!
-    body = {} <<< val{username, password, displayname}
-    Promise.resolve!
-      .then ~>
-        data = {}
-        ld$.fetch "#{@auth.api-root!}#{@action}", {method: \POST}, {json: body}
-      .then ~> @auth.fetch!
-      .finally ~> @ldld.off!
-      .then (g) ~>
-        @set-info \default
-        @form.reset!
-      .catch (e) ~>
-        console.log e
-        @set-info "#{@action}-failed"
-        @form.fields.password.value = null
-        @form.check {n: \password, now: true}
-
-  is-valid: 
+mod:
+  tab: (tab) ->
+    @_tab = tab
+    @view.render!
+  is-valid:
     username: (u) -> curegex.get('email').exec(u)
     password: (p) -> p and p.length >= 8
 
-if window? => window.authpanel = main
+  info: ->
+    @_info = it
+    @view.render \info
+
+  submit: ->
+    if !@form.ready! => return
+    val = @form.values!
+    body = {} <<< val{username, password, displayname}
+    @ldld.on!
+      .then -> debounce 1000
+      .then ~>
+        data = {}
+        ld$.fetch "#{@frontend.auth.api-root!}#{@_tab}", {method: \POST}, {json: body}
+      .then ~> @frontend.auth.fetch!
+      .finally ~> @ldld.off!
+      .then (g) ~>
+        @info \default
+        @form.reset!
+        @ldcv.authpanel.set g
+        return g
+      .catch (e) ~>
+        console.log e
+        @info "#{@_tab}-failed"
+        @form.fields.password.value = null
+        @form.check {n: \password, now: true}
+
