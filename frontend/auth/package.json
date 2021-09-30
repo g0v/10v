@@ -16,6 +16,7 @@
     "@loadingio/debounce.js": "^0.0.1",
     "@loadingio/ldc": "^0.0.2",
     "@loadingio/ldquery": "^2.1.0",
+    "@loadingio/loading.css": "^2.0.1",
     "@loadingio/transition.css": "^2.0.1",
     "@plotdb/block": "^2.1.0",
     "@plotdb/csscope": "^2.0.0",
@@ -47,6 +48,7 @@
       "bootstrap.native",
       "@loadingio/ldquery",
       "@loadingio/debounce.js",
+      "@loadingio/loading.css",
       "@loadingio/transition.css",
       "@loadingio/ldc",
       "@plotdb/rescope",
@@ -67,6 +69,7 @@
       "ldview",
       "zmgr",
       "i18next",
+      "ldbutton",
       "curegex"
     ]
   }

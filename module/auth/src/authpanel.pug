@@ -50,7 +50,7 @@ div
                   input.form-control(ld="invite-code",name="invite-code",t
                   t-placeholder="code we sent you for using this service",autocomplete="invite-code")
                   .invalid-feedback(style="margin-bottom:-.75em",t) invalid invitation code
-              .btn.btn-primary.d-block.my-2(ld="submit",t) Login
+              .btn.btn-primary.d-block.my-2.ld-ext-right(ld="submit",t) Login #[.ld.ld-spin.ld-ring]
               .text-center.my-2: a(ld="switch-login",href="#") #[span(t) Switch to Password Login] »
           .d-flex.align-items-stretch.flex-column.justify-content-center.h-100.p-4
             div
@@ -83,7 +83,7 @@ div
                 span and
                 span 
                 a.mx-1(href="#",target="_blank",rel="noopener noreferrer") Privacy Policy
-              .btn.btn-primary.d-block.my-2(ld="submit",t) Login
+              .btn.btn-primary.d-block.my-2.ld-ext-right(ld="submit",t) Login #[.ld.ld-spin.ld-ring]
               .text-right.my-2: a(ld="forget-password",href="#") #[span(t) Forget Password]? »
             div
               .sep.sep-text.mb-4.text-sm.text-secondary: span(t) or login with
