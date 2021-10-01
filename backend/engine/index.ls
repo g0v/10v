@@ -89,7 +89,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
       .then ~>
         @db = new postgresql @
 
-        @app = @route.app = app = express!
+        @app = app = express!
         @store = new redis-node!
         @log-server.info "initializing backend in #{app.get \env} mode".cyan
 
@@ -133,6 +133,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.set 'views', path.join(__dirname, '../..', @base, 'src/pug')
         app.locals.basedir = app.get \views
 
+        @route.app = aux.routecatch app
         @route.extapi = aux.routecatch express.Router {mergeParams: true}
         @route.api = api = aux.routecatch express.Router {mergeParams: true}
         @route.auth = aux.routecatch express.Router {mergeParams: true}
