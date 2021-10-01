@@ -148,7 +148,7 @@
       }).then(function(){
         var app, api;
         this$.db = new postgresql(this$);
-        this$.app = this$.route.app = app = express();
+        this$.app = app = express();
         this$.store = new redisNode();
         this$.logServer.info(("initializing backend in " + app.get('env') + " mode").cyan);
         app.disable('x-powered-by');
@@ -191,6 +191,7 @@
         app.set('view engine', 'pug');
         app.set('views', path.join(__dirname, '../..', this$.base, 'src/pug'));
         app.locals.basedir = app.get('views');
+        this$.route.app = aux.routecatch(app);
         this$.route.extapi = aux.routecatch(express.Router({
           mergeParams: true
         }));
