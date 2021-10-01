@@ -54,7 +54,7 @@
     "i18next-http-middleware": "^3.0.6",
     "js-yaml": "^3.14.0",
     "jsonwebtoken": "^8.5.1",
-    "lderror": "^1.1.3",
+    "lderror": "^1.1.4",
     "livescript": "^1.6.0",
     "ls-lint": "^0.1.2",
     "marked": "^2.0.1",
