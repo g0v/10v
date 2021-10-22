@@ -34,4 +34,12 @@ base = do
   reject: (code=403,msg="") ->
     Promise.reject new Error(if typeof(msg) == typeof({}) => JSON.stringify(msg) else msg) <<< {code, name: 'lderror'}
 
+  is-admin: (req, res, next) ->
+    return if req.user and req.user.staff == 1 => next!
+    else next(new Error! <<< {name: 'lderror', id: 404})
+
+  validate-key: (req, res, next) ->
+    if ((val = req.params.key) and !isNaN(val) and val > 0) => return next!
+    next new lderror(400)
+
 module.exports = base

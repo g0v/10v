@@ -169,8 +169,8 @@
         },
         set: function(sid, session, cb){
           var owner, that;
-          owner = (that = session.passport) ? (that = that.user) ? that.key : 0 : void 8;
-          this$.query(["insert into session (key,detail,owner) values", "($1, $2, $3) on conflict (key) do update set detail=$2"].join(" "), [sid, session, owner]).then(function(){
+          owner = (that = session.passport) ? (that = that.user) ? that.key : null : void 8;
+          this$.query(["insert into session (key,detail,owner) values", "($1, $2, $3) on conflict (key) do update set (detail,owner)=($2,$3)"].join(" "), [sid, session, owner]).then(function(){
             return cb();
           })['catch'](function(err){
             return [

@@ -1,4 +1,5 @@
-<-(->it.apply {}) _
+root = {}
+<-(->it.apply root) _
 @zmgr = new zmgr init: 1000
 @auth = new auth!
 manager = new block.manager registry: ({name,version,path,type}) ->
@@ -13,9 +14,9 @@ frontend = do
   zmgr: @zmgr
 
 @user = {}
+@view = {}
 
-view = {}
-view.panel = new ldView do
+@view.panel = new ldview do
   root: document.body
   action: click: do
     # we need an approch to control authpanel. should be done via auth.
@@ -38,7 +39,7 @@ update = ~>
   @auth.get!then (g) ~>
     @global = g
     @user = g.user
-    view.panel.render!
+    @view.panel.render!
 
 update!
   .then -> console.log \here

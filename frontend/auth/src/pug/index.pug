@@ -24,24 +24,65 @@ html
       .flex-grow-1
       .clickable(ld="login") Login
     .w-1024.rwd.mx-auto.my-4
-      h4 Authentication
-      hr
-      div
-        b Current Status
-        p(ld="status") Not login
-      div
-        b User Name
-        p(ld="username") n/a
-      div
-        b User Id
-        p(ld="userid") n/a
-      .btn.btn-primary.mr-2(ld="signup not-signed") Sign Up
-      .btn.btn-primary.mr-2(ld="login not-signed") Login
-      .btn.btn-primary.mr-2.d-none(ld="logout signed") Logout
-      .btn.btn-primary(ld="reauth") Re-auth
+      .row
+        .col-md
 
+          h4 Authentication
+          hr
+          div
+            b Current Status
+            p(ld="status") Not login
+          div
+            b User Name
+            p(ld="username") n/a
+          div
+            b User Id
+            p(ld="userid") n/a
+          .btn.btn-primary.mr-2(ld="signup not-signed") Sign Up
+          .btn.btn-primary.mr-2(ld="login not-signed") Login
+          .btn.btn-primary.mr-2.d-none(ld="logout signed") Logout
+          .btn.btn-primary(ld="reauth") Re-auth
+        .col-md
+
+          div(ld="admin",ld-scope)
+            h4 Admin Operations
+            hr
+            b Search User
+            .input-group.mb-2
+              input.form-control(ld="keyword",placeholder="email or user key ... ")
+              .input-group-append
+                .btn.btn-outline-secondary(ld="search") Search
+            .pb-4
+              .text-center.p-4(ld="nouser") no user found
+              .list-group.shadow-sm: .list-group-item.p-1.d-flex(ld-each="user")
+                .btn(ld="username")
+                .btn(ld="displayname")
+                .flex-grow-1
+                .dropdown(ld="dropdown")
+                  .btn.dropdown-toggle(data-toggle="dropdown") Action
+                  .dropdown-menu.shadow-sm.dropdown-menu-right
+                    .dropdown-item(ld="su") Su
+                    .dropdown-item(ld="change-email") Change Email
+                    .dropdown-item(ld="change-password") Change Password
+                    .dropdown-item(ld="random-password") Random Password
+                    .dropdown-item(ld="force-logout") Force Logout
+                    .dropdown-item(ld="delete-user") Delete User
+            div
+              h5 Add User
+              hr
+              .form-group
+                b username
+                input.form-control(ld="adduser.username")
+              .form-group
+                b displayname
+                input.form-control(ld="adduser.displayname")
+              .form-group
+                b password #[span.text-sm / left empty for auto generation]
+                input.form-control(ld="adduser.password",type="password")
+              .btn.btn-primary(ld="adduser") Add User
+    +script("/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js")
     +script("/assets/lib/i18next/main/umd/i18next.min.js")
-    +script("assets/lib/zmgr/main/index.min.js")
+    +script("/assets/lib/zmgr/main/index.min.js")
     +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
     +script("/assets/lib/proxise/main/proxise.min.js")
     +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
@@ -56,3 +97,4 @@ html
     +script("assets/lib/lderror/main/index.min.js")
     +script("assets/lib/auth/main/index.min.js")
     script: include:lsc index.ls
+    script: include:lsc admin.ls

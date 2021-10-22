@@ -56,6 +56,19 @@
       code == null && (code = 403);
       msg == null && (msg = "");
       return Promise.reject((ref$ = new Error(typeof msg === typeof {} ? JSON.stringify(msg) : msg), ref$.code = code, ref$.name = 'lderror', ref$));
+    },
+    isAdmin: function(req, res, next){
+      var ref$;
+      return req.user && req.user.staff === 1
+        ? next()
+        : next((ref$ = new Error(), ref$.name = 'lderror', ref$.id = 404, ref$));
+    },
+    validateKey: function(req, res, next){
+      var val;
+      if ((val = req.params.key) && !isNaN(val) && val > 0) {
+        return next();
+      }
+      return next(new lderror(400));
     }
   };
   module.exports = base;
