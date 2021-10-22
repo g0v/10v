@@ -22,7 +22,10 @@ create table if not exists users (
 
 create index if not exists idx_user_displayname on users (lower(displayname) varchar_pattern_ops);
 
-create table if not exists sessions (
+create table if not exists session (
   key text not null unique primary key,
+  owner int references users(key),
   detail jsonb
 );
+
+create index if not exists idx_sessions_user on session (owner);

@@ -77,17 +77,18 @@ ret = (backend) ->
 
     session: do
       get: (sid, cb) !~>
-        @query "select * from sessions where key=$1", [sid]
+        @query "select * from session where key=$1", [sid]
           .then -> cb null, (it.[]rows.0 or {}).detail
           .catch (err) -> [log.error({err}, "get session failed"), cb(err)]
       set: (sid, session, cb) !~>
+        owner = if session.passport => if that.user => that.key else 0
         @query([
-          "insert into sessions (key,detail) values"
-          "($1, $2) on conflict (key) do update set detail=$2"].join(" "), [sid, session])
+          "insert into session (key,detail,owner) values"
+          "($1, $2, $3) on conflict (key) do update set detail=$2"].join(" "), [sid, session, owner])
           .then -> cb!
           .catch (err) -> [log.error({err},"set session failed"), cb!]
       destroy: (sid, cb) !~>
-        @query "delete from sessions where key = $1", [sid]
+        @query "delete from session where key = $1", [sid]
           .then -> cb!
           .catch (err) -> [log.error({err}, "destroy session failed"),cb!]
   @

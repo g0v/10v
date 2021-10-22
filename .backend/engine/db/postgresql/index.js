@@ -157,7 +157,7 @@
       },
       session: {
         get: function(sid, cb){
-          this$.query("select * from sessions where key=$1", [sid]).then(function(it){
+          this$.query("select * from session where key=$1", [sid]).then(function(it){
             return cb(null, ((it.rows || (it.rows = []))[0] || {}).detail);
           })['catch'](function(err){
             return [
@@ -168,7 +168,9 @@
           });
         },
         set: function(sid, session, cb){
-          this$.query(["insert into sessions (key,detail) values", "($1, $2) on conflict (key) do update set detail=$2"].join(" "), [sid, session]).then(function(){
+          var owner, that;
+          owner = (that = session.passport) ? (that = that.user) ? that.key : 0 : void 8;
+          this$.query(["insert into session (key,detail,owner) values", "($1, $2, $3) on conflict (key) do update set detail=$2"].join(" "), [sid, session, owner]).then(function(){
             return cb();
           })['catch'](function(err){
             return [
@@ -179,7 +181,7 @@
           });
         },
         destroy: function(sid, cb){
-          this$.query("delete from sessions where key = $1", [sid]).then(function(){
+          this$.query("delete from session where key = $1", [sid]).then(function(){
             return cb();
           })['catch'](function(err){
             return [
