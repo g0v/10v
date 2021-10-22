@@ -29,3 +29,19 @@ create table if not exists session (
 );
 
 create index if not exists idx_sessions_user on session (owner);
+
+create table if not exists mailverifytoken (
+  owner int references users(key) on delete cascade,
+  token text not null,
+  time timestamp not null default now()
+);
+
+create index if not exists idx_mailverifytoken on mailverifytoken (token);
+
+create table if not exists pwresettoken (
+  owner int references users(key) on delete cascade,
+  token text not null,
+  time timestamp default now()
+);
+
+create index if not exists idx_pwresettoken on pwresettoken (token);
