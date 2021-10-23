@@ -16,14 +16,16 @@
     "start": "npx server -r . -o true"
   },
   "devDependencies": {
-    "@loadingio/ldquery": "^2.1.0",
-    "bootstrap": "^4.5.3",
     "@loadingio/bootstrap.ext": "^0.0.1",
+    "@loadingio/ldquery": "^2.1.0",
+    "@plotdb/srcbuild": "^0.0.24",
+    "@zbryikt/template": "^2.3.20",
+    "bootstrap": "^4.5.3",
     "bootstrap.native": "^3.0.13",
     "fedep": "^0.0.15",
     "ldview": "^0.2.3",
+    "livescript": "^1.6.0",
     "stylus": "^0.55.0",
-    "@zbryikt/template": "^2.3.20",
     "uglify-js": "^3.2.0",
     "uglifycss": "^0.0.29"
   },

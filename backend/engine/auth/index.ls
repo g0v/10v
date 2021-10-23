@@ -10,8 +10,13 @@ require! <[../aux]>
 
 get-user = ({username, password, method, detail, create, cb, req}) ->
   db.auth.user.get {username, password, method, detail, create}
-    .then (user) !-> cb null, (user <<< {ip: aux.ip(req)})
-    .catch !-> cb new lderror(1012), null, {message: ''}
+    .then (user) !->
+      db.query "select count(ip) from session where owner = $1 group by ip", [user.key]
+        .then (r={}) ->
+          # by default disabled - session amount limitation
+          if false and ((r.[]rows.0 or {}).count or 1) > 1 => cb lderror(1004), null, {message: ''}
+          else cb null, (user <<< {ip: aux.ip(req)})
+    .catch !-> cb lderror(1012), null, {message: ''}
 
 strategy = do
   local: (opt) ->

@@ -28,9 +28,18 @@
         detail: detail,
         create: create
       }).then(function(user){
-        cb(null, (user.ip = aux.ip(req), user));
+        db.query("select count(ip) from session where owner = $1 group by ip", [user.key]).then(function(r){
+          r == null && (r = {});
+          if (false && (((r.rows || (r.rows = []))[0] || {}).count || 1) > 1) {
+            return cb(lderror(1004), null, {
+              message: ''
+            });
+          } else {
+            return cb(null, (user.ip = aux.ip(req), user));
+          }
+        });
       })['catch'](function(){
-        cb(new lderror(1012), null, {
+        cb(lderror(1012), null, {
           message: ''
         });
       });
