@@ -2,7 +2,7 @@ require! <[fs yargs express colors path pino lderror pino-http redis util body-p
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
-require! <[./error-handler ./redis-node]>
+require! <[./error-handler ./redis-node ./mail-queue]>
 require! <[backend/auth backend/i18n backend/aux backend/db/postgresql]>
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
@@ -41,12 +41,13 @@ backend = (opt = {}) ->
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: ({} <<< default-config <<< opt.config) # backend configuration
     base: opt.config.base or 'frontend'
-    server: null # http.Server object, either created by express or from other lib
-    app: null    # express application
-    log: null    # obj for logging, in pino / winston interface 
-    route: {}    # all default routes
-    store: {}    # redis like data store, with get / set function
-    session: {}  # express-session object
+    server: null     # http.Server object, either created by express or from other lib
+    app: null        # express application
+    log: null        # obj for logging, in pino / winston interface
+    mail-queue: null # mail queue for sending email
+    route: {}        # all default routes
+    store: {}        # redis like data store, with get / set function
+    session: {}      # express-session object
   @
 
 backend <<< do
@@ -74,6 +75,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @log = log = pino level: log-level
         @log-server = log.child {module: \server}
         @log-build = log.child {module: \build}
+        @log-mail = log.child {module: \mail}
+        if @config.mail => @mail-queue = new mail-queue {logger: @log-mail} <<< (@config.mail or {})
 
         process.on \uncaughtException, (err, origin) ~>
           @log-server.error {err}, "uncaught exception ocurred, outside express routes".red

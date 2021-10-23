@@ -36,3 +36,7 @@ module.exports = do
     local:
       usernameField: \email
       passwordField: \passwd
+  mail:
+    mailgun: auth:
+      domain: '...'
+      api_key: '...'
