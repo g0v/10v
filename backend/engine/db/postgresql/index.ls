@@ -82,9 +82,10 @@ ret = (backend) ->
           .catch (err) -> [log.error({err}, "get session failed"), cb(err)]
       set: (sid, session, cb) !~>
         owner = if session.passport => if that.user => that.key else null
-        @query([
-          "insert into session (key,detail,owner) values"
-          "($1, $2, $3) on conflict (key) do update set (detail,owner)=($2,$3)"].join(" "), [sid, session, owner])
+        ip = if session.passport => if that.user => that.ip else null
+        @query("""insert into session
+        (key,detail,owner,ip) values ($1, $2, $3, $4)
+        on conflict (key) do update set (detail,owner,ip)=($2,$3,$4)""", [sid, session, owner, ip])
           .then -> cb!
           .catch (err) -> [log.error({err},"set session failed"), cb!]
       destroy: (sid, cb) !~>

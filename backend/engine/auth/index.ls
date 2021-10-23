@@ -8,17 +8,18 @@ require! <[../aux]>
 (backend) <- ((f) -> module.exports = auth-module = -> f it) _
 {db,app,config,route} = backend
 
-get-user = ({username, password, method, detail, create, cb}) ->
+get-user = ({username, password, method, detail, create, cb, req}) ->
   db.auth.user.get {username, password, method, detail, create}
-    .then (user) !-> cb null, user
+    .then (user) !-> cb null, (user <<< {ip: aux.ip(req)})
     .catch !-> cb new lderror(1012), null, {message: ''}
 
 strategy = do
   local: (opt) ->
     passport.use new passport-local.Strategy {
       usernameField: \username, passwordField: \password
-    }, (username,password,cb) ~>
-      get-user {username, password, method: \local, detail: null, create: false, cb}
+      passReqToCallback: true
+    }, (req, username,password,cb) ~>
+      get-user {username, password, method: \local, detail: null, create: false, cb, req}
 
   google: (opt) ->
     passport.use new passport-google-oauth20.Strategy(
@@ -29,11 +30,11 @@ strategy = do
         passReqToCallback: true
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
         profileFields: ['id', 'displayName', 'link', 'emails']
-      , (request, access-token, refresh-token, profile, cb) !->
+      , (req, access-token, refresh-token, profile, cb) !->
         if !profile.emails => cb null, false, {}
         else get-user {
           username: profile.emails.0.value, password: null
-          method: \google, detail: profile, create: true, cb
+          method: \google, detail: profile, create: true, cb, req
         }
     )
 
@@ -42,13 +43,14 @@ strategy = do
       do
         clientID: opt.clientID
         clientSecret: opt.clientSecret
+        passReqToCallback: true
         callbackURL: "/api/auth/facebook/callback"
         profileFields: ['id', 'displayName', 'link', 'emails']
-      , (access-token, refresh-token, profile, cb) !->
+      , (req, access-token, refresh-token, profile, cb) !->
         if !profile.emails => cb null, false, {}
         else get-user {
           username: profile.emails.0.value, password: null
-          method: \facebook, detail: profile, create: true, cb
+          method: \facebook, detail: profile, create: true, cb, req
         }
     )
 
@@ -60,15 +62,16 @@ strategy = do
         callbackURL: "/api/auth/line/callback"
         scope: <[profile openid email]>
         botPrompt: \normal
+        passReqToCallback: true
         prompt: 'consent'
         uiLocales: \zh-TW
-      , (access-token, refresh-token, params, profile, cb) !->
+      , (req, access-token, refresh-token, params, profile, cb) !->
         try
           ret = jsonwebtoken.verify params.id_token, opt.channelSecret
           if !(ret and ret.email) => throw new Error('')
           get-user {
             username: ret.email, password: null
-            method: \line, detail: profile, create: true, cb
+            method: \line, detail: profile, create: true, cb, req
           }
         catch e
           console.log e

@@ -19,8 +19,8 @@
     var db, app, config, route, getUser, strategy, sessionStore, session, x$;
     db = backend.db, app = backend.app, config = backend.config, route = backend.route;
     getUser = function(arg$){
-      var username, password, method, detail, create, cb;
-      username = arg$.username, password = arg$.password, method = arg$.method, detail = arg$.detail, create = arg$.create, cb = arg$.cb;
+      var username, password, method, detail, create, cb, req;
+      username = arg$.username, password = arg$.password, method = arg$.method, detail = arg$.detail, create = arg$.create, cb = arg$.cb, req = arg$.req;
       return db.auth.user.get({
         username: username,
         password: password,
@@ -28,7 +28,7 @@
         detail: detail,
         create: create
       }).then(function(user){
-        cb(null, user);
+        cb(null, (user.ip = aux.ip(req), user));
       })['catch'](function(){
         cb(new lderror(1012), null, {
           message: ''
@@ -39,15 +39,17 @@
       local: function(opt){
         return passport.use(new passportLocal.Strategy({
           usernameField: 'username',
-          passwordField: 'password'
-        }, function(username, password, cb){
+          passwordField: 'password',
+          passReqToCallback: true
+        }, function(req, username, password, cb){
           return getUser({
             username: username,
             password: password,
             method: 'local',
             detail: null,
             create: false,
-            cb: cb
+            cb: cb,
+            req: req
           });
         }));
       },
@@ -59,7 +61,7 @@
           passReqToCallback: true,
           userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
           profileFields: ['id', 'displayName', 'link', 'emails']
-        }, function(request, accessToken, refreshToken, profile, cb){
+        }, function(req, accessToken, refreshToken, profile, cb){
           if (!profile.emails) {
             cb(null, false, {});
           } else {
@@ -69,7 +71,8 @@
               method: 'google',
               detail: profile,
               create: true,
-              cb: cb
+              cb: cb,
+              req: req
             });
           }
         }));
@@ -78,9 +81,10 @@
         return passport.use(new passportFacebook.Strategy({
           clientID: opt.clientID,
           clientSecret: opt.clientSecret,
+          passReqToCallback: true,
           callbackURL: "/api/auth/facebook/callback",
           profileFields: ['id', 'displayName', 'link', 'emails']
-        }, function(accessToken, refreshToken, profile, cb){
+        }, function(req, accessToken, refreshToken, profile, cb){
           if (!profile.emails) {
             cb(null, false, {});
           } else {
@@ -90,7 +94,8 @@
               method: 'facebook',
               detail: profile,
               create: true,
-              cb: cb
+              cb: cb,
+              req: req
             });
           }
         }));
@@ -102,9 +107,10 @@
           callbackURL: "/api/auth/line/callback",
           scope: ['profile', 'openid', 'email'],
           botPrompt: 'normal',
+          passReqToCallback: true,
           prompt: 'consent',
           uiLocales: 'zh-TW'
-        }, function(accessToken, refreshToken, params, profile, cb){
+        }, function(req, accessToken, refreshToken, params, profile, cb){
           var ret, e;
           try {
             ret = jsonwebtoken.verify(params.id_token, opt.channelSecret);
@@ -117,7 +123,8 @@
               method: 'line',
               detail: profile,
               create: true,
-              cb: cb
+              cb: cb,
+              req: req
             });
           } catch (e$) {
             e = e$;

@@ -25,6 +25,7 @@ create index if not exists idx_user_displayname on users (lower(displayname) var
 create table if not exists session (
   key text not null unique primary key,
   owner int references users(key),
+  ip text,
   detail jsonb
 );
 

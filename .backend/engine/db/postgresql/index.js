@@ -168,9 +168,10 @@
           });
         },
         set: function(sid, session, cb){
-          var owner, that;
+          var owner, that, ip;
           owner = (that = session.passport) ? (that = that.user) ? that.key : null : void 8;
-          this$.query(["insert into session (key,detail,owner) values", "($1, $2, $3) on conflict (key) do update set (detail,owner)=($2,$3)"].join(" "), [sid, session, owner]).then(function(){
+          ip = (that = session.passport) ? (that = that.user) ? that.ip : null : void 8;
+          this$.query("insert into session\n(key,detail,owner,ip) values ($1, $2, $3, $4)\non conflict (key) do update set (detail,owner,ip)=($2,$3,$4)", [sid, session, owner, ip]).then(function(){
             return cb();
           })['catch'](function(err){
             return [
