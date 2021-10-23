@@ -13,6 +13,8 @@
  - `log`: logger object, in pino interface
  - `log-server`: child log of `log` for server information
  - `log-build`: child log of `log` for build information
+ - `log-mail`: child log of `log` for mail sender
+ - `mail-queue`: mail sender
  - `route`: all default routes. including:
    - `app`: routes for view
    - `api`: routes for api
@@ -22,6 +24,7 @@
    - `get(...)`
  - `db`: db interface, postgresql object.
  - `i18n`: i18n object, in `i18next` spec.
+
 
 ## API
 
@@ -34,3 +37,25 @@ Following are apis available in `backend` object. Most of them are only for serv
 And a constructor API:
 
  - `create(opt)`: create a backend server and start this server.
+
+
+## mail-queue API
+
+mail-queue API:
+
+ - `add`: add mail into mail queue
+ - `send(payload, opt)`: send mail.
+   - payload field:
+     - from: sender. e.g., '"Servebase Dev" <contact@yourserver.address>'
+     - to: recipient. e.g., "some@mail.address"
+     - bcc: bcc recipient. e.g., "some@mail.address"
+     - subject: mail title
+     - text: mail text content
+     - html: mail html content
+     - content: used in `send-from-md` as mardkwon content. translated to text and html
+   - opt field:
+     - now: true if send immediately. the same as `send-directly`.
+ - `send-directly(payload)`: send mail, bypassing queue
+ - `send-from-md(payload, map, opt)`: send with markdown content
+ - `by-template(name, email, map, config)`: send using template content.
+   - templates are stored under "config/mail/${name}.yaml"

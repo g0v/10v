@@ -3,7 +3,7 @@ require! <[nodemailer nodemailer-mailgun-transport]>
 require! <[./utils/md]>
 
 # # sample code for sending mail
-# backend.mail-queue.send {
+# backend.mail-queue.add {
 #   from: '"Servebase Dev" <contact@yourserver.address>'
 #   to: "some@mail.address"
 #   subject: "Your Title"
