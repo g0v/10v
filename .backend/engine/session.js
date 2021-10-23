@@ -6,7 +6,6 @@
     'delete': function(arg$){
       var db, key;
       db = arg$.db, key = arg$.key;
-      console.log(key);
       return db.query("delete from session where owner = $1", [key]);
     },
     login: function(arg$){

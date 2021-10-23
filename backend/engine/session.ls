@@ -2,8 +2,11 @@ require! <[lderror]>
 
 module.exports = do
   delete: ({db, key}) ->
-    console.log key
+    # alternatively use session store clear?
     db.query "delete from session where owner = $1", [key]
+  # this login should be used only for updating session data.
+  # normal login process should be done in backend/auth/index.ls,
+  # and go through `get-user` for additional check.
   login: ({db, key, req}) ->
     db.query "select * from users where key = $1", [key]
       .then (r={})->
