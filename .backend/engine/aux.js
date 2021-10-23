@@ -46,7 +46,7 @@
     },
     signedin: function(req, res, next){
       var ref$;
-      if (req.user && req.user.key) {
+      if (req.user && req.user.key && req.user.username) {
         return next();
       }
       return next((ref$ = new Error(), ref$.name = 'lderror', ref$.id = 1000, ref$.redirect = "/auth/?nexturl=" + req.originalUrl, ref$));

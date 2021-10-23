@@ -27,7 +27,7 @@ base = do
     return route
 
   signedin: (req, res, next) ->
-    if req.user and req.user.key => return next!
+    if req.user and req.user.key and req.user.username => return next!
     next(new Error! <<< {name: 'lderror', id: 1000, redirect: "/auth/?nexturl=#{req.originalUrl}"})
 
   # deprecated. use lderror.reject instead.
