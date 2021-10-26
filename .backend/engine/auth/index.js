@@ -16,12 +16,12 @@
       return f(it);
     };
   })(function(backend){
-    var db, app, config, route, getUser, strategy, sessionStore, session, x$;
+    var db, app, config, route, getUser, strategy, session, x$;
     db = backend.db, app = backend.app, config = backend.config, route = backend.route;
     getUser = function(arg$){
       var username, password, method, detail, create, cb, req;
       username = arg$.username, password = arg$.password, method = arg$.method, detail = arg$.detail, create = arg$.create, cb = arg$.cb, req = arg$.req;
-      return db.auth.user.get({
+      return db.userStore.get({
         username: username,
         password: password,
         method: method,
@@ -186,30 +186,26 @@
       return x$;
     });
     passport.serializeUser(function(u, done){
-      db.auth.user.serialize(u).then(function(v){
+      db.userStore.serialize(u).then(function(v){
         done(null, v);
       });
     });
     passport.deserializeUser(function(v, done){
-      db.auth.user.deserialize(v).then(function(u){
+      db.userStore.deserialize(v).then(function(u){
         u == null && (u = {});
         done(null, u);
       });
     });
-    sessionStore = function(){
-      return import$(this, db.auth.session);
-    };
-    sessionStore.prototype = expressSession.Store.prototype;
     app.use(backend.session = session = expressSession({
       secret: config.session.secret,
       resave: true,
       saveUninitialized: true,
-      store: new sessionStore(),
+      store: db.sessionStore,
       proxy: true,
       cookie: {
         path: '/',
         httpOnly: true,
-        maxAge: 86400000 * 30 * 12
+        maxAge: config.session.maxAge
       }
     }));
     app.use(passport.initialize());
@@ -226,7 +222,7 @@
       if (!username || !displayname || password.length < 8) {
         return next(new lderror(400));
       }
-      return db.auth.user.create({
+      return db.userStore.create({
         username: username,
         password: password,
         method: 'local',
@@ -262,9 +258,4 @@
     });
     return x$;
   });
-  function import$(obj, src){
-    var own = {}.hasOwnProperty;
-    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
 }).call(this);

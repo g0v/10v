@@ -18,6 +18,7 @@ module.exports = do
       ignores: ['\/\..*\.swp$', '^static/assets/img']
   session:
     secret: 'this-is-a-sample-secret-please-update-it'
+    max-age: 365 * 86400 * 1000
   grecaptcha:
     sitekey: '...'
     enabled: false

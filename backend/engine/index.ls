@@ -29,9 +29,20 @@ catch e
   console.log "if this file doesn't exist, you should add one. check config/private/demo.ls for reference"
   process.exit -1
 
+with-default = (cfg = {}, defcfg = {}) ->
+  defcfg = JSON.parse JSON.stringify defcfg
+  _ = (cfg, defcfg) ->
+    for k,v of defcfg =>
+      if !(cfg[k]?) => cfg[k] = v
+      else if typeof(cfg[k]) == \object and typeof(v) == \object => with-default(cfg[k], defcfg[k])
+    return cfg
+  return _ cfg, defcfg
+
+
 default-config = do
   limit: '10mb'
   port: 3000
+  session: max-age: 365 * 86400 * 1000
 
 backend = (opt = {}) ->
   @opt = opt
@@ -39,7 +50,7 @@ backend = (opt = {}) ->
     mode: process.env.NODE_ENV # 'production' or other
     production: process.env.NODE_ENV == \production
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
-    config: ({} <<< default-config <<< opt.config) # backend configuration
+    config: with-default(opt.config, default-config) # backend configuration
     base: opt.config.base or 'frontend'
     server: null     # http.Server object, either created by express or from other lib
     app: null        # express application

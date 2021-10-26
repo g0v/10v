@@ -26,10 +26,12 @@ create table if not exists session (
   key text not null unique primary key,
   owner int references users(key),
   ip text,
+  ttl timestamp,
   detail jsonb
 );
 
 create index if not exists idx_sessions_user on session (owner);
+create index if not exists idx_sessions_ttl on session (ttl);
 
 create table if not exists mailverifytoken (
   owner int references users(key) on delete cascade,

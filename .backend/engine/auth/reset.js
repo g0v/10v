@@ -17,7 +17,7 @@
       password = {
         plain: req.body.password
       };
-      return db.auth.user.hashing(password.plain, true, true).then(function(ret){
+      return db.userStore.hashing(password.plain, true, true).then(function(ret){
         password.hashed = ret;
         return db.query(["select users.key from users,pwresettoken", "where pwresettoken.token=$1 and users.key=pwresettoken.owner"].join(" "), [token]);
       }).then(function(r){

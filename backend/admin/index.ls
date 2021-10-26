@@ -36,7 +36,7 @@ route.post \/user/, (req, res) ->
   detail = {username, displayname}
   config = {}
   method = \local
-  db.auth.user.create {username, password, method, detail, config}
+  db.user-store.create {username, password, method, detail, config}
     .then ->
       delete it.password
       res.send it
@@ -47,7 +47,7 @@ route.post \/user/:key/password, aux.validate-key, (req, res) ->
   # TODO verify password based on customized rules, if needed.
   db.query "select password from users where key = $1", [key]
     .then ({rows}) -> if !rows or !rows.0 => return lderror.reject 404
-    .then -> db.auth.user.hashing password, true, true
+    .then -> db.user-store.hashing password, true, true
     .then (pw-hashed) ->
       db.query "update users set (method,password) = ('local',$1) where key = $2", [pw-hashed, key]
     .then -> session.delete {db, key}

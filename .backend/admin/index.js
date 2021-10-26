@@ -68,7 +68,7 @@
       };
       config = {};
       method = 'local';
-      return db.auth.user.create({
+      return db.userStore.create({
         username: username,
         password: password,
         method: method,
@@ -92,7 +92,7 @@
           return lderror.reject(404);
         }
       }).then(function(){
-        return db.auth.user.hashing(password, true, true);
+        return db.userStore.hashing(password, true, true);
       }).then(function(pwHashed){
         return db.query("update users set (method,password) = ('local',$1) where key = $2", [pwHashed, key]);
       }).then(function(){

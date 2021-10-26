@@ -9,7 +9,7 @@ require! <[../aux]>
 {db,app,config,route} = backend
 
 get-user = ({username, password, method, detail, create, cb, req}) ->
-  db.auth.user.get {username, password, method, detail, create}
+  db.user-store.get {username, password, method, detail, create}
     .then (user) !->
       db.query "select count(ip) from session where owner = $1 group by ip", [user.key]
         .then (r={}) ->
@@ -114,22 +114,20 @@ route.auth.get \/info, (req, res) ~>
       failureRedirect: \/auth/failed/social.html
 
 passport.serializeUser (u,done) !->
-  db.auth.user.serialize u .then (v) !-> done null, v
+  db.user-store.serialize u .then (v) !-> done null, v
 passport.deserializeUser (v,done) !->
-  db.auth.user.deserialize v .then (u = {}) !-> done null, u
+  db.user-store.deserialize v .then (u = {}) !-> done null, u
 
-session-store = -> @ <<< db.auth.session
-session-store.prototype = express-session.Store.prototype
 app.use backend.session = session = express-session do
   secret: config.session.secret
   resave: true
   saveUninitialized: true
-  store: new session-store!
+  store: db.session-store
   proxy: true
   cookie: do
     path: \/
     httpOnly: true
-    maxAge: 86400000 * 30 * 12 #  1 year
+    maxAge: config.session.max-age
 app.use passport.initialize!
 app.use passport.session!
 
@@ -137,7 +135,7 @@ route.auth
   ..post \/signup, (req, res, next) ->
     {username,displayname,password,config} = req.body{username,displayname,password,config}
     if !username or !displayname or password.length < 8 => return next(new lderror 400)
-    db.auth.user.create {username, password} <<< {
+    db.user-store.create {username, password} <<< {
       method: \local, detail: {displayname}, config: (config or {})
     }
       .then (user) !-> req.logIn user, !-> res.send!

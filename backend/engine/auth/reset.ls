@@ -7,7 +7,7 @@ require! <[../../util/throttle ../../util/grecaptcha]>
 api.post \/me/passwd/reset/:token, throttle.count.ip-md, grecaptcha, (req, res) ->
   token = req.params.token
   password = {plain: req.body.password}
-  db.auth.user.hashing password.plain, true, true
+  db.user-store.hashing password.plain, true, true
     .then (ret) ->
       password.hashed = ret
       db.query(["select users.key from users,pwresettoken"
