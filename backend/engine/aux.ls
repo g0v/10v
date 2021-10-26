@@ -1,8 +1,34 @@
 base = do
   ip: (req) ->
+    # `req.headers` is kinda case-sensitive. use `req.header()` to get rid of this problem.
     return (
-      req.headers['cf-connecting-ip'] or req.headers['x-forwarded-for'] or
-      req.headers['X-Real-IP'] or req.headers['x-real-ip'] or req.connection.remoteAddress
+      # set by cloudflare thus we have to use it first if we are behind cloudflare
+      # https://support.cloudflare.com/hc/en-us/articles/200170986-How-does-Cloudflare-handle-HTTP-Request-headers-
+      # cloudflare suggests you to use this since it's normalized to have only one ip, not like x-fowarded-for
+      req.header('cf-connecting-ip') or
+
+      # x-real-ip: set by nginx (configured by us). Earliest usage seems to from nginx, but not de-facto.
+      # we probably will want to use this since if it exists, it means that we set it manually
+      req.header('x-real-ip') or
+
+      # req.ip: set by express, actually derived from x-fowarded-for when trust-proxy is not false.
+      # http://expressjs.com/en/api.html#req.ip
+      req.ip or
+
+      # de-facto standard for proxy and load balancer
+      # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
+      (req.header('x-forwarded-for') or '').split(',').pop!.trim! or
+
+      # should use req.socket after v13:
+      # https://nodejs.org/api/net.html#socketremoteaddress
+      req.socket.remoteAddress or
+
+      # req.connection is deprecated after node v13:
+      # https://nodejs.org/dist/latest/docs/api/http.html#http_request_connection
+      req.connection.remoteAddress or
+
+      # last resort. should we use something that looks like an IP?
+      'unknown-ip'
     )
 
   # autocatch / routecatch
