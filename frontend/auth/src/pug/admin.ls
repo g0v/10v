@@ -36,6 +36,7 @@
               .then -> alert \delete.
 
   action: click:
+    "throttle-reset": ~> ld$.fetch "/api/admin/throttle/reset/", {method: \GET} .then -> alert 'throttle reset.'
     adduser: ~>
       username = @view.admin.get('adduser.username').value
       displayname = @view.admin.get('adduser.displayname').value

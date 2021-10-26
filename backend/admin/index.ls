@@ -1,4 +1,4 @@
-require! <[fs path express lderror backend/aux backend/session re2 curegex]>
+require! <[fs path express lderror backend/aux backend/session re2 curegex backend/throttle]>
 
 (backend) <- (->module.exports = it)  _
 {db,config,route:{api,app}} = backend
@@ -6,6 +6,10 @@ require! <[fs path express lderror backend/aux backend/session re2 curegex]>
 route = aux.routecatch express.Router {mergeParams: true}
 api.use \/admin, route
 route.use aux.is-admin
+
+route.get \/throttle/reset, (req, res, next) ->
+  throttle.core.reset!
+  res.send!
 
 route.post \/users/, (req, res, next) ->
   if !(keyword = req.body.keyword) => return lderror.reject 400

@@ -2,6 +2,7 @@ doctype html
 html
   include @/@loadingio/bootstrap.ext/dist/index.pug
   head
+    base(href="/")
     +css("assets/lib/bootstrap/main/css/bootstrap.min.css")
     +css("assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
     +css("assets/lib/ldcover/main/index.min.css")
@@ -47,6 +48,8 @@ html
           div(ld="admin",ld-scope)
             h4 Admin Operations
             hr
+            .mb-2: .btn.btn-sm.btn-primary(ld="throttle-reset") Throttle Reset
+            br
             b Search User
             .input-group.mb-2
               input.form-control(ld="keyword",placeholder="email or user key ... ")
