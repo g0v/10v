@@ -30,7 +30,8 @@
     });
     this.sessionStore = new sessionStore({
       db: this,
-      session: backend.config.session.maxAge
+      session: backend.config.session.maxAge,
+      logger: log
     });
     this.userStore = new userStore({
       db: this,

@@ -16,7 +16,7 @@ database = (backend) ->
 
   @pool.on \error, (err, client) -> log.error "db pool error".red
 
-  @session-store = new session-store {db: @, session: backend.config.session.max-age}
+  @session-store = new session-store {db: @, session: backend.config.session.max-age, logger: log}
   @user-store = new user-store {db: @, logger: log}
 
   @
