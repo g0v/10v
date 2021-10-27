@@ -3,6 +3,7 @@ require! <[express-session events]>
 session-store = (opt = {}) ->
   events.EventEmitter.call @
   @db = opt.db
+  @log = opt.logger
   @lifespan = opt.lifespan or (1 * 60)
   # this may have to be externalized for server scaling
   @cleaner-interval = (opt.cleaner-interval or (86400 * 1000) >? 10 * 60 * 1000)
@@ -16,7 +17,7 @@ session-store.prototype = {} <<< express-session.Store.prototype <<< do
   get: (sid, cb) !->
     @db.query "select * from session where key=$1", [sid]
       .then -> cb null, (it.[]rows.0 or {}).detail
-      .catch (err) -> [log.error({err}, "get session failed"), cb(err)]
+      .catch (err) ~> [@log.error({err}, "get session failed"), cb(err)]
   set: (sid, session, cb) !->
     owner = if session.passport => if that.user => that.key else null
     ip = if session.passport => if that.user => that.ip else null
@@ -26,15 +27,15 @@ session-store.prototype = {} <<< express-session.Store.prototype <<< do
       update set (detail, owner, ip, ttl) = ($2, $3, $4, now() + $5 * interval '1 second')
     """, [sid, session, owner, ip, @lifespan])
       .then -> cb!
-      .catch (err) -> [log.error({err},"set session failed"), cb!]
+      .catch (err) ~> [@log.error({err},"set session failed"), cb!]
   destroy: (sid, cb) !->
     @db.query "delete from session where key = $1", [sid]
       .then -> cb!
-      .catch (err) -> [log.error({err}, "destroy session failed"), cb!]
+      .catch (err) ~> [@log.error({err}, "destroy session failed"), cb!]
   touch: (sid, cb) !->
     @db.query "update session set ttl = now() + $2 * interval '1 second' where key = $1", [sid, @lifespan]
       .then -> cb!
-      .catch (err) -> [log.error({err}, "touch session failed"), cb!]
+      .catch (err) ~> [@log.error({err}, "touch session failed"), cb!]
 
 session-store.prototype.__proto__ = express-session.Store.prototype.__proto__
 
