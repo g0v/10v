@@ -8,6 +8,7 @@
     opt == null && (opt = {});
     events.EventEmitter.call(this);
     this.db = opt.db;
+    this.log = opt.logger;
     this.lifespan = opt.lifespan || 1 * 60;
     this.cleanerInterval = opt.cleanerInterval || ((ref$ = 86400 * 1000) > (ref1$ = 10 * 60 * 1000) ? ref$ : ref1$);
     this.handler = setInterval(function(){
@@ -19,50 +20,59 @@
   };
   sessionStore.prototype = import$(import$({}, expressSession.Store.prototype), {
     trim: function(){
-      this.db.query("delete from session where ttl < now()");
+      var this$ = this;
+      this.log.info("removing expired sessions ...");
+      this.db.query("delete from session where ttl < now()").then(function(){
+        return this$.log.info("removing expired sessions done.");
+      })['catch'](function(){
+        return this$.log.warn("failed to removing expired sessions.");
+      });
     },
     get: function(sid, cb){
+      var this$ = this;
       this.db.query("select * from session where key=$1", [sid]).then(function(it){
         return cb(null, ((it.rows || (it.rows = []))[0] || {}).detail);
       })['catch'](function(err){
         return [
-          log.error({
+          this$.log.error({
             err: err
           }, "get session failed"), cb(err)
         ];
       });
     },
     set: function(sid, session, cb){
-      var owner, that, ip;
+      var owner, that, ip, this$ = this;
       owner = (that = session.passport) ? (that = that.user) ? that.key : null : void 8;
       ip = (that = session.passport) ? (that = that.user) ? that.ip : null : void 8;
       this.db.query("insert into session\n(key, detail, owner, ip, ttl) values ($1, $2, $3, $4, now() + $5 * interval '1 second')\non conflict (key) do\n  update set (detail, owner, ip, ttl) = ($2, $3, $4, now() + $5 * interval '1 second')", [sid, session, owner, ip, this.lifespan]).then(function(){
         return cb();
       })['catch'](function(err){
         return [
-          log.error({
+          this$.log.error({
             err: err
           }, "set session failed"), cb()
         ];
       });
     },
     destroy: function(sid, cb){
+      var this$ = this;
       this.db.query("delete from session where key = $1", [sid]).then(function(){
         return cb();
       })['catch'](function(err){
         return [
-          log.error({
+          this$.log.error({
             err: err
           }, "destroy session failed"), cb()
         ];
       });
     },
     touch: function(sid, cb){
+      var this$ = this;
       this.db.query("update session set ttl = now() + $2 * interval '1 second' where key = $1", [sid, this.lifespan]).then(function(){
         return cb();
       })['catch'](function(err){
         return [
-          log.error({
+          this$.log.error({
             err: err
           }, "touch session failed"), cb()
         ];
