@@ -15,7 +15,7 @@
     var config, log, ref$, user, password, host, database, port;
     this.config = config = backend.config;
     this.log = log = backend.log.child({
-      module: 'DB'
+      module: 'db'
     });
     ref$ = config.db.postgresql, user = ref$.user, password = ref$.password, host = ref$.host, database = ref$.database, port = ref$.port;
     this.uri = "postgres://" + user + ":" + password + "@" + host + (port ? ':' + port : '') + "/" + database;
