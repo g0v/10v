@@ -9,7 +9,8 @@ session-store = (opt = {}) ->
   @cleaner-interval = (opt.cleaner-interval or (86400 * 1000) >? 10 * 60 * 1000)
   @handler = setInterval (~>@trim!), @cleaner-interval
   @handler.unref!
-  @trim!
+  # run first trim later after database initialized
+  setTimeout (~> @trim!), 3000
   @
 
 session-store.prototype = {} <<< express-session.Store.prototype <<< do

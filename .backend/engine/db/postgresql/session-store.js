@@ -15,7 +15,9 @@
       return this$.trim();
     }, this.cleanerInterval);
     this.handler.unref();
-    this.trim();
+    setTimeout(function(){
+      return this$.trim();
+    }, 3000);
     return this;
   };
   sessionStore.prototype = import$(import$({}, expressSession.Store.prototype), {
