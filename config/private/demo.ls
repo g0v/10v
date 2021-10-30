@@ -3,14 +3,14 @@ module.exports = do
   limit: '20mb'
   i18n:
     lng: <[en zh-TW]>
+    ns: <[default]>
   base: 'frontend/demo'
   db:
     postgresql:
-      host: \localhost # host.docker.internal
-      port: 15432
-      database: \pg
-      user: \pg
-      password: \pg
+      host: \localhost:15432 # host.docker.internal
+      database: \servebase
+      user: \servebase
+      password: \servebase
       poolSize: 20
   build:
     enabled: true
