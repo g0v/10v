@@ -1,7 +1,11 @@
 doctype html
-html
+html(lang="en")
   include @/@loadingio/bootstrap.ext/dist/index.pug
   head
+    meta(charset="utf-8")
+    title Serverbase
+    meta(name="description", content="servebase sample page")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     base(href="/")
     +css("assets/lib/bootstrap/main/css/bootstrap.min.css")
     +css("assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
@@ -52,7 +56,7 @@ html
             br
             b Search User
             .input-group.mb-2
-              input.form-control(ld="keyword",placeholder="email or user key ... ")
+              input.form-control(ld="keyword",placeholder="email or user key ... ",aria-label="keyword")
               .input-group-append
                 .btn.btn-outline-secondary(ld="search") Search
             .pb-4
@@ -75,29 +79,31 @@ html
               hr
               .form-group
                 b username
-                input.form-control(ld="adduser.username")
+                input.form-control(ld="adduser.username",aria-label="username")
               .form-group
                 b displayname
-                input.form-control(ld="adduser.displayname")
+                input.form-control(ld="adduser.displayname",aria-label="displayname")
               .form-group
                 b password #[span.text-sm / left empty for auto generation]
-                input.form-control(ld="adduser.password",type="password")
+                input.form-control(ld="adduser.password",type="password",aria-label="password")
               .btn.btn-primary(ld="adduser") Add User
-    +script("/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js")
-    +script("/assets/lib/i18next/main/umd/i18next.min.js")
-    +script("/assets/lib/zmgr/main/index.min.js")
-    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
-    +script("/assets/lib/proxise/main/proxise.min.js")
-    +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
-    +script("/assets/lib/@plotdb/rescope/main/rescope.min.js")
-    +script("/assets/lib/@plotdb/csscope/main/csscope.min.js")
-    +script("/assets/lib/@plotdb/block/main/block.min.js")
-    +script("assets/lib/ldcover/main/index.min.js")
-    +script("assets/lib/ldform/main/index.min.js")
-    +script("assets/lib/curegex/main/curegex.min.js")
-    +script("assets/lib/ldview/main/index.min.js")
-    +script("assets/lib/ldloader/main/index.min.js")
-    +script("assets/lib/lderror/main/index.min.js")
-    +script("assets/lib/auth/main/index.min.js")
-    script: include:lsc index.ls
-    script: include:lsc admin.ls
+    +script("/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js",{defer:true})
+    +script("/assets/lib/i18next/main/umd/i18next.min.js",{defer:true})
+    +script("/assets/lib/zmgr/main/index.min.js",{defer:true})
+    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js",{defer:true})
+    +script("/assets/lib/proxise/main/proxise.min.js",{defer:true})
+    +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js",{defer:true})
+    +script("/assets/lib/@plotdb/rescope/main/rescope.min.js",{defer:true})
+    +script("/assets/lib/@plotdb/csscope/main/csscope.min.js",{defer:true})
+    +script("/assets/lib/@plotdb/block/main/block.min.js",{defer:true})
+    +script("assets/lib/ldcover/main/index.min.js",{defer:true})
+    +script("assets/lib/ldform/main/index.min.js",{defer:true})
+    +script("assets/lib/curegex/main/curegex.min.js",{defer:true})
+    +script("assets/lib/ldview/main/index.min.js",{defer:true})
+    +script("assets/lib/ldloader/main/index.min.js",{defer:true})
+    +script("assets/lib/lderror/main/index.min.js",{defer:true})
+    +script("assets/lib/auth/main/index.min.js",{defer:true})
+
+    script(type="module")
+      include:lsc index.ls
+      include:lsc admin.ls
