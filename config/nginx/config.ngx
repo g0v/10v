@@ -4,6 +4,9 @@ upstream !{name}_api {
 
 server {
   listen 443;
+  #listen 443 ssl http2;
+  # for IPv6
+  #listen [::]:443 ssl http2 ipv6only=on;
   include !{nginxCfgDir}/mime.types;
   server_name !{hostname};
   ssl on;
