@@ -31,7 +31,7 @@ init: ({root, data}) ->
   <-(~>it.apply @mod) _
   @ldcv = ldcv = {}
   @frontend = data.frontend
-  ldcv.authpanel = new ldcover root: ld$.find(root, '.ldcv[data-name=authpanel]', 0), base-z: 1
+  ldcv.authpanel = new ldcover root: ld$.find(root, '.ldcv[data-name=authpanel]', 0), base-z: 100
   @ldld = new ldloader class-name: "ldld full z-fixed"
   @ <<< {_tab: 'login', _info: \default}
 
