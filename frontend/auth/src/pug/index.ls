@@ -24,6 +24,7 @@ frontend = do
     login: ~> @auth.prompt true, {tab: \login} .then -> update!
     logout: ~> @auth.logout!then -> update!
     reauth: ~> @auth.logout!then ~> update! .then ~> @auth.prompt true, {tab: \login} .then -> update!
+    notify: ~> ldnotify.send <[success warning danger dark light]>[Math.floor(Math.random! * 5)], "some test text"
   text: do
     username: ~> @user.username or 'n/a'
     userid: ~> @user.key or 'n/a'
@@ -54,3 +55,4 @@ update!
     debounce 1000
   .then ~> @auth.ensure!
   .then -> console.log \ok
+  .then -> ldnotify.send \success, "you have successfully logged in."

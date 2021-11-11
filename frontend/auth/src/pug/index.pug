@@ -15,6 +15,7 @@ html(lang="en")
     +css("assets/lib/ldbutton/main/ldbtn.min.css")
     +css("assets/lib/@loadingio/loading.css/main/loading.min.css")
     +css("assets/lib/@loadingio/transition.css/main/transition.min.css")
+    +css("assets/lib/ldnotify/main/index.min.css")
     style(type="text/css"): :stylus
       @font-face {
         font-family: 'ldi';
@@ -46,6 +47,8 @@ html(lang="en")
           .btn.btn-primary.mr-2(ld="login not-signed") Login
           .btn.btn-primary.mr-2.d-none(ld="logout signed") Logout
           .btn.btn-primary(ld="reauth") Re-auth
+          +nbr(2)
+          .btn.btn-outline-secondary.mr-2(ld="notify") Send notify
         .col-md.mb-4
 
           div(ld="admin",ld-scope)
@@ -86,15 +89,15 @@ html(lang="en")
                 b password #[span.text-sm / left empty for auto generation]
                 input.form-control(ld="adduser.password",type="password",aria-label="password")
               .btn.btn-primary(ld="adduser") Add User
-    +script("/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js",{defer:true})
-    +script("/assets/lib/i18next/main/umd/i18next.min.js",{defer:true})
-    +script("/assets/lib/zmgr/main/index.min.js",{defer:true})
-    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js",{defer:true})
-    +script("/assets/lib/proxise/main/proxise.min.js",{defer:true})
-    +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js",{defer:true})
-    +script("/assets/lib/@plotdb/rescope/main/rescope.min.js",{defer:true})
-    +script("/assets/lib/@plotdb/csscope/main/csscope.min.js",{defer:true})
-    +script("/assets/lib/@plotdb/block/main/block.min.js",{defer:true})
+    +script("assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js",{defer:true})
+    +script("assets/lib/i18next/main/umd/i18next.min.js",{defer:true})
+    +script("assets/lib/zmgr/main/index.min.js",{defer:true})
+    +script("assets/lib/@loadingio/ldquery/main/ldq.min.js",{defer:true})
+    +script("assets/lib/proxise/main/proxise.min.js",{defer:true})
+    +script("assets/lib/@loadingio/debounce.js/main/debounce.min.js",{defer:true})
+    +script("assets/lib/@plotdb/rescope/main/rescope.min.js",{defer:true})
+    +script("assets/lib/@plotdb/csscope/main/csscope.min.js",{defer:true})
+    +script("assets/lib/@plotdb/block/main/block.min.js",{defer:true})
     +script("assets/lib/ldcover/main/index.min.js",{defer:true})
     +script("assets/lib/ldform/main/index.min.js",{defer:true})
     +script("assets/lib/curegex/main/curegex.min.js",{defer:true})
@@ -102,6 +105,7 @@ html(lang="en")
     +script("assets/lib/ldloader/main/index.min.js",{defer:true})
     +script("assets/lib/lderror/main/index.min.js",{defer:true})
     +script("assets/lib/auth/main/index.min.js",{defer:true})
+    +script("assets/lib/ldnotify/main/index.min.js",{defer:true})
 
     script(type="module")
       include:lsc index.ls
