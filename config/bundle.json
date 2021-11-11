@@ -1,38 +1,37 @@
 {
   "css": {
     "vendor": [
-      "frontend/static/assets/lib/bootstrap.custom/main/css/bootstrap.min.css",
-      "frontend/static/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css",
-      "frontend/static/assets/lib/ldiconfont/main/ldif.min.css",
-      "frontend/static/assets/lib/ldloader/main/ldld.min.css",
-      "frontend/static/assets/lib/ldcover/main/ldcv.min.css",
-      "frontend/static/assets/lib/ldcover/main/ldcv.effects.min.css",
-      "frontend/static/assets/lib/ldtab/main/ldtab.min.css",
-      "frontend/static/assets/lib/ldfolder/main/ldfolder.min.css",
-      "frontend/static/assets/lib/ldnotify/main/ldnotify.min.css",
-      "frontend/static/assets/lib/ldbutton/main/ldbtn.min.css",
-      "frontend/static/assets/lib/@loadingio/transition.css/main/transition.min.css"
+      "frontend/demo/static/assets/lib/bootstrap/main/css/bootstrap.min.css",
+      "frontend/demo/static/assets/lib/@loadingio/bootstrap.ext/main/index.min.css",
+      "frontend/demo/static/assets/lib/ldiconfont/main/ldif.min.css",
+      "frontend/demo/static/assets/lib/ldloader/main/index.min.css",
+      "frontend/demo/static/assets/lib/ldcover/main/index.min.css",
+      "frontend/demo/static/assets/lib/ldcover/main/ldcv.effects.min.css",
+      "frontend/demo/static/assets/lib/ldtab/main/ldtab.min.css",
+      "frontend/demo/static/assets/lib/ldfolder/main/ldfolder.min.css",
+      "frontend/demo/static/assets/lib/ldnotify/main/index.min.css",
+      "frontend/demo/static/assets/lib/ldbutton/main/ldbtn.min.css",
+      "frontend/demo/static/assets/lib/@loadingio/transition.css/main/transition.min.css"
     ]
   },
   "js": {
     "vendor": [
-      "frontend/static/assets/lib/bootstrap.native/main/bootstrap-native.min.js",
-      "frontend/static/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.js",
-      "frontend/static/assets/lib/@loadingio/ldquery/main/ldq.min.js",
-      "frontend/static/assets/lib/@loadingio/debounce.js/main/debounce.min.js",
-      "frontend/static/assets/lib/@loadingio/ldc/main/ldc.min.js",
-      "frontend/static/assets/lib/proxise/main/proxise.min.js",
-      "frontend/static/assets/lib/ldloader/main/ldld.min.js",
-      "frontend/static/assets/lib/ldform/main/ldform.min.js",
-      "frontend/static/assets/lib/ldcover/main/ldcv.min.js",
-      "frontend/static/assets/lib/ldcvmgr/main/ldcvmgr.min.js",
-      "frontend/static/assets/lib/ldview/main/index.min.js",
-      "frontend/static/assets/lib/lderror/main/lde.min.js",
-      "frontend/static/assets/lib/ldtab/main/ldtab.min.js",
-      "frontend/static/assets/lib/ldfolder/main/ldfolder.min.js",
-      "frontend/static/assets/lib/ldnotify/main/ldnotify.min.js",
-      "frontend/static/assets/lib/curegex/main/curegex.min.js",
-      "frontend/static/assets/lib/zmgr/main/zmgr.min.js"
+      "frontend/demo/static/assets/lib/bootstrap.native/main/bootstrap-native.min.js",
+      "frontend/demo/static/assets/lib/@loadingio/ldquery/main/ldq.min.js",
+      "frontend/demo/static/assets/lib/@loadingio/debounce.js/main/debounce.min.js",
+      "frontend/demo/static/assets/lib/@loadingio/ldc/main/ldc.min.js",
+      "frontend/demo/static/assets/lib/proxise/main/proxise.min.js",
+      "frontend/demo/static/assets/lib/ldloader/main/index.min.js",
+      "frontend/demo/static/assets/lib/ldform/main/index.min.js",
+      "frontend/demo/static/assets/lib/ldcover/main/index.min.js",
+      "frontend/demo/static/assets/lib/ldcvmgr/main/ldcvmgr.min.js",
+      "frontend/demo/static/assets/lib/ldview/main/index.min.js",
+      "frontend/demo/static/assets/lib/lderror/main/index.min.js",
+      "frontend/demo/static/assets/lib/ldtab/main/ldtab.min.js",
+      "frontend/demo/static/assets/lib/ldfolder/main/ldfolder.min.js",
+      "frontend/demo/static/assets/lib/ldnotify/main/index.min.js",
+      "frontend/demo/static/assets/lib/curegex/main/curegex.min.js",
+      "frontend/demo/static/assets/lib/zmgr/main/index.min.js"
     ]
   }
 }
