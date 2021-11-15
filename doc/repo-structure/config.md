@@ -3,7 +3,7 @@
  - 分類
    - 依階段分
      - 同一主機需通用的設定
-       - 開發時期 ( bundle.ls, bootstrap )
+       - 開發時期 ( bootstrap ) -> 應該移到各 frontend folder 中.
        - 建構階段 ( package.json, schema.sql )
        - 啟動階段 ( nginx, secret.ls, docker )
      - 可以依用戶不同做切換的設定
@@ -20,7 +20,7 @@
    - db        ( db schema. 所有機器應該都一樣 )
    - mail      ( mail template. 會需要 i18n. 所有機器應該都一樣 )
    - nginx     ( nginx 設定, 依機器路徑, ip, port, domain name 有所差異. 會需要動態生成 )
-   - bootstrap ( bootstrap customization. 也許要多做一層 ( e.g., css ) 父目錄？ )
+   - bootstrap ( bootstrap customization. 也許要多做一層 ( e.g., css ) 父目錄？ ) -> 應該移到各 frontend folder 中.
    - docker    ( docker/compose files. 是說, 也可以用 podman, 或 k8s 也許也有設定? )
    - key       ( 公私鑰對. 用來加密文字? 可能會需要隨網域而變更 )
    - site      ( 主機各項公開設定   )
@@ -43,7 +43,7 @@
    - 提案 2
      - repo
        - config ( 除 private 之外都進 git )
-         - docker, bootstrap, build, db, nginx, mail
+         - docker, db, nginx, mail
          - private ( 不進 git )
            - secret.ls
            - key
@@ -64,8 +64,6 @@
      - repo
        - config
          - src ( 不因 domain, node, cluster 改變而有所不同. 進 git )
-           - build
-             - bundle.ls
            - db
              - <purpose>.sql
            - nginx

@@ -14,7 +14,6 @@
  - 思考, 甚至嘗試使用 @plotdb/block 做為前端套件模組控制器的可能
    - @plotdb/block server bundler
    - @plotdb/block i18n 怎麼做?
- - bundle not rebuild even if some files listed inside are updated ( through symlink )
  - dependency issue
    - frontend modules might use different packages. how could we better manage all of them?
      - e.g., authpanel.ls use `curegex`, and authpanel is itself in local module `auth`.
@@ -28,4 +27,5 @@
 
 ## done
 
- * ldsite modualized and re-add ( auth, ldcvmgr, error, loader, notify, httputil )
+ - ldsite modualized and re-add ( auth, ldcvmgr, error, loader, notify, httputil )
+ - bundle not rebuild even if some files listed inside are updated ( through symlink )

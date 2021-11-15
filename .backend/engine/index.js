@@ -132,7 +132,8 @@
         return;
       }
       return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = this.base, ref$.bundle = {
-        configFile: 'config/bundle.json'
+        configFile: path.join(this.base, 'bundle.json'),
+        relativePath: true
       }, ref$));
     },
     start: function(){
