@@ -51,7 +51,7 @@ backend = (opt = {}) ->
     production: process.env.NODE_ENV == \production
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: with-default(opt.config, default-config) # backend configuration
-    base: opt.config.base or 'frontend'
+    base: opt.config.base or 'frontend/web'
     server: null     # http.Server object, either created by express or from other lib
     app: null        # express application
     log: null        # obj for logging, in pino / winston interface

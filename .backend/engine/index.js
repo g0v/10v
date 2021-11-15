@@ -81,7 +81,7 @@
       production: process.env.NODE_ENV === 'production',
       middleware: {},
       config: withDefault(opt.config, defaultConfig),
-      base: opt.config.base || 'frontend',
+      base: opt.config.base || 'frontend/web',
       server: null,
       app: null,
       log: null,
