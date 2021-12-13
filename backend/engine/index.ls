@@ -98,7 +98,9 @@ backend.prototype = Object.create(Object.prototype) <<< do
           @log-server.error "terminate process to reset server status".red
           process.exit -1
 
-        i18n(@config.i18n or {})
+        i18n-enabled = @config.i18n and (@config.i18n.enabled or !(@config.i18n.enabled?))
+        @config.{}i18n.enabled = i18n-enabled
+        i18n @config.i18n
       .then ~> @i18n = it
       .then ~>
         @db = new postgresql @
@@ -132,7 +134,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         # TODO invalidate cache after view updated
         if app.get(\env) != \development => app.enable 'view cache'
 
-        app.use i18next-http-middleware.handle @i18n, {ignoreRoutes: <[]>}
+        if @config.i18n.enabled => app.use i18next-http-middleware.handle @i18n, {ignoreRoutes: <[]>}
 
         # also, we precompile all view pug into .view folder, which can be used by our custom pug view engine.
         app.engine 'pug', pug({

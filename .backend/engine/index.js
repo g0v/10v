@@ -139,7 +139,7 @@
     start: function(){
       var this$ = this;
       return Promise.resolve().then(function(){
-        var logLevel, ref$, log;
+        var logLevel, ref$, log, i18nEnabled;
         logLevel = ((ref$ = this$.config).log || (ref$.log = {})).level || (this$.production ? 'info' : 'debug');
         if (!(logLevel === 'silent' || logLevel === 'trace' || logLevel === 'debug' || logLevel === 'info' || logLevel === 'warn' || logLevel === 'error' || logLevel === 'fatal')) {
           return Promise.reject(new Error("pino log level incorrect. please fix secret.ls: log.level"));
@@ -175,7 +175,9 @@
           this$.logServer.error("terminate process to reset server status".red);
           return process.exit(-1);
         });
-        return i18n(this$.config.i18n || {});
+        i18nEnabled = this$.config.i18n && (this$.config.i18n.enabled || !(this$.config.i18n.enabled != null));
+        ((ref$ = this$.config).i18n || (ref$.i18n = {})).enabled = i18nEnabled;
+        return i18n(this$.config.i18n);
       }).then(function(it){
         return this$.i18n = it;
       }).then(function(){
@@ -208,9 +210,11 @@
         if (app.get('env') !== 'development') {
           app.enable('view cache');
         }
-        app.use(i18nextHttpMiddleware.handle(this$.i18n, {
-          ignoreRoutes: []
-        }));
+        if (this$.config.i18n.enabled) {
+          app.use(i18nextHttpMiddleware.handle(this$.i18n, {
+            ignoreRoutes: []
+          }));
+        }
         app.engine('pug', pug({
           logger: this$.log.child({
             module: 'view'
