@@ -40,7 +40,7 @@
     }
     req.log.error({
       err: err
-    }, ("unhandled exception occurred " + (err.message ? ': ' + err.message : '')).red);
+    }, ("unhandled exception occurred [URL: " + req.originalUrl + "] " + (err.message ? ': ' + err.message : '')).red);
     return res.status(500).send();
   };
   module.exports = handler;
