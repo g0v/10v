@@ -8,6 +8,8 @@ require! <[../aux]>
 (backend) <- ((f) -> module.exports = auth-module = -> f it) _
 {db,app,config,route} = backend
 
+captcha = Object.fromEntries [[k,v] for k,v of config.captcha].map -> [it.0, it.1{sitekey, enabled}]
+
 get-user = ({username, password, method, detail, create, cb, req}) ->
   db.user-store.get {username, password, method, detail, create}
     .then (user) !->
@@ -100,7 +102,7 @@ route.auth.get \/info, (req, res) ~>
     production: backend.production
     ip: aux.ip(req)
     user: if req.user => req.user{key, config, displayname, verified, username} else {}
-    recaptcha: config.{}grecaptcha{sitekey, enabled}
+    captcha: captcha
   })
   res.cookie 'global', payload, { path: '/', secure: true }
   res.send payload

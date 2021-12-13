@@ -2,6 +2,7 @@ module.exports = do
   port: 8901
   limit: '20mb'
   i18n:
+    enabled: true
     lng: <[en zh-TW]>
     ns: <[default]>
   base: 'frontend/demo'
@@ -16,13 +17,19 @@ module.exports = do
   build:
     enabled: true
     watcher: do
-      ignores: ['\/\..*\.swp$', '^static/assets/img']
+      ignored: ['\/\..*\.swp$', '^static/assets/img']
   session:
     secret: 'this-is-a-sample-secret-please-update-it'
     max-age: 365 * 86400 * 1000
-  grecaptcha:
-    sitekey: '...'
-    enabled: false
+  captcha:
+    recaptcha:
+      sitekey: '...'
+      secret: '...'
+      enabled: false
+    hcaptcha:
+      sitekey: '...'
+      secret: '...'
+      enabled: false
   log:
     level: \info
   auth:

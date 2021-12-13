@@ -16,8 +16,24 @@
       return f(it);
     };
   })(function(backend){
-    var db, app, config, route, getUser, strategy, session, x$;
+    var db, app, config, route, captcha, k, v, getUser, strategy, session, x$;
     db = backend.db, app = backend.app, config = backend.config, route = backend.route;
+    captcha = Object.fromEntries((function(){
+      var ref$, results$ = [];
+      for (k in ref$ = config.captcha) {
+        v = ref$[k];
+        results$.push([k, v]);
+      }
+      return results$;
+    }()).map(function(it){
+      var ref$;
+      return [
+        it[0], {
+          sitekey: (ref$ = it[1]).sitekey,
+          enabled: ref$.enabled
+        }
+      ];
+    }));
     getUser = function(arg$){
       var username, password, method, detail, create, cb, req;
       username = arg$.username, password = arg$.password, method = arg$.method, detail = arg$.detail, create = arg$.create, cb = arg$.cb, req = arg$.req;
@@ -144,7 +160,7 @@
       }
     };
     route.auth.get('/info', function(req, res){
-      var ref$, payload, ref1$;
+      var payload, ref$;
       res.setHeader('content-type', 'application/json');
       payload = JSON.stringify({
         csrfToken: req.csrfToken(),
@@ -152,17 +168,14 @@
         ip: aux.ip(req),
         user: req.user
           ? {
-            key: (ref1$ = req.user).key,
-            config: ref1$.config,
-            displayname: ref1$.displayname,
-            verified: ref1$.verified,
-            username: ref1$.username
+            key: (ref$ = req.user).key,
+            config: ref$.config,
+            displayname: ref$.displayname,
+            verified: ref$.verified,
+            username: ref$.username
           }
           : {},
-        recaptcha: {
-          sitekey: (ref$ = config.grecaptcha || (config.grecaptcha = {})).sitekey,
-          enabled: ref$.enabled
-        }
+        captcha: captcha
       });
       res.cookie('global', payload, {
         path: '/',
