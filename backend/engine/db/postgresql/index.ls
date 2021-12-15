@@ -1,4 +1,4 @@
-require! <[pg crypto bcrypt colors lderror re2 curegex ./session-store ./user-store]>
+require! <[pg lderror ./session-store ./user-store]>
 
 pg.defaults.poolSize = 30
 
