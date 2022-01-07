@@ -3,6 +3,7 @@ provider.prototype = Object.create(Object.prototype) <<<
   create: (o = {}) -> new @factory o
   cfg: (o) -> if o? => @{}_cfg <<< o else (@_cfg or {})
 
+
 captcha =
   _p: {} # providers
   _order: null
@@ -17,7 +18,6 @@ captcha =
       @opt = o
       @init!
       @
-    
     f.prototype = {_provider: p} <<< Object.create(Object.prototype) <<< itf <<<
       priority: 99
       _init: itf.init
@@ -43,6 +43,26 @@ captcha =
     if !@cfg[opt.name] => lderror.reject 1010
     # TODO finish this
     @_p[opt.name].verify({} <<< @cfg[opt.name] <<< opt)
+
+  prepare: -> @root = it
+  examine: ->
+    root = @root
+    v = new ldview do
+      root: root
+      action: click: ok: ~>
+        capobj.get!then ~>
+          console.log \result, it
+          @ldcv.toggle false
+    inner = root.querySelector('[ld=box]')
+    @ldcv = new ldcover root: root.querySelector('.ldcv')
+    @ldcv.toggle!
+    capobj = captcha.get \recaptcha_v2_checkbox .create {root: inner}
+    capobj = capobj
+    capobj.init!
+      .then ->
+        capobj.render!
+        console.log "capobj inited"
+
 
 captcha.register \hcaptcha, do
   priority: 3
@@ -161,5 +181,9 @@ captcha.register \recaptcha_v2_checkbox, do
       .catch -> return Promise.reject it
   */
 
-if module? => module.exports = interface: -> captcha
+if module? => module.exports =
+  init: ({root}) ->
+    captcha.prepare root
+
+  interface: -> captcha
 else if window => window.captcha = captcha

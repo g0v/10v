@@ -27,7 +27,7 @@ frontend = do
     notify: ~> ldnotify.send <[success warning danger dark light]>[Math.floor(Math.random! * 5)], "some test text"
     "hcaptcha-done": ~>
       console.log "done..."
-      @capobj.get!then -> console.log ">", it
+      #@capobj.get!then -> console.log ">", it
     captcha: ~>
       @auth.get!
         .then (g) -> captcha.init g.captcha
@@ -73,19 +73,22 @@ update!
   #.then -> ldnotify.send \success, "you have successfully logged in."
   .then -> manager.get {name: 'captcha'}
   .then (bc) -> bc.create!
-  .then (bi) -> bi.attach! .then -> bi.interface!
+  .then (bi) -> bi.attach {root: document.body} .then -> bi.interface!
   .then (cap) ~>
     @auth.get!
       .then (g) ->
         cap.init g.captcha
       .then ~>
+        cap.examine!
 
+        /*
         capobj = cap.get \recaptcha_v2_checkbox .create {root: @view.panel.get('hcaptcha')}
         @capobj = capobj
         capobj.init!
           .then ->
             capobj.render!
             console.log "capobj inited"
+        */
 
         /*
         capobj = cap.get \hcaptcha .create {root: @view.panel.get('hcaptcha')}

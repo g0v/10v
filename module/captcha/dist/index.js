@@ -110,6 +110,39 @@
         lderror.reject(1010);
       }
       return this._p[opt.name].verify(import$(import$({}, this.cfg[opt.name]), opt));
+    },
+    prepare: function(it){
+      return this.root = it;
+    },
+    examine: function(){
+      var root, v, inner, capobj, this$ = this;
+      root = this.root;
+      v = new ldview({
+        root: root,
+        action: {
+          click: {
+            ok: function(){
+              return capobj.get().then(function(it){
+                console.log('result', it);
+                return this$.ldcv.toggle(false);
+              });
+            }
+          }
+        }
+      });
+      inner = root.querySelector('[ld=box]');
+      this.ldcv = new ldcover({
+        root: root.querySelector('.ldcv')
+      });
+      this.ldcv.toggle();
+      capobj = captcha.get('recaptcha_v2_checkbox').create({
+        root: inner
+      });
+      capobj = capobj;
+      return capobj.init().then(function(){
+        capobj.render();
+        return console.log("capobj inited");
+      });
     }
   };
   captcha.register('hcaptcha', {
@@ -308,6 +341,11 @@
   });
   if (typeof module != 'undefined' && module !== null) {
     module.exports = {
+      init: function(arg$){
+        var root;
+        root = arg$.root;
+        return captcha.prepare(root);
+      },
       'interface': function(){
         return captcha;
       }
