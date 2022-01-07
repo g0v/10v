@@ -25,7 +25,7 @@ html(lang="en")
       }
       
   body
-
+    #captcha.ldcv: .base: .inner.p-4: div
     .w-100.py-2.px-4.bg-dark.text-light.d-flex
       .flex-grow-1
       .clickable(ld="login") Login
@@ -49,6 +49,11 @@ html(lang="en")
           .btn.btn-primary(ld="reauth") Re-auth
           +nbr(2)
           .btn.btn-outline-secondary.mr-2(ld="notify") Send notify
+          .btn.btn-outline-secondary.mr-2(ld="captcha") Captcha
+          .card: .card-body
+            div(ld="hcaptcha")
+            .btn.btn-outline-secondary(ld="hcaptcha-done") Submit
+
         .col-md.mb-4
 
           div(ld="admin",ld-scope)
@@ -89,23 +94,29 @@ html(lang="en")
                 b password #[span.text-sm / left empty for auto generation]
                 input.form-control(ld="adduser.password",type="password",aria-label="password")
               .btn.btn-primary(ld="adduser") Add User
-    +script("assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js",{defer:true})
-    +script("assets/lib/i18next/main/umd/i18next.min.js",{defer:true})
-    +script("assets/lib/zmgr/main/index.min.js",{defer:true})
-    +script("assets/lib/@loadingio/ldquery/main/ldq.min.js",{defer:true})
-    +script("assets/lib/proxise/main/proxise.min.js",{defer:true})
-    +script("assets/lib/@loadingio/debounce.js/main/debounce.min.js",{defer:true})
-    +script("assets/lib/@plotdb/rescope/main/rescope.min.js",{defer:true})
-    +script("assets/lib/@plotdb/csscope/main/csscope.min.js",{defer:true})
-    +script("assets/lib/@plotdb/block/main/block.min.js",{defer:true})
-    +script("assets/lib/ldcover/main/index.min.js",{defer:true})
-    +script("assets/lib/ldform/main/index.min.js",{defer:true})
-    +script("assets/lib/curegex/main/curegex.min.js",{defer:true})
-    +script("assets/lib/ldview/main/index.min.js",{defer:true})
-    +script("assets/lib/ldloader/main/index.min.js",{defer:true})
-    +script("assets/lib/lderror/main/index.min.js",{defer:true})
-    +script("assets/lib/auth/main/index.min.js",{defer:true})
-    +script("assets/lib/ldnotify/main/index.min.js",{defer:true})
+    +script([
+      {name: "bootstrap.native", version: "main", path: "bootstrap-native-v4.min.js"},
+      {name: "i18next", version: "main", path: "umd/i18next.min.js"},
+      {name: "zmgr", version: "main"},
+      {name: "@loadingio/ldquery", version: "main", path: "ldq.min.js"},
+      {name: "proxise", version: "main"},
+      {name: "@loadingio/debounce.js", version: "main", path: "debounce.min.js"},
+      {name: "@plotdb/rescope", version: "main"},
+      {name: "@plotdb/csscope", version: "main"},
+      {name: "@plotdb/block", version: "main"},
+      {name: "ldcover", version: "main"},
+      {name: "ldform", version: "main"},
+      {name: "curegex", version: "main", path: "curegex.min.js"},
+      {name: "ldview", version: "main"},
+      {name: "ldloader", version: "main"},
+      {name: "lderror", version: "main"},
+      {name: "auth", version: "main"},
+      {name: "ldnotify", version: "main"},
+      {name: "captcha", version: "main"}
+    ])
+
+    //-+script("js/main.min.js",{defer:true})
+    //-+script("https://www.google.com/recaptcha/api.js",{async: true})
 
     script(type="module")
       include:lsc index.ls
