@@ -25,6 +25,18 @@ frontend = do
     logout: ~> @auth.logout!then -> update!
     reauth: ~> @auth.logout!then ~> update! .then ~> @auth.prompt true, {tab: \login} .then -> update!
     notify: ~> ldnotify.send <[success warning danger dark light]>[Math.floor(Math.random! * 5)], "some test text"
+    "hcaptcha-done": ~>
+      console.log "done..."
+      @capobj.get!then -> console.log ">", it
+    captcha: ~>
+      @auth.get!
+        .then (g) -> captcha.init g.captcha
+        .then ->
+          captcha.guard do
+            cb: ->
+              console.log it
+              lderror.reject 1010
+
   text: do
     username: ~> @user.username or 'n/a'
     userid: ~> @user.key or 'n/a'
@@ -41,6 +53,9 @@ update = ~>
     @global = g
     @user = g.user
     @view.panel.render!
+    #grecaptcha.ready -> grecaptcha.render \blah, {sitekey: g.captcha.sitekey}
+    #cap.get {sitekey: '262e7cc7-7384-48c4-97de-8c91b5bfb9bf', enabled: true}
+    #  .then -> console.log \ok
 
 update!
   .then -> console.log \here
@@ -53,6 +68,35 @@ update!
   .then ~>
     @auth.set-ui {authpanel: it, loader: new ldloader class-name: "ldld full"}
     debounce 1000
-  .then ~> @auth.ensure!
+  #.then ~> @auth.ensure!
   .then -> console.log \ok
-  .then -> ldnotify.send \success, "you have successfully logged in."
+  #.then -> ldnotify.send \success, "you have successfully logged in."
+  .then -> manager.get {name: 'captcha'}
+  .then (bc) -> bc.create!
+  .then (bi) -> bi.attach! .then -> bi.interface!
+  .then (cap) ~>
+    @auth.get!
+      .then (g) ->
+        cap.init g.captcha
+      .then ~>
+
+        capobj = cap.get \recaptcha_v2_checkbox .create {root: @view.panel.get('hcaptcha')}
+        @capobj = capobj
+        capobj.init!
+          .then ->
+            capobj.render!
+            console.log "capobj inited"
+
+        /*
+        capobj = cap.get \hcaptcha .create {root: @view.panel.get('hcaptcha')}
+        @capobj = capobj
+        capobj.init!
+          .then ->
+            capobj.render!
+            console.log "capobj inited"
+        */
+      .then ->
+        return
+        cap.guard cb: ->
+          console.log it, \done
+          lderror.reject 1010

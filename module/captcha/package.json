@@ -1,0 +1,27 @@
+{
+  "author": "zbryikt",
+  "name": "captcha",
+  "license": "MIT",
+  "description": "servebase captcha module",
+  "version": "0.1.0",
+  "files": [
+    "dist/**/*"
+  ],
+  "homepage": "https://github.com/plotdb/servebase",
+  "engines": {
+    "node": ">=15.4.0",
+    "npm": ">=7.0.15"
+  },
+  "scripts": {
+    "start": "npx server -r . -o true"
+  },
+  "devDependencies": {
+    "@plotdb/srcbuild": "^0.0.24",
+    "livescript": "^1.6.0",
+    "uglify-js": "^3.2.0"
+  },
+  "peerDependencies": {
+    "@loadingio/debounce.js": "^0.0.1",
+    "proxise": "^0.1.2"
+  }
+}
