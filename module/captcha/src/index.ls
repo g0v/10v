@@ -3,7 +3,6 @@ provider.prototype = Object.create(Object.prototype) <<<
   create: (o = {}) -> new @factory o
   cfg: (o) -> if o? => @{}_cfg <<< o else (@_cfg or {})
 
-
 captcha =
   _p: {} # providers
   _order: null
@@ -35,7 +34,7 @@ captcha =
     if !@_order.length => return Promise.resolve!then -> opt.cb!
     _ = (idx = 0) ~>
       if idx >= @_order.length => return lderror.reject 1010
-      @verify({name: @_order[idx]} <<< opt)
+      @blah({name: @_order[idx]} <<< opt)
         .then (ret) -> opt.cb ret
         .catch -> debounce(1000).then -> _ idx + 1
     _!
@@ -45,6 +44,23 @@ captcha =
     @_p[opt.name].verify({} <<< @cfg[opt.name] <<< opt)
 
   prepare: -> @root = it
+  blah: ({name}) ->
+    if !@{}obj[name] =>
+      node = @root.querySelector('.ldcv').cloneNode(true)
+      @root.appendChild node
+      ldcv = new ldcover root: node
+      p = ldcv.get!
+      @obj[name] =
+        obj: @get(name).create {root: node.querySelector('[ld=box]')}
+        ldcv: ldcv
+    else 
+      p = @obj[name].ldcv.get!
+    @obj[name].obj.init!
+      .then ~> @obj[name].obj.render!
+      .then -> p
+      .then ~> @obj[name].obj.get!
+      .catch -> return {}
+
   examine: ->
     root = @root
     v = new ldview do
@@ -143,15 +159,14 @@ captcha.register \recaptcha_v3, do
 captcha.register \recaptcha_v2_checkbox, do
   priority: 2
   init: proxise.once ->
-    Promise.resolve!then ~>
-      (res, rej) <~ new Promise _
-      @_script = s = document.createElement("script")
-      s.onerror = ~> rej it
-      s.onload = ~> grecaptcha.ready ~> res @inited = true
-      s.setAttribute \type, \text/javascript
-      s.setAttribute \src, \https://www.google.com/recaptcha/api.js
-      document.body.appendChild s
-      @ldcv = new ldcover root: ld$.find('#captcha', 0)
+    (res, rej) <~ new Promise _
+    @_script = s = document.createElement("script")
+    s.onerror = ~> rej it
+    s.onload = ~> grecaptcha.ready ~> res @inited = true
+    s.setAttribute \type, \text/javascript
+    s.setAttribute \src, \https://www.google.com/recaptcha/api.js
+    document.body.appendChild s
+    @ldcv = new ldcover root: ld$.find('#captcha', 0)
 
   interface:
     init: ->

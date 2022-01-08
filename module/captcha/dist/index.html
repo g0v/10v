@@ -1,4 +1,4 @@
-<div><div class="ldcv default-size" ld="cover"><div class="base"><div class="inner" ld="inner"><div class="d-flex align-items-center justify-content-center h-100"><div class="text-center"><div class="mb-4" ld="box"></div><div class="btn btn-outline-secondary btn-block" ld="ok">OK</div></div></div></div></div></div><script type="@plotdb/block">var provider, ref$, captcha;
+<div><div class="ldcv default-size" ld="cover"><div class="base"><div class="inner" ld="inner"><div class="d-flex align-items-center justify-content-center h-100"><div class="text-center"><div class="mb-4" ld="box"></div><div class="btn btn-outline-secondary btn-block" data-ldcv-set="ok">OK</div></div></div></div></div></div><script type="@plotdb/block">var provider, ref$, captcha;
 provider = function(o){
   o == null && (o = {});
   return import$(this, o);
@@ -90,7 +90,7 @@ captcha = {
       if (idx >= this$._order.length) {
         return lderror.reject(1010);
       }
-      return this$.verify(import$({
+      return this$.blah(import$({
         name: this$._order[idx]
       }, opt)).then(function(ret){
         return opt.cb(ret);
@@ -111,6 +111,35 @@ captcha = {
   },
   prepare: function(it){
     return this.root = it;
+  },
+  blah: function(arg$){
+    var name, node, ldcv, p, this$ = this;
+    name = arg$.name;
+    if (!(this.obj || (this.obj = {}))[name]) {
+      node = this.root.querySelector('.ldcv').cloneNode(true);
+      this.root.appendChild(node);
+      ldcv = new ldcover({
+        root: node
+      });
+      p = ldcv.get();
+      this.obj[name] = {
+        obj: this.get(name).create({
+          root: node.querySelector('[ld=box]')
+        }),
+        ldcv: ldcv
+      };
+    } else {
+      p = this.obj[name].ldcv.get();
+    }
+    return this.obj[name].obj.init().then(function(){
+      return this$.obj[name].obj.render();
+    }).then(function(){
+      return p;
+    }).then(function(){
+      return this$.obj[name].obj.get();
+    })['catch'](function(){
+      return {};
+    });
   },
   examine: function(){
     var root, v, inner, capobj, this$ = this;
@@ -272,24 +301,22 @@ captcha.register('recaptcha_v2_checkbox', {
   priority: 2,
   init: proxise.once(function(){
     var this$ = this;
-    return Promise.resolve().then(function(){
-      return new Promise(function(res, rej){
-        var s;
-        this$._script = s = document.createElement("script");
-        s.onerror = function(it){
-          return rej(it);
-        };
-        s.onload = function(){
-          return grecaptcha.ready(function(){
-            return res(this$.inited = true);
-          });
-        };
-        s.setAttribute('type', 'text/javascript');
-        s.setAttribute('src', 'https://www.google.com/recaptcha/api.js');
-        document.body.appendChild(s);
-        return this$.ldcv = new ldcover({
-          root: ld$.find('#captcha', 0)
+    return new Promise(function(res, rej){
+      var s;
+      this$._script = s = document.createElement("script");
+      s.onerror = function(it){
+        return rej(it);
+      };
+      s.onload = function(){
+        return grecaptcha.ready(function(){
+          return res(this$.inited = true);
         });
+      };
+      s.setAttribute('type', 'text/javascript');
+      s.setAttribute('src', 'https://www.google.com/recaptcha/api.js');
+      document.body.appendChild(s);
+      return this$.ldcv = new ldcover({
+        root: ld$.find('#captcha', 0)
       });
     });
   }),
