@@ -1,4 +1,4 @@
-require! <[fs colors js-yaml lderror]>
+require! <[fs @plotdb/colors js-yaml lderror]>
 require! <[nodemailer nodemailer-mailgun-transport]>
 require! <[./utils/md]>
 

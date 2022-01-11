@@ -1,4 +1,4 @@
-require! <[fs yargs express colors path pino lderror pino-http redis util body-parser csurf]>
+require! <[fs yargs express @plotdb/colors path pino lderror pino-http redis util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
