@@ -1,4 +1,4 @@
-require! <[fs path lderror backend/aux backend/throttle]>
+require! <[fs path lderror backend/aux backend/throttle backend/captcha]>
 (backend, {api, app}) <- (->module.exports = it)  _
 {db,config} = backend
 
@@ -28,3 +28,7 @@ app.get \/lderror/reject,  (req, res, next) -> Promise.reject(lderror 1023)
 
 api.get \/ip, (req, res, next) ->
   res.send aux.ip(req)
+
+# Demonstrate using captcha to guard this api.
+api.post \/post, captcha(backend)middleware!, (req, res, next) ->
+  res.send \pass
