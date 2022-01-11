@@ -4,7 +4,7 @@
   fs = require('fs');
   yargs = require('yargs');
   express = require('express');
-  colors = require('colors');
+  colors = require('@plotdb/colors');
   path = require('path');
   pino = require('pino');
   lderror = require('lderror');
