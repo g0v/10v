@@ -144,6 +144,7 @@ captcha.register \recaptcha_v3, do
       cfg = @_provider.cfg!
       if !(cfg.sitekey and cfg.enabled) => return lderror.reject 998
       grecaptcha.execute cfg.sitekey, {action: 'generic'} # TODO: action
+        .then (token) -> return {token, name: \recaptcha_v3}
     reset: ->
     render: ->
 

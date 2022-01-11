@@ -285,6 +285,11 @@
         }
         return grecaptcha.execute(cfg.sitekey, {
           action: 'generic'
+        }).then(function(token){
+          return {
+            token: token,
+            name: 'recaptcha_v3'
+          };
         });
       },
       reset: function(){},
