@@ -33,9 +33,14 @@ frontend = do
         .then (g) -> captcha.init g.captcha
         .then ->
           captcha.guard do
-            cb: ->
-              console.log it
-              lderror.reject 1010
+            cb: (data) ->
+              ld$.fetch "/api/post", {method: \POST}, {json: data}
+                .then -> console.log \ok
+                .catch ->
+                  console.error "no", it
+                  Promise.reject it
+              #console.log it
+              #lderror.reject 1010
 
   text: do
     username: ~> @user.username or 'n/a'
@@ -79,7 +84,14 @@ update!
       .then (g) ->
         cap.init g.captcha
       .then ~>
-        cap.examine!
+        cap.guard cb: (data) ->
+          console.log "token obj: ", data
+          ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
+            .then -> console.log "api response: ", it
+            # if we want to test all captcha verifier...
+            #.then -> lderror.reject 1010
+
+      .then ->
 
         /*
         capobj = cap.get \recaptcha_v2_checkbox .create {root: @view.panel.get('hcaptcha')}
@@ -98,8 +110,3 @@ update!
             capobj.render!
             console.log "capobj inited"
         */
-      .then ->
-        return
-        cap.guard cb: ->
-          console.log it, \done
-          lderror.reject 1010
