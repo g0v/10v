@@ -16,12 +16,12 @@
     "start": "npx server -r . -o true"
   },
   "devDependencies": {
-    "@plotdb/srcbuild": "^0.0.24",
+    "@plotdb/srcbuild": "^0.0.37",
     "livescript": "^1.6.0",
-    "uglify-js": "^3.2.0"
+    "uglify-js": "^3.13.1"
   },
   "peerDependencies": {
-    "@loadingio/debounce.js": "^0.0.1",
-    "proxise": "^0.1.2"
+    "@loadingio/debounce.js": "^1.0.1",
+    "proxise": "^1.0.1"
   }
 }
