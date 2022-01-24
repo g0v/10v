@@ -1,18 +1,18 @@
 doctype html
 html(lang="en")
-  include @/@loadingio/bootstrap.ext/dist/index.pug
+  include @/@loadingio/bootstrap.ext/index.pug
   head
     meta(charset="utf-8")
     title Serverbase
     meta(name="description", content="servebase sample page")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     base(href="/")
-    +css("assets/lib/bootstrap/main/css/bootstrap.min.css")
+    +css("assets/lib/bootstrap/main/dist/css/bootstrap.min.css")
     +css("assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
     +css("assets/lib/ldcover/main/index.min.css")
     +css("assets/lib/ldloader/main/index.min.css")
     +css("assets/lib/ldiconfont/main/ldif.min.css")
-    +css("assets/lib/ldbutton/main/ldbtn.min.css")
+    +css("assets/lib/ldbutton/main/index.min.css")
     +css("assets/lib/@loadingio/loading.css/main/loading.min.css")
     +css("assets/lib/@loadingio/transition.css/main/transition.min.css")
     +css("assets/lib/ldnotify/main/index.min.css")
@@ -95,12 +95,12 @@ html(lang="en")
                 input.form-control(ld="adduser.password",type="password",aria-label="password")
               .btn.btn-primary(ld="adduser") Add User
     +script([
-      {name: "bootstrap.native", version: "main", path: "bootstrap-native-v4.min.js"},
-      {name: "i18next", version: "main", path: "umd/i18next.min.js"},
+      {name: "bootstrap.native", version: "main", path: "dist/bootstrap-native-v4.min.js"},
+      {name: "i18next", version: "main", path: "dist/umd/i18next.min.js"},
       {name: "zmgr", version: "main"},
-      {name: "@loadingio/ldquery", version: "main", path: "ldq.min.js"},
+      {name: "@loadingio/ldquery", version: "main"},
       {name: "proxise", version: "main"},
-      {name: "@loadingio/debounce.js", version: "main", path: "debounce.min.js"},
+      {name: "@loadingio/debounce.js", version: "main"},
       {name: "@plotdb/rescope", version: "main"},
       {name: "@plotdb/csscope", version: "main"},
       {name: "@plotdb/block", version: "main"},
