@@ -17,3 +17,4 @@ frontend/demo/.view
 !frontend/auth
 frontend/auth/static
 frontend/auth/.view
+package-lock.json
