@@ -2,7 +2,7 @@ require! <[pg lderror ./session-store ./user-store]>
 
 pg.defaults.poolSize = 30
 
-database = (backend) ->
+database = (backend, opt = {}) ->
   @config = config = backend.config
   @log = log = backend.log.child {module: 'db'}
   {user, password, host, database, port} = config.db.postgresql
@@ -15,8 +15,9 @@ database = (backend) ->
     connectionTimeoutMillis: 2000
 
   @pool.on \error, (err, client) -> log.error "db pool error".red
-
-  @session-store = new session-store {db: @, session: backend.config.session.max-age, logger: log}
+  @session-store = new session-store {
+    db: @, session: backend.config.session.max-age, logger: log, query-only: opt.query-only
+  }
   @user-store = new user-store {db: @, logger: log}
 
   @

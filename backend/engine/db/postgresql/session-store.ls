@@ -7,10 +7,11 @@ session-store = (opt = {}) ->
   @lifespan = opt.lifespan or (1 * 60)
   # this may have to be externalized for server scaling
   @cleaner-interval = (opt.cleaner-interval or (86400 * 1000) >? 10 * 60 * 1000)
-  @handler = setInterval (~>@trim!), @cleaner-interval
-  @handler.unref!
-  # run first trim later after database initialized
-  setTimeout (~> @trim!), 3000
+  if !opt.query-only =>
+    @handler = setInterval (~>@trim!), @cleaner-interval
+    @handler.unref!
+    # run first trim later after database initialized
+    setTimeout (~> @trim!), 3000
   @
 
 session-store.prototype = {} <<< express-session.Store.prototype <<< do
