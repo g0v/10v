@@ -39,6 +39,16 @@ And a constructor API:
  - `create(opt)`: create a backend server and start this server.
 
 
+### Access backend features via server program
+
+construct a backend object for accessing libraries that require backend to work. Following is an example with database interface:
+
+    require! <[backend backend/db/postgresql]>
+    opt = require "../config/private/secret"
+    db = new postgresql(new backend {config: opt})
+    db.query "select count(key) from session" .then ->
+
+
 ## mail-queue API
 
 mail-queue API:
