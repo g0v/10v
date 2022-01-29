@@ -11,7 +11,6 @@ routes = fs.readdir-sync path.join(libdir, '..')
   .map -> path.join(libdir, '..', it)
   .map -> require it
 
-
 argv = yargs
   .option \config-name, do
     alias: \c
@@ -38,7 +37,6 @@ with-default = (cfg = {}, defcfg = {}) ->
     return cfg
   return _ cfg, defcfg
 
-
 default-config = do
   limit: '10mb'
   port: 3000
@@ -59,6 +57,10 @@ backend = (opt = {}) ->
     route: {}        # all default routes
     store: {}        # redis like data store, with get / set function
     session: {}      # express-session object
+  log-level = @config.{}log.level or (if @production => \info else \debug)
+  if !(log-level in <[silent trace debug info warn error fatal]>) =>
+    throw new Error("pino log level incorrect. please fix secret.ls: log.level")
+  @log = pino level: log-level
   @
 
 backend <<< do
@@ -80,13 +82,9 @@ backend.prototype = Object.create(Object.prototype) <<< do
   start: ->
     Promise.resolve!
       .then ~>
-        log-level = @config.{}log.level or (if @production => \info else \debug)
-        if !(log-level in <[silent trace debug info warn error fatal]>) =>
-          return Promise.reject new Error("pino log level incorrect. please fix secret.ls: log.level")
-        @log = log = pino level: log-level
-        @log-server = log.child {module: \server}
-        @log-build = log.child {module: \build}
-        @log-mail = log.child {module: \mail}
+        @log-server = @log.child {module: \server}
+        @log-build = @log.child {module: \build}
+        @log-mail = @log.child {module: \mail}
         if @config.mail => @mail-queue = new mail-queue {logger: @log-mail} <<< (@config.mail or {})
 
         process.on \uncaughtException, (err, origin) ~>

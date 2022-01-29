@@ -74,6 +74,7 @@
     }
   };
   backend = function(opt){
+    var logLevel, ref$;
     opt == null && (opt = {});
     this.opt = opt;
     import$(this, {
@@ -89,6 +90,13 @@
       route: {},
       store: {},
       session: {}
+    });
+    logLevel = ((ref$ = this.config).log || (ref$.log = {})).level || (this.production ? 'info' : 'debug');
+    if (!(logLevel === 'silent' || logLevel === 'trace' || logLevel === 'debug' || logLevel === 'info' || logLevel === 'warn' || logLevel === 'error' || logLevel === 'fatal')) {
+      throw new Error("pino log level incorrect. please fix secret.ls: log.level");
+    }
+    this.log = pino({
+      level: logLevel
     });
     return this;
   };
@@ -139,21 +147,14 @@
     start: function(){
       var this$ = this;
       return Promise.resolve().then(function(){
-        var logLevel, ref$, log, i18nEnabled;
-        logLevel = ((ref$ = this$.config).log || (ref$.log = {})).level || (this$.production ? 'info' : 'debug');
-        if (!(logLevel === 'silent' || logLevel === 'trace' || logLevel === 'debug' || logLevel === 'info' || logLevel === 'warn' || logLevel === 'error' || logLevel === 'fatal')) {
-          return Promise.reject(new Error("pino log level incorrect. please fix secret.ls: log.level"));
-        }
-        this$.log = log = pino({
-          level: logLevel
-        });
-        this$.logServer = log.child({
+        var i18nEnabled, ref$;
+        this$.logServer = this$.log.child({
           module: 'server'
         });
-        this$.logBuild = log.child({
+        this$.logBuild = this$.log.child({
           module: 'build'
         });
-        this$.logMail = log.child({
+        this$.logMail = this$.log.child({
           module: 'mail'
         });
         if (this$.config.mail) {
