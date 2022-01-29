@@ -11,13 +11,15 @@
     this.log = opt.logger;
     this.lifespan = opt.lifespan || 1 * 60;
     this.cleanerInterval = opt.cleanerInterval || ((ref$ = 86400 * 1000) > (ref1$ = 10 * 60 * 1000) ? ref$ : ref1$);
-    this.handler = setInterval(function(){
-      return this$.trim();
-    }, this.cleanerInterval);
-    this.handler.unref();
-    setTimeout(function(){
-      return this$.trim();
-    }, 3000);
+    if (!opt.queryOnly) {
+      this.handler = setInterval(function(){
+        return this$.trim();
+      }, this.cleanerInterval);
+      this.handler.unref();
+      setTimeout(function(){
+        return this$.trim();
+      }, 3000);
+    }
     return this;
   };
   sessionStore.prototype = import$(import$({}, expressSession.Store.prototype), {

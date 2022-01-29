@@ -6,8 +6,9 @@
   sessionStore = require('./session-store');
   userStore = require('./user-store');
   pg.defaults.poolSize = 30;
-  database = function(backend){
+  database = function(backend, opt){
     var config, log, ref$, user, password, host, database, port;
+    opt == null && (opt = {});
     this.config = config = backend.config;
     this.log = log = backend.log.child({
       module: 'db'
@@ -26,7 +27,8 @@
     this.sessionStore = new sessionStore({
       db: this,
       session: backend.config.session.maxAge,
-      logger: log
+      logger: log,
+      queryOnly: opt.queryOnly
     });
     this.userStore = new userStore({
       db: this,
