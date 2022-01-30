@@ -20,8 +20,8 @@ frontend = do
   root: document.body
   action: click: do
     # we need an approch to control authpanel. should be done via auth.
-    signup: ~> @auth.prompt true, {tab: \signup} .then -> update!
-    login: ~> @auth.prompt true, {tab: \login} .then -> update!
+    signup: ~> @auth.prompt {tab: \signup} .then -> update!
+    login: ~> @auth.prompt {tab: \login} .then -> update!
     logout: ~> @auth.logout!then -> update!
     reauth: ~> @auth.logout!then ~> update! .then ~> @auth.prompt true, {tab: \login} .then -> update!
     notify: ~> ldnotify.send <[success warning danger dark light]>[Math.floor(Math.random! * 5)], "some test text"
