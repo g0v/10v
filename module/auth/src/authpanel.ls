@@ -1,34 +1,13 @@
 module.exports =
   pkg:
     name: "auth", version: "0.0.1"
-    i18n:
-      "zh-TW":
-        "email": "電子郵件"
-        "your email address, as account name": "您的電子郵件地址做為帳戶名"
-        "invalid email address": "無效的電子郵件"
-        "display name": "顯示名稱"
-        "such as 'Paris Hillton'": "例如: 王小明"
-        "requried field": "不能留白"
-        "password too short": "密碼不能太短"
-        "password incorrect": "密碼不正確"
-        "how shuold we call you": "您希望我們如何稱呼您?"
-        "password": "密碼"
-        "at least 8 characters": "至少八個字元"
-        "by sign-in, you agree to our": "登入即代表您同意我們的"
-        "and": "和"
-        "or login with": "或使用下列登入"
-        "Terms": "使用條款"
-        "Privacy Policy": "隱私權政策"
-        "Login": "登入"
-        "Signup": "註冊"
-        "Sign Up": "註冊"
-        "Forget Password": "忘記密碼"
-        "code we sent you for using this service": "由我們另外發給您的邀請碼"
-        "invitation code": "邀請碼"
-        "invalid invitation code": "無效的邀請碼"
-        "Switch to Password Login": "切換回帳號登入 / 註冊"
-        "by Invitation": "使用邀請碼"
-  init: ({root, data}) ->
+    i18n: i18n-resource
+    dependencies: [
+      {name: "ldview", version: "main"}
+      {name: "ldnotify", version: "main"}
+    ]
+  init: ({ctx, root, data}) ->
+    {ldview, ldnotify} = ctx
     <-(~>it.apply @mod) _
     @ldcv = ldcv = {}
     @frontend = data.frontend
@@ -97,6 +76,7 @@ module.exports =
           @info \default
           @form.reset!
           @ldcv.authpanel.set g
+          ldnotify.send "success", "login successfully"
           return g
         .catch (e) ~>
           console.log e

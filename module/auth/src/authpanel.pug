@@ -104,4 +104,6 @@ div
                 ld="social",data-name="google") #[span Google] #[i.i-google]
 
   style(type="text/css"): include:stylus authpanel.styl
-  script(type="@plotdb/block"): include:lsc authpanel.ls
+  script(type="@plotdb/block")
+    include:lsc i18n.ls
+    include:lsc authpanel.ls
