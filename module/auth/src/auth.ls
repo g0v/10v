@@ -123,4 +123,5 @@ auth.prototype = Object.create(Object.prototype) <<< do
       .then ~> @fire \change
       .catch (e) ~> @fire \error, e; return Promise.reject(e)
 
-if window? => window.auth = auth
+if module? => module.exports = auth
+else if window? => window.auth = auth

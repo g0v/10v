@@ -218,7 +218,9 @@
         });
       }
     });
-    if (typeof window != 'undefined' && window !== null) {
+    if (typeof module != 'undefined' && module !== null) {
+      return module.exports = auth;
+    } else if (typeof window != 'undefined' && window !== null) {
       return window.auth = auth;
     }
   });
