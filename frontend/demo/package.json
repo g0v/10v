@@ -19,7 +19,7 @@
     "@loadingio/ldquery": "^3.0.2",
     "@loadingio/loading.css": "^3.0.0",
     "@loadingio/transition.css": "^3.0.0",
-    "@plotdb/block": "^4.1.2",
+    "@plotdb/block": "^4.2.0",
     "@plotdb/csscope": "^4.0.0",
     "@plotdb/rescope": "^4.1.0",
     "@zbryikt/template": "^2.3.33",
