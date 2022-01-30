@@ -134,10 +134,15 @@
           obj: this.get(name).create({
             root: root
           }),
-          ldcv: ldcv
+          ldcv: ldcv,
+          provider: provider
         };
       } else {
-        p = this.obj[name].ldcv.get();
+        if (this.obj[name].provider.headless) {
+          p = Promise.resolve();
+        } else {
+          p = this.obj[name].ldcv.get();
+        }
       }
       return this.obj[name].obj.init().then(function(){
         return this$.obj[name].obj.render();

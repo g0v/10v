@@ -62,8 +62,10 @@ captcha =
       @obj[name] =
         obj: @get(name).create {root}
         ldcv: ldcv
+        provider: provider
     else 
-      p = @obj[name].ldcv.get!
+      if @obj[name].provider.headless => p = Promise.resolve!
+      else p = @obj[name].ldcv.get!
     @obj[name].obj.init!
       .then ~> @obj[name].obj.render!
       .then -> p
@@ -167,8 +169,6 @@ captcha.register \recaptcha_v2_checkbox, do
       @id = grecaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
 
 if module? => module.exports =
-  init: ({root}) ->
-    captcha.prepare root
-
+  init: ({root}) -> captcha.prepare root
   interface: -> captcha
 else if window => window.captcha = captcha

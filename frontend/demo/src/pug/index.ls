@@ -30,17 +30,17 @@ frontend = do
       #@capobj.get!then -> console.log ">", it
     captcha: ~>
       @auth.get!
-        .then (g) -> captcha.init g.captcha
-        .then ->
-          captcha.guard do
+        .then (g) ~> @captcha.init g.captcha
+        .then ~>
+          @captcha.guard do
             cb: (data) ->
-              ld$.fetch "/api/post", {method: \POST}, {json: data}
-                .then -> console.log \ok
+              # if we just somehow test captcha.guard:
+              # lderror.reject 1010
+              ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
+                .then -> console.log "accessing /api/demo/post successfully"
                 .catch ->
-                  console.error "no", it
+                  console.error "accessing /api/demo/post with captcha failed: ", it
                   Promise.reject it
-              #console.log it
-              #lderror.reject 1010
 
   text: do
     username: ~> @user.username or 'n/a'
@@ -63,7 +63,6 @@ update = ~>
     #  .then -> console.log \ok
 
 update!
-  .then -> console.log \here
   .then -> i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW
   .then -> block.i18n.use i18next
   .then -> manager.init!
@@ -80,9 +79,9 @@ update!
   .then (bc) -> bc.create!
   .then (bi) -> bi.attach {root: document.body} .then -> bi.interface!
   .then (cap) ~>
+    @captcha = cap
     @auth.get!
-      .then (g) ->
-        cap.init g.captcha
+      .then (g) -> cap.init g.captcha
       .then ~>
         cap.guard cb: (data) ->
           console.log "token obj: ", data
