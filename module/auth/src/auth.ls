@@ -35,12 +35,10 @@ auth.prototype = Object.create(Object.prototype) <<< do
     ld$.fetch "#{@api-root!}/logout", {method: \post}, {}
       .then ~> @fetch {renew: true}
       .then ~> @fire \logout
-      .then ~>
-        console.log \here
-        @ui.loader.off!
+      .then ~> @ui.loader.off!
       .catch ~> @fire \error
 
-  # ensure user is authed. shorthand and for readbility for auth.get({authed:true})
+  # ensure user is authed. shorthand and for readbility for auth.get({authed-only:true})
   ensure: (opt = {}) -> @get(opt <<< {authed-only: true})
 
   # for retrieving global object in local.
@@ -100,7 +98,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
         # to stop further progress of current code.
         new Promise (res, rej) ->
 
-  prompt: (v, opt) -> @ui.authpanel(true, opt)
+  prompt: (o) -> @ui.authpanel true, o
   social: ({name}) ->
     @get!
       .then (g = {}) ~>

@@ -96,7 +96,6 @@
         }).then(function(){
           return this$.fire('logout');
         }).then(function(){
-          console.log('here');
           return this$.ui.loader.off();
         })['catch'](function(){
           return this$.fire('error');
@@ -178,8 +177,8 @@
           return new Promise(function(res, rej){});
         });
       },
-      prompt: function(v, opt){
-        return this.ui.authpanel(true, opt);
+      prompt: function(o){
+        return this.ui.authpanel(true, o);
       },
       social: function(arg$){
         var name, this$ = this;
