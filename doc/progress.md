@@ -22,9 +22,6 @@
    * csp
      - 考慮由 nginx 提供 default, server route 提供 overwrite, 透過 `map` + `$sent_http_*` 來實作.
    * cors
- - authenticate
-   - 考慮將 ldSite 的 auth.ls 包進來.
-     - 採用 event / plugin 方式處裡 recaptcha 與 consent, 並做介面抽離.
  - error handling
    * autocatch 待整理
    - 全面使用 lderror 處理錯誤. 

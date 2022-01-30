@@ -40,7 +40,6 @@ It's encouraged to use lderror to provide error information. ( `lderror(id, msg)
 
  - authed
  - staff
- - recaptcha - should provide fallback for failure
 
 
 ## Backend
@@ -50,10 +49,6 @@ It's encouraged to use lderror to provide error information. ( `lderror(id, msg)
  - zero down-time strategy
    - https://yu-jack.github.io/2020/03/09/nodejs-zero-downtime/
 
-
-## Security
-
- - recaptcha - should provide fallback for failure
 
 # Reference
 
