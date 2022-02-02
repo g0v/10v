@@ -4,17 +4,22 @@ echo "prepare..."
 rm -rf dist
 mkdir -p dist
 
-echo "building consent.ls -> consent.js ..."
-npx lsc -cp src/consent.ls > dist/consent.js
-echo "minify consent.js -> consent.min.js ..."
-npx uglifyjs dist/consent.js > dist/consent.min.js
+echo "building consent.ls -> index.js ..."
+./node_modules/.bin/lsc -cp --no-header src/consent.ls > dist/index.js
+echo "minify index.js -> index.min.js ..."
+./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 
-echo "build src/consent.styl -> dist/consent.css ..."
-./node_modules/.bin/stylus -p src/consent.styl > dist/consent.css
-echo "minifying consent.css ..."
-./node_modules/.bin/uglifycss dist/consent.css > dist/consent.min.css
+echo "build index.pug ..."
+./node_modules/.bin/srcbuild-pug src/index.pug > dist/index.html
 
-echo "copy dist to web ..."
-rm -rf web/static/assets/lib/consent/dev/
-mkdir -p web/static/assets/lib/consent/dev/
-cp -R dist/* web/static/assets/lib/consent/dev/
+echo "build consent base ..."
+mkdir -p dist/block/base/0.0.1
+./node_modules/.bin/srcbuild-pug src/block/base/0.0.1/index.pug > dist/block/base/0.0.1/index.html
+
+echo "build cookie consent  ..."
+mkdir -p dist/block/cookie/0.0.1
+./node_modules/.bin/srcbuild-pug src/block/cookie/0.0.1/index.pug > dist/block/cookie/0.0.1/index.html
+
+echo "build tos consent  ..."
+mkdir -p dist/block/tos/0.0.1
+./node_modules/.bin/srcbuild-pug src/block/tos/0.0.1/index.pug > dist/block/tos/0.0.1/index.html

@@ -1,0 +1,49 @@
+div
+  .ldcv(plug="widget")
+    .base.w-1024.rwd.h-100: .inner.card: .card-body.text-center.h-100.p-0
+      .d-flex.flex-column.w-100.h-100
+        .text-left.p-3
+          .mb-2 #[span(t) Before you continue] #[span ...]
+          h4.m-0(t) Please make sure that you agree with our term of use
+        .flex-grow-1
+          object.d-none.w-100.h-100.flex-grow-1.border.mb-2(ld="link",data="about:blank",type="application/pdf")
+            embed.w-100.h-100.border(ld="link",src="about:blank",type="application/pdf")
+          iframe.d-none.w-100.h-100.flex-grow-1.mb-2(ld="link",src="about:blank")
+        .d-flex.justify-content-center.g-2.p-3
+          .btn.btn-lg.btn-outline-primary(t,data-ldcv-set="") No, I don't agree
+          .btn.btn-lg.btn-outline-primary(t,data-ldcv-set="true") Yes
+          .flex-grow-1
+          a.btn.btn-lg.btn-link.pr-0(ld="link",href="",t,target="_blank",rel="noreferrer noopener") Open document in new window
+  script(type="@plotdb/block"): :lsc
+    module.exports =
+      pkg:
+        name: "consent"
+        extend: {name: "consent", path: "block/base/0.0.1/index.html"}
+        i18n:
+          "en":
+            "Yes": "Yes, I've read and agree with the term of use."
+          "zh-TW":
+            "Before you continue": "在繼續之前"
+            "Please make sure that you agree with our term of use": "請先確認您同意我們的使用條款"
+            "No, I don't agree": "不，我不同意"
+            "Yes": "是，我已詳讀並同意此使用條款"
+            "Open document in new window": "於新視窗開啟文件"
+      init: ({root}) ->
+        @link = "about:blank"
+        @view = view = new ldview do
+          root: ld$.find(root, '.ldcv', 0)
+          init-render: false
+          handler:
+            "link": ({node}) ~>
+              n = node.nodeName.toLowerCase!
+              is-html = /\.html/.exec(@link)
+              if n in <[object embed]> => node.classList.toggle \d-none, is-html
+              if n in <[iframe]> => node.classList.toggle \d-none, !is-html
+              if n == "a" => node.setAttribute \href, @link
+              else if n == "object" => node.setAttribute \data, @link
+              else node.setAttribute \src, @link
+      interface: ->
+        render: ({link}) ~>
+          @link = link
+          @view.render!
+

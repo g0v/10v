@@ -1,0 +1,15 @@
+div
+  plug(name="widget")
+  script(type="@plotdb/block"): :lsc
+    module.exports =
+      pkg: {name: "consent", path: "block/base/0.0.1/index.html"}
+      init: ({root}) ->
+        ldcv = new ldcover {
+          root: root.querySelector('.ldcv')
+          lock: true
+          resident: true
+          escape: false
+        }
+        ldcv.get!
+        return true
+
