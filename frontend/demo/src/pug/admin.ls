@@ -37,6 +37,9 @@
 
   action: click:
     "throttle-reset": ~> ld$.fetch "/api/admin/throttle/reset/", {method: \GET} .then -> alert 'throttle reset.'
+    "local-storage-reset": ->
+      window.localStorage.clear!
+      alert 'local storage cleared.'
     adduser: ~>
       username = @view.admin.get('adduser.username').value
       displayname = @view.admin.get('adduser.displayname').value
