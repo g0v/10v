@@ -8,15 +8,41 @@
     o == null && (o = {});
     this.mgr = o.manager;
     this.store = window.localStorage;
-    this._apiRoot = opt.api || "/api/consent";
-    if ((ref$ = this._apiRoot)[ref$.length - 1] !== '/') {
-      this._apiRoot += '/';
-    }
+    this._apiRoot = o.api || "/api/consent";
+    this.global = {
+      user: (o.global || {}).user
+    };
+    this.userkey = ((ref$ = this.global).user || (ref$.user = {})).key || 0;
+    this._apiRoot = this._apiRoot.replace(/\/$/, '');
     return this;
   };
   consent.prototype = import$(Object.create(Object.prototype), {
+    _keep: function(o, remote){
+      var id, ref$;
+      remote == null && (remote = true);
+      id = "module/consent/" + this.userkey + "/" + _id(o);
+      this.store.setItem(id, JSON.stringify({
+        time: Date.now(),
+        user: ((ref$ = this.global).user || (ref$.user = {})).key || 0
+      }));
+      if (remote) {
+        return ld$.fetch(this._apiRoot + "", {
+          method: 'POST'
+        }, {
+          body: {
+            consent_id: id
+          }
+        });
+      }
+    },
     prompt: function(o){
-      return mgr.get(o).then(function(bc){
+      var args, res$, i$, to$, this$ = this;
+      res$ = [];
+      for (i$ = 1, to$ = arguments.length; i$ < to$; ++i$) {
+        res$.push(arguments[i$]);
+      }
+      args = res$;
+      return this.mgr.get(o).then(function(bc){
         return bc.create();
       }).then(function(bi){
         return bi.attach({
@@ -25,12 +51,23 @@
           return bi['interface']();
         });
       }).then(function(itf){
-        return itf.get();
+        return itf.get.apply(itf, args);
+      }).then(function(ret){
+        if (!ret) {
+          return Promise.reject(lderror(1018));
+        } else {
+          return this$._keep(o);
+        }
       });
     },
     ensure: function(o){
-      var id, ret, e, this$ = this;
-      id = "consent/" + _id(o);
+      var args, res$, i$, to$, id, ret, e, this$ = this;
+      res$ = [];
+      for (i$ = 1, to$ = arguments.length; i$ < to$; ++i$) {
+        res$.push(arguments[i$]);
+      }
+      args = res$;
+      id = "module/consent/" + this.userkey + "/" + _id(o);
       ret = this.store.getItem(id);
       if (ret) {
         try {
@@ -40,29 +77,22 @@
           e = e$;
         }
       }
-      return ld$.fetch(this._apiRoot + "/query", {
+      return ld$.fetch(this._apiRoot + "", {
         method: 'POST'
       }, {
         body: {
-          consent_id: id
+          consent_id: id,
+          check: true
         },
         type: 'json'
       }).then(function(it){
         if (!it) {
           return lderror.reject(1018);
         }
+        this$._keep(o, false);
         return true;
       })['catch'](function(){
-        return this$.prompt(o).then(function(it){
-          if (!it) {
-            return lderror.reject(1018);
-          }
-          return true;
-        });
-      })['catch'](function(e){
-        return e.id === 1018
-          ? false
-          : Promise.reject(e);
+        return this$.prompt.apply(this$, [o].concat(args));
       });
     }
   });

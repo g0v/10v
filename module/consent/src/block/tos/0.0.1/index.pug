@@ -18,7 +18,6 @@ div
     module.exports =
       pkg:
         name: "consent"
-        extend: {name: "consent", path: "block/base/0.0.1/index.html"}
         i18n:
           "en":
             "Yes": "Yes, I've read and agree with the term of use."
@@ -42,8 +41,18 @@ div
               if n == "a" => node.setAttribute \href, @link
               else if n == "object" => node.setAttribute \data, @link
               else node.setAttribute \src, @link
+
+        @ldcv = new ldcover {
+          root: root.querySelector('.ldcv')
+          lock: true
+          resident: true
+          escape: false
+        }
+
       interface: ->
-        render: ({link}) ~>
+        get: ({link}) ~>
+          ret = @ldcv.get!
           @link = link
           @view.render!
+          ret
 

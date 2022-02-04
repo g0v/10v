@@ -10,7 +10,8 @@
   },
   "workspaces": [
     "../../module/auth",
-    "../../module/captcha"
+    "../../module/captcha",
+    "../../module/consent"
   ],
   "dependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",
@@ -19,6 +20,7 @@
     "@loadingio/ldquery": "^3.0.2",
     "@loadingio/loading.css": "^3.0.0",
     "@loadingio/transition.css": "^3.0.0",
+    "@plotdb/semver": "^0.0.2",
     "@plotdb/block": "^4.2.0",
     "@plotdb/csscope": "^4.0.0",
     "@plotdb/rescope": "^4.1.0",
@@ -55,9 +57,11 @@
       "@loadingio/ldc",
       "@plotdb/rescope",
       "@plotdb/csscope",
+      "@plotdb/semver",
       "@plotdb/block",
       {"name": "auth", "dir": "dist"},
       {"name": "captcha", "dir": "dist"},
+      {"name": "consent", "dir": "dist"},
       "curegex",
       "proxise",
       "ldiconfont",

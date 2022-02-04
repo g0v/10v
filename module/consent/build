@@ -9,9 +9,6 @@ echo "building consent.ls -> index.js ..."
 echo "minify index.js -> index.min.js ..."
 ./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 
-echo "build index.pug ..."
-./node_modules/.bin/srcbuild-pug src/index.pug > dist/index.html
-
 echo "build consent base ..."
 mkdir -p dist/block/base/0.0.1
 ./node_modules/.bin/srcbuild-pug src/block/base/0.0.1/index.pug > dist/block/base/0.0.1/index.html

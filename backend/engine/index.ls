@@ -3,7 +3,7 @@ require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
 require! <[./error-handler ./redis-node ./mail-queue]>
-require! <[backend/auth backend/i18n backend/aux backend/db/postgresql]>
+require! <[backend/auth backend/consent backend/i18n backend/aux backend/db/postgresql]>
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
 routes = fs.readdir-sync path.join(libdir, '..')
@@ -151,6 +151,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @route.extapi = aux.routecatch express.Router {mergeParams: true}
         @route.api = api = aux.routecatch express.Router {mergeParams: true}
         @route.auth = aux.routecatch express.Router {mergeParams: true}
+        @route.consent = aux.routecatch express.Router {mergeParams: true}
 
         # Authentication
         auth @  # Authenticate. must before any router ( e.g., /api )
@@ -162,6 +163,9 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         app.use \/api, @route.api
         app.use \/api/auth, @route.auth
+        app.use \/api/consent, @route.consent
+
+        consent @
 
         routes.map ~> it @ # APIs
 

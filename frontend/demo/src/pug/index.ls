@@ -90,22 +90,28 @@ update!
             # if we want to test all captcha verifier...
             #.then -> lderror.reject 1010
 
+  .then ~>
+    console.log "load consent ..."
+    cs = new consent {manager, global: @global}
+    #cs.ensure {name: "consent", path: "block/tos/0.0.1/index.html"}, {link: "/assets/pdf/bitcoin.pdf"}
+    cs.ensure {name: "consent", path: "block/cookie/0.0.1/index.html"}
+  .then ->
+    console.log "done."
+
+    /*
+    capobj = cap.get \recaptcha_v2_checkbox .create {root: @view.panel.get('hcaptcha')}
+    @capobj = capobj
+    capobj.init!
       .then ->
+        capobj.render!
+        console.log "capobj inited"
+    */
 
-        /*
-        capobj = cap.get \recaptcha_v2_checkbox .create {root: @view.panel.get('hcaptcha')}
-        @capobj = capobj
-        capobj.init!
-          .then ->
-            capobj.render!
-            console.log "capobj inited"
-        */
-
-        /*
-        capobj = cap.get \hcaptcha .create {root: @view.panel.get('hcaptcha')}
-        @capobj = capobj
-        capobj.init!
-          .then ->
-            capobj.render!
-            console.log "capobj inited"
-        */
+    /*
+    capobj = cap.get \hcaptcha .create {root: @view.panel.get('hcaptcha')}
+    @capobj = capobj
+    capobj.init!
+      .then ->
+        capobj.render!
+        console.log "capobj inited"
+    */

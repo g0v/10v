@@ -25,6 +25,16 @@ html(lang="en")
       }
       
   body
+
+    .ldcv.mini.bottom.left.right(data-name="cookie-consent"): .base: .inner.p-2.px-3
+      .d-flex.justify-content-center.align-items-center
+        .mr-1 By continuing to browse, you agree to our use of cookies.
+        .d-none.d-lg-block For more details please check our privacy policy.
+        .d-none.d-md-block.ml-4
+        div
+          a.btn.border.mr-2.my-1.py-0(href="/privacy/") Details
+          .btn.border.my-1.py-0(data-ldcv-set="") OK
+
     #captcha.ldcv: .base: .inner.p-4: div
     .w-100.py-2.px-4.bg-dark.text-light.d-flex
       .flex-grow-1
@@ -101,6 +111,7 @@ html(lang="en")
       {name: "@loadingio/ldquery", version: "main"},
       {name: "proxise", version: "main"},
       {name: "@loadingio/debounce.js", version: "main"},
+      {name: "@plotdb/semver", version: "main"},
       {name: "@plotdb/rescope", version: "main"},
       {name: "@plotdb/csscope", version: "main"},
       {name: "@plotdb/block", version: "main"},
@@ -110,8 +121,9 @@ html(lang="en")
       {name: "ldview", version: "main"},
       {name: "ldloader", version: "main"},
       {name: "lderror", version: "main"},
-      {name: "auth", version: "main"},
       {name: "ldnotify", version: "main"},
+      {name: "auth", version: "main"},
+      {name: "consent", version: "main"},
       {name: "captcha", version: "main"}
     ])
 

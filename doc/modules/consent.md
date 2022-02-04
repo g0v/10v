@@ -59,14 +59,14 @@ Constructor options: none for now. ( preserved for future extension )
 Object API:
 
  - `ensure(opt)`: ensure a consent is made.
-   - return a Promise, resolves to true if consent accepted, otherwise resolves to false.
+   - return a Promise, resolves if consent is accepted. Otherwise rejects.
    - option:
      - name: consent module name
      - version: consent module version. default `main`
        - if not given, the actual version of the module depends on the consent time
      - path: consent module path. default `index.html`
  - `prompt(opt)`: prompt a consent UI.
-   - return a Promise, resolves to true if consent accepted, otherwise resolves to false.
+   - return a Promise, resolves if consent accepted, otherwise rejects
    - Users are always presented with a consent UI, even if it has been accepted before.
    - option: same with `ensure`
 
@@ -75,7 +75,8 @@ Consent frontend also caches consent result in localStorage so we don't have to 
 
 Consents are stored in following format:
 
- - name: consent/id
+ - name: module/consent/userkey/id
+   - userkey = 0 for anonymous user
  - value: {time, user}, as a stringified JSON string.
 
 For example, consent `@consent/cookie@0.0.1:` made by user with id `1`, with timestamp 1643636129532 ( UTC Time ):
@@ -83,6 +84,13 @@ For example, consent `@consent/cookie@0.0.1:` made by user with id `1`, with tim
  - name: consent/@consent/cookie@0.0.1
  - value: "{time: 1643636129532, user: 1}"
 
+
+### Consent Block
+
+The only requirement for a block to be compatible with the consent module is a `get` function in the returned interface object, which meets following:
+
+ - if accept parameter(s), all parameters that may affect the content of the consent should be stored as an object in the first parameter.
+ - return a Promise which resolves `true` if the consent is accepted, otherwise resolves `false`.
 
 
 ## Discussion: Genuineness of the Record
