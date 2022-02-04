@@ -18,8 +18,8 @@
   "devDependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",
     "@loadingio/ldquery": "^3.0.2",
-    "@plotdb/srcbuild": "^0.0.37",
-    "@zbryikt/template": "^2.3.33",
+    "@plotdb/srcbuild": "^0.0.38",
+    "@zbryikt/template": "^2.3.34",
     "bootstrap": "^4.6.1",
     "bootstrap.native": "^3.0.13",
     "fedep": "^1.1.3",

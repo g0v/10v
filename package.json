@@ -36,7 +36,7 @@
     "coverage": "npx nyc --reporter=text npm run test"
   },
   "dependencies": {
-    "@plotdb/srcbuild": "^0.0.37",
+    "@plotdb/srcbuild": "^0.0.38",
     "express": "^4.17.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
