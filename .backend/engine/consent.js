@@ -18,7 +18,7 @@
         return res.send(false);
       }
       if (check) {
-        return db.query("select * from consent where id = $1 and owner = $1", [consent_id, user]).then(function(r){
+        return db.query("select * from consent where consent_id = $1 and owner = $2", [consent_id, user]).then(function(r){
           r == null && (r = {});
           return res.send((r.rows || (r.rows = [])).length ? true : false);
         });

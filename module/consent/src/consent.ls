@@ -12,7 +12,7 @@ consent.prototype = Object.create(Object.prototype) <<< do
   _keep: (o, remote = true) ->
     id = "module/consent/#{@userkey}/#{_id o}"
     @store.set-item id, JSON.stringify({time:Date.now!, user: @global.{}user.key or 0})
-    if remote => ld$.fetch "#{@_api-root}", {method: \POST}, {body: {consent_id: id}}
+    if remote => ld$.fetch "#{@_api-root}", {method: \POST}, {json: {consent_id: id}}
   prompt: (o, ...args) ->
     @mgr.get o
       .then (bc) -> bc.create!
@@ -27,7 +27,7 @@ consent.prototype = Object.create(Object.prototype) <<< do
         ret = JSON.parse(ret)
         return Promise.resolve true
       catch e
-    ld$.fetch "#{@_api-root}", {method: \POST}, {body: {consent_id: id, check: true}, type: \json}
+    ld$.fetch "#{@_api-root}", {method: \POST}, {json: {consent_id: id, check: true}, type: \json}
       .then ~>
         if !it => return lderror.reject 1018
         @_keep o, false

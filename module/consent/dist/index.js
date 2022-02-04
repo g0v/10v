@@ -29,7 +29,7 @@
         return ld$.fetch(this._apiRoot + "", {
           method: 'POST'
         }, {
-          body: {
+          json: {
             consent_id: id
           }
         });
@@ -80,7 +80,7 @@
       return ld$.fetch(this._apiRoot + "", {
         method: 'POST'
       }, {
-        body: {
+        json: {
           consent_id: id,
           check: true
         },
