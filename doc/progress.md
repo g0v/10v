@@ -22,11 +22,13 @@
    * csp
      - 考慮由 nginx 提供 default, server route 提供 overwrite, 透過 `map` + `$sent_http_*` 來實作.
    * cors
+
  - error handling
    * autocatch 待整理
    - 全面使用 lderror 處理錯誤. 
    - 捕抓並紀錄 uncaught rejection / unhandled exception 
    - 包覆 db error, 以便確認出錯位置
+
  - route ( 待規畫 )
  - config
    - 待說明文件
@@ -35,6 +37,7 @@
  - logging
    * log rotation + backup
    - 使用 pino 與 pino-http 紀錄細節. 分組並使用 pino-pretty + tee 輸出至 console & 檔案.
+   - nginx log 的 ip address 需要確認是否能取得 cloudflare 提供的原始 ip
  - performance
    * 效能工具組
    - cannon 測時間
