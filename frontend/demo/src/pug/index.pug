@@ -60,9 +60,13 @@ html(lang="en")
           +nbr(2)
           .btn.btn-outline-secondary.mr-2(ld="notify") Send notify
           .btn.btn-outline-secondary.mr-2(ld="captcha") Captcha
-          .card: .card-body
+          .card.my-2: .card-body
             div(ld="hcaptcha")
             .btn.btn-outline-secondary(ld="hcaptcha-done") Submit
+          .input-group
+            input.form-control(ld="password-reset-email")
+            .input-group-append
+              .btn.btn-outline-secondary(ld="password-reset") Send Password Reset Link
 
         .col-md.mb-4
 
