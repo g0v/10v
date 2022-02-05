@@ -19,9 +19,9 @@ route.auth.post \/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
       user.password = password.hashed
       db.query "update users set (password,usepasswd) = ($2,$3) where key = $1", [user.key, user.password, true]
     .then -> db.query "delete from pwresettoken where pwresettoken.token=$1", [token]
-    .then -> res.redirect \/dash/auth/reset/done
+    .then -> res.redirect \/auth/reset/done
 
-route.app.get \/auth/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
+route.app.get \/auth/passwd/reset/:token, mdw.throttle, (req, res) ->
   token = req.params.token
   if !token => return lderror.reject 400
   db.query "select owner,time from pwresettoken where token = $1", [token]
@@ -31,7 +31,7 @@ route.app.get \/auth/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) 
       if new Date!getTime! - new Date(obj.time).getTime! > 1000 * 600 =>
         return res.redirect \/auth/reset/expire/
       res.cookie "password-reset-token", token
-      res.redirect "/dash/auth/reset/change/"
+      res.redirect "/auth/reset/change/"
 
 route.auth.post \/passwd/reset, mdw.throttle, mdw.captcha, (req, res) ->
   email = "#{req.body.email}".trim!

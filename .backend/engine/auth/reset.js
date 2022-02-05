@@ -36,10 +36,10 @@
       }).then(function(){
         return db.query("delete from pwresettoken where pwresettoken.token=$1", [token]);
       }).then(function(){
-        return res.redirect('/dash/auth/reset/done');
+        return res.redirect('/auth/reset/done');
       });
     });
-    route.app.get('/auth/passwd/reset/:token', mdw.throttle, mdw.captcha, function(req, res){
+    route.app.get('/auth/passwd/reset/:token', mdw.throttle, function(req, res){
       var token;
       token = req.params.token;
       if (!token) {
@@ -56,7 +56,7 @@
           return res.redirect('/auth/reset/expire/');
         }
         res.cookie("password-reset-token", token);
-        return res.redirect("/dash/auth/reset/change/");
+        return res.redirect("/auth/reset/change/");
       });
     });
     return route.auth.post('/passwd/reset', mdw.throttle, mdw.captcha, function(req, res){
