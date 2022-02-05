@@ -1,0 +1,19 @@
+{
+  "author": "zbryikt",
+  "name": "erratum",
+  "license": "MIT",
+  "description": "servebase error module",
+  "version": "0.0.1",
+  "files": [
+    "dist/**/*"
+  ],
+  "homepage": "https://github.com/plotdb/servebase",
+  "engines": {
+    "node": ">=15.4.0",
+    "npm": ">=7.0.15"
+  },
+  "devDependencies": {
+    "livescript": "^1.6.0",
+    "uglify-js": "^3.13.1"
+  }
+}
