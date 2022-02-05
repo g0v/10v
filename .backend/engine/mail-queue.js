@@ -70,7 +70,7 @@
           if (!e) {
             return res();
           }
-          this$.log.error("send mail failed: ".red, e);
+          this$.log.error("send mail failed: api.sendMail failed.", e);
           return rej(lderror(500));
         });
       });
@@ -107,14 +107,14 @@
         return fs.readFile(path + "/config/mail/" + name + ".yaml", function(e, content){
           var payload, option;
           if (e) {
-            this$.log.error("send mail failed: ", e);
+            this$.log.error("send mail failed: read template file failed.", e);
             return rej(lderror(500));
           }
           try {
             payload = jsYaml.safeLoad(content);
           } catch (e$) {
             e = e$;
-            this$.log.error("send mail failed: ", e);
+            this$.log.error("send mail failed: parse template yaml failed.", e);
             return rej(lderror(500));
           }
           option = {

@@ -53,7 +53,7 @@ mail-queue.prototype = Object.create(Object.prototype) <<< do
     @log.info "sending [from:#{payload.from}] [to:#{payload.to}] [subject:#{payload.subject}]".cyan
     (e,i) <~ @api.sendMail payload, _
     if !e => return res!
-    @log.error "send mail failed: ".red, e
+    @log.error "send mail failed: api.sendMail failed.", e
     return rej lderror 500
 
   # content -> text / html
@@ -73,12 +73,12 @@ mail-queue.prototype = Object.create(Object.prototype) <<< do
     path = if config.path => that else '.'
     (e, content) <~ fs.read-file "#path/config/mail/#name.yaml", _
     if e =>
-      @log.error "send mail failed: ", e
+      @log.error "send mail failed: read template file failed.", e
       return rej lderror 500
     try
       payload = js-yaml.safe-load content
     catch e
-      @log.error "send mail failed: ", e
+      @log.error "send mail failed: parse template yaml failed.", e
       return rej lderror 500
     option = from: payload.from, to: email, subject: payload.subject, content: payload.content
     if config.bcc => option.bcc = config.bcc
