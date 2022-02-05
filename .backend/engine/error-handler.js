@@ -9,7 +9,7 @@
         return next();
       }
       if (err.code === 'EBADCSRFTOKEN') {
-        err = new lderror(1005);
+        err = lderror(1005);
       }
       if (lderror.id(err)) {
         delete err.stack;

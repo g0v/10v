@@ -8,7 +8,7 @@ handler = (err, req, res, next) ->
   try
     if !err => return next!
     # delegate csrf token mismatch to lderror handling
-    if err.code == \EBADCSRFTOKEN => err = new lderror(1005)
+    if err.code == \EBADCSRFTOKEN => err = lderror 1005
     if lderror.id(err) =>
       # customized error - pass to frontend for them to handle
       delete err.stack
