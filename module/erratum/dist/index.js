@@ -1,12 +1,13 @@
 (function(){
-  var erratum;
+  var handler, erratum;
   if (typeof window != 'undefined' && window !== null) {
     window.addEventListener('error', function(evt){
-      return evt.error;
+      return handler(evt.error);
     });
     window.addEventListener('unhandledrejection', function(evt){
-      return evt.reason;
+      return handler(evt.reason);
     });
+    handler = function(e){};
   }
   erratum = {
     handler: function(e){

@@ -2,8 +2,12 @@
 # It can be triggered via wrapping test code with setTimeout - however `evt.error` will be null
 # alternative to listener: window.onerror = (msg,fn,lineno,colno,error) -> ...
 if window? =>
-  window.addEventListener \error, (evt) -> evt.error # the error object
-  window.addEventListener \unhandledrejection, (evt) -> evt.reason # the error object
+  window.addEventListener \error, (evt) -> handler(evt.error) # the error object
+  window.addEventListener \unhandledrejection, (evt) -> handler(evt.reason) # the error object
+  handler = (e) ->
+    # expired session removal may cause an active session expire, which leads to csrftoken mismatch (1005)
+    # we should prompt and ask user to re-auth if necessary.
+    # if lderror.id(e) == 1005 => auth.fetch {renew: true} # or any other reload / reauth actions
 
 erratum =
   handler: (e) -> console.log e
