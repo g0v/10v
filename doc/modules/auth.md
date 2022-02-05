@@ -90,17 +90,25 @@ Authpanel script works with bootstrap and still have some class names hardcoded,
 
 engine/auth.ls. API endpoints:
 
- - GET  / `@api/auth/info` - server and user information
- - POST / `@api/auth/signup` - signup. params:
-   - username
-   - displayname
-   - password
-   - config
- - POST / `@api/auth/login` - login. params:
-   - username
-   - password
- - POST / `@api/auth/logout` - logout. no params.
- - GET  / `@api/auth/<social>/callback`
+ - sign in related
+   - GET  / `@api/auth/info` - server and user information
+   - POST / `@api/auth/signup` - signup. params:
+     - username
+     - displayname
+     - password
+     - config
+   - POST / `@api/auth/login` - login. params:
+     - username
+     - password
+   - POST / `@api/auth/logout` - logout. no params.
+   - GET  / `@api/auth/<social>/callback`
+ - password reset
+   - POST / `@api/auth/passwd`
+   - POST / `@api/auth/passwd/:token`
+   - GET  / `@app/auth/passwd/:token`
+ - email verification
+   - POST / `@api/auth/mail/verify`
+   - GET  / `@app/auth/mail/verify/:token`
 
 
 ## config
