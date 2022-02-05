@@ -269,6 +269,11 @@
       req.logout();
       return res.send();
     });
+    x$.get('/reset', function(req, res){
+      aux.clearCookie(res);
+      req.logout();
+      return res.send();
+    });
     return x$;
   });
 }).call(this);

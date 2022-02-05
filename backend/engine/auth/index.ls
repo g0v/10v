@@ -148,4 +148,8 @@ route.auth
     req.logIn user, (err) !-> if err => next(err) else res.send!
     )(req, res, next)
   ..post \/logout, (req, res) -> req.logout!; res.send!
+  ..get \/reset, (req, res) ->
+    aux.clear-cookie res
+    req.logout!
+    res.send!
 

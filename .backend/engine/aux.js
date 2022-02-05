@@ -69,6 +69,14 @@
         return next();
       }
       return next(new lderror(400));
+    },
+    clearCookie: function(res){
+      res.clearCookie('connect.sid', {
+        path: '/'
+      });
+      return res.clearCookie('global', {
+        path: '/'
+      });
     }
   };
   module.exports = base;

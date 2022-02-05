@@ -68,4 +68,8 @@ base = do
     if ((val = req.params.key) and !isNaN(val) and val > 0) => return next!
     next new lderror(400)
 
+  clear-cookie: (res) ->
+    res.clearCookie \connect.sid, {path:'/'}
+    res.clearCookie \global, {path:'/'}
+
 module.exports = base
