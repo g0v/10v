@@ -44,11 +44,11 @@
   module.exports = {
     toText: function(it){
       marked.setOptions(option.text);
-      return marked(it);
+      return marked.parse(it);
     },
     toHtml: function(it){
       marked.setOptions(option.html);
-      return marked(it);
+      return marked.parse(it);
     }
   };
 }).call(this);

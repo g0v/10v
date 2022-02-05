@@ -21,7 +21,7 @@ option = do
 module.exports = do
   to-text: ->
     marked.set-options option.text
-    return marked it
+    return marked.parse it
   to-html: ->
     marked.set-options option.html
-    return marked it
+    return marked.parse it
