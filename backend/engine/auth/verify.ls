@@ -1,8 +1,8 @@
-require! <[fs fs-extra crypto express-rate-limit lderror]>
-require! <[backend/aux backend/session ../../util/throttle ../../util/mail ../../util/action ./mail]>
+require! <[fs fs-extra crypto lderror]>
+require! <[backend/aux backend/session backend/throttle backend/captcha]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
-{db,config,route:{api,app}} = backend
+{db,config,route} = backend
 
 verify-email = ({req, io, user}) ->
   obj = {}
@@ -20,14 +20,14 @@ verify-email = ({req, io, user}) ->
         {now: true}
       )
 
-api.post \/me/mail/verify, aux.signedin, (req, res) ->
+route.auth.post \/mail/verify, aux.signedin, (req, res) ->
   db.query "select key from users where key = $1 and deleted is not true", [req.user.key]
     .then (r={}) ->
       if !(r.[]rows.length) => return lderror.reject 404
       verify-email {req, user: req.user, db}
     .then -> res.send!
 
-app.get \/me/mail/verify/:token, (req, res) ->
+route.app.get \/auth/mail/verify/:token, (req, res) ->
   lc = {}
   if !(token = req.params.token) => return lderror.reject 400
   db.query "select owner,time from mailverifytoken where token = $1", [token]

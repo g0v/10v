@@ -101,6 +101,7 @@ engine/auth.ls. API endpoints:
      - username
      - password
    - POST / `@api/auth/logout` - logout. no params.
+   - POST  / `@api/auth/reset` - logout, clear cookie
    - GET  / `@api/auth/<social>/callback`
  - password reset
    - POST / `@api/auth/passwd`

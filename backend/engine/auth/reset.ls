@@ -1,10 +1,11 @@
 require! <[crypto]>
-require! <[../../util/throttle ../../util/grecaptcha]>
+require! <[backend/throttle/kit backend/captcha]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
-{db,config,route:{api,app}} = backend
+{db,config,route} = backend
+mdw = throttle: kit.login, captcha: captcha(backend)middleware!
 
-api.post \/me/passwd/reset/:token, throttle.count.ip-md, grecaptcha, (req, res) ->
+route.auth.post \/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
   token = req.params.token
   password = {plain: req.body.password}
   db.user-store.hashing password.plain, true, true
@@ -18,11 +19,9 @@ api.post \/me/passwd/reset/:token, throttle.count.ip-md, grecaptcha, (req, res) 
       user.password = password.hashed
       db.query "update users set (password,usepasswd) = ($2,$3) where key = $1", [user.key, user.password, true]
     .then -> db.query "delete from pwresettoken where pwresettoken.token=$1", [token]
-    .then ->
-      res.redirect \/dash/auth/reset/done
-      return null
+    .then -> res.redirect \/dash/auth/reset/done
 
-app.get \/me/passwd/reset/:token, throttle.count.ip-md, (req, res) ->
+route.app.get \/auth/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
   token = req.params.token
   if !token => return lderror.reject 400
   db.query "select owner,time from pwresettoken where token = $1", [token]
@@ -30,16 +29,12 @@ app.get \/me/passwd/reset/:token, throttle.count.ip-md, (req, res) ->
       if !r.[]rows.length => return lderror.reject 403
       obj = r.rows.0
       if new Date!getTime! - new Date(obj.time).getTime! > 1000 * 600 =>
-        res.redirect \/auth/reset/expire/
-        return null
-      # use this to pass by param
-      #res.redirect "/auth/reset/change/?token=#token"
-      # use this to pass by cookie
+        return res.redirect \/auth/reset/expire/
       res.cookie "password-reset-token", token
       res.redirect "/dash/auth/reset/change/"
-      return null
 
-api.post \/me/passwd/reset, throttle.count.action.mail, (req, res) ->
+route.auth.post \/passwd/reset, mdw.throttle, mdw.captcha, (req, res) ->
+  console.log 1
   email = "#{req.body.email}".trim!
   if !email => return lderror.reject 400
   obj = {}
@@ -51,7 +46,7 @@ api.post \/me/passwd/reset, throttle.count.action.mail, (req, res) ->
       db.query "delete from pwresettoken where owner=$1", [obj.key]
     .then -> db.query "insert into pwresettoken (owner,token,time) values ($1,$2,$3)", [obj.key, obj.hex, obj.time]
     .then ->
-      mail.by-template(
+      backend.mail-queue.by-template(
         \reset-password
         email
         {token: obj.hex}

@@ -3,7 +3,7 @@ require! <[passport-facebook]>
 require! <[passport-google-oauth20]>
 require! <[passport-line-auth]>
 require! <[lderror jsonwebtoken]>
-require! <[../aux]>
+require! <[../aux ./reset ./verify]>
 
 (backend) <- ((f) -> module.exports = auth-module = -> f it) _
 {db,app,config,route} = backend
@@ -148,8 +148,10 @@ route.auth
     req.logIn user, (err) !-> if err => next(err) else res.send!
     )(req, res, next)
   ..post \/logout, (req, res) -> req.logout!; res.send!
-  ..get \/reset, (req, res) ->
+  ..post \/reset, (req, res) ->
     aux.clear-cookie res
     req.logout!
     res.send!
 
+reset backend
+verify backend
