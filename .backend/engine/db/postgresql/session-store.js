@@ -9,7 +9,7 @@
     events.EventEmitter.call(this);
     this.db = opt.db;
     this.log = opt.logger;
-    this.lifespan = opt.lifespan || 1 * 60;
+    this.lifespan = opt.lifespan || 1 * 60 * 24 * 365;
     this.cleanerInterval = opt.cleanerInterval || ((ref$ = 86400 * 1000) > (ref1$ = 10 * 60 * 1000) ? ref$ : ref1$);
     if (!opt.queryOnly) {
       this.handler = setInterval(function(){

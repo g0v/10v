@@ -4,7 +4,7 @@ session-store = (opt = {}) ->
   events.EventEmitter.call @
   @db = opt.db
   @log = opt.logger
-  @lifespan = opt.lifespan or (1 * 60)
+  @lifespan = opt.lifespan or (1 * 60 * 24 * 365)
   # this may have to be externalized for server scaling
   @cleaner-interval = (opt.cleaner-interval or (86400 * 1000) >? 10 * 60 * 1000)
   if !opt.query-only =>
