@@ -1,0 +1,11 @@
+from: '"serve.base Support" <contact@serve.base>'
+subject: Email Verification from serve.base
+content: |
+  You receive this mail because there is an email verification request for the account using this email in serve.base. If you didn't sign up serve.base, please just ignore this mail, or reply directly to ask removing email.
+
+  To verify your email, click following link:
+
+  [https://serve.base/auth/mail/verify/#{token}](https://serve.base/auth/mail/verify/#{token})
+
+  Thanks,
+  serve.base team
