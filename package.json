@@ -36,13 +36,14 @@
     "coverage": "npx nyc --reporter=text npm run test"
   },
   "dependencies": {
-    "@plotdb/srcbuild": "^0.0.38",
-    "express": "^4.17.1",
+    "@plotdb/colors": "^0.0.2",
+    "@plotdb/srcbuild": "^0.0.39",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "chokidar": "^3.4.2",
     "csurf": "^1.11.0",
     "curegex": "^0.0.4",
+    "express": "^4.17.1",
     "express-list-endpoints": "^5.0.0",
     "express-session": "^1.17.1",
     "i18next": "^19.8.3",
@@ -74,9 +75,8 @@
     "redis": "^3.0.2",
     "redis-clustr": "^1.4.3",
     "require-reload": "^0.2.2",
-    "template-text": "^0.1.2",
-    "@plotdb/colors": "^0.0.2",
     "stylus": "^0.55.0",
+    "template-text": "^0.1.2",
     "uglify-js": "^3.13.1",
     "uglifycss": "^0.0.29",
     "yargs": "^17.3.1"
