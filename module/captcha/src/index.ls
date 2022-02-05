@@ -36,14 +36,10 @@ captcha =
       if idx >= @_order.length => return lderror.reject 1010
       @verify({name: @_order[idx]} <<< opt)
         .then (ret) -> opt.cb ret
-        .catch -> debounce(1000).then -> _ idx + 1
+        .catch (e) ->
+          if lderror.id(e) in [1009 1010] => debounce(1000).then -> _ idx + 1
+          else return lderror.reject e
     _!
-  /*
-  verify: (opt = {}) ->
-    if !@cfg[opt.name] => lderror.reject 1010
-    # TODO finish this
-    @_p[opt.name].verify({} <<< @cfg[opt.name] <<< opt)
-  */
 
   prepare: -> @root = it
   verify: ({name}) ->
@@ -163,7 +159,7 @@ captcha.register \recaptcha_v2_checkbox, do
       Promise.resolve!
         .then ~>
           ret = grecaptcha.getResponse @id
-          {token: ret, name: \hcaptcha}
+          {token: ret, name: \recaptcha_v2_checkbox}
     reset: ->
     render: ->
       @id = grecaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}

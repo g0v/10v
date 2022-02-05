@@ -18,11 +18,11 @@
               method: 'POST',
               form: {
                 secret: config.secret,
-                response: captcha,
+                response: captcha.token,
                 remoteip: aux.ip(req)
               }
             }, function(e, r, b){
-              var data;
+              var data, that;
               if (e) {
                 reject(lderror(1010));
               }
@@ -32,11 +32,10 @@
                 e = e$;
                 return reject(lderror.reject(1010));
               }
-              if (data.success === false) {
-                return reject(lderror(1009));
-              }
               return resolve({
-                score: data.score,
+                score: data.success
+                  ? 1
+                  : (that = data.score) ? that : 0,
                 verified: true
               });
             });
@@ -53,7 +52,7 @@
                 remoteip: aux.ip(req)
               }
             }, function(e, r, b){
-              var data;
+              var data, that;
               if (e) {
                 return reject(lderror(1010));
               }
@@ -67,7 +66,9 @@
                 return reject(lderror(1009));
               }
               return resolve({
-                score: data.score,
+                score: data.success
+                  ? 1
+                  : (that = data.score) ? that : 0,
                 verified: true
               });
             });
@@ -106,7 +107,7 @@
         }
       },
       verify: function(req, res, next){
-        var captcha, ref$;
+        var captcha, ref$, cfg;
         captcha = req.body && req.body.captcha
           ? req.body.captcha
           : req.fields ? req.fields.captcha : null;
@@ -119,10 +120,13 @@
         if (!((ref$ = captcha.name) === 'hcaptcha' || ref$ === 'recaptcha_v3' || ref$ === 'recaptcha_v2_checkbox')) {
           return lderror.reject(1020);
         }
-        if (!config[captcha.name]) {
+        if (!(cfg = config[captcha.name])) {
           return lderror.reject(1020);
         }
-        return main.verifier[captcha.name](req, res, config[captcha.name], captcha);
+        if (!(!(cfg.enabled != null) || cfg.enabled)) {
+          return lderror.reject(1020);
+        }
+        return main.verifier[captcha.name](req, res, cfg, captcha);
       },
       middleware: function(){
         var this$ = this;
