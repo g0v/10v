@@ -34,7 +34,6 @@ route.app.get \/auth/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) 
       res.redirect "/dash/auth/reset/change/"
 
 route.auth.post \/passwd/reset, mdw.throttle, mdw.captcha, (req, res) ->
-  console.log 1
   email = "#{req.body.email}".trim!
   if !email => return lderror.reject 400
   obj = {}

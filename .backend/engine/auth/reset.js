@@ -61,7 +61,6 @@
     });
     return route.auth.post('/passwd/reset', mdw.throttle, mdw.captcha, function(req, res){
       var email, obj;
-      console.log(1);
       email = (req.body.email + "").trim();
       if (!email) {
         return lderror.reject(400);

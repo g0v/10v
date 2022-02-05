@@ -14,7 +14,6 @@
     this.api = !opt.mailgun
       ? {
         sendMail: function(){
-          console.log('here');
           this$.log.error("sendMail called while mail gateway is not available");
           return lderror.reject(500, "mail service not available");
         }

@@ -15,7 +15,6 @@ require! <[./utils/md]>
 mail-queue = (opt={}) ->
   @api = if !opt.mailgun =>
     sendMail: ~>
-      console.log \here
       @log.error "sendMail called while mail gateway is not available"
       return lderror.reject 500, "mail service not available"
   else nodemailer.createTransport(nodemailer-mailgun-transport(opt.mailgun))
