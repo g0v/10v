@@ -1,3 +1,22 @@
+## Versioning
+
+use `pre-commit` git hook ( tool/git-hooks ) to update version before commiting to `.version` file.
+
+Version acquisition:
+
+ - through `/auth/api/info`: version update on file change in `backend/auth` and serve along with user info.
+   - (TBD / TODO) move this logic into `module/version`?
+ - a `version.pug` file available by `include @/@servebase/version/index.pug`
+
+Version application:
+ - Libraries inclusion in Pug can be decached via `libLoader.version(...)`
+ - Decache files fetched through `@plotdb/block` by simply update `registry` with version information.
+ - Static built html files have to be rebuilt for acquiring version info.
+   - Consider using bunlder and script loader to minimize versioning impact here.
+     - bundler: to minimize file amounts we have to decache
+     - script loader: to load bunlded files with decache, this has be to done by js.
+
+
 ## log
 
  - colors
@@ -26,3 +45,4 @@ then, execute following commands:
 based on the configuration, run command as follow:
 
     psql -h localhost -p 15432 -U pg < config/db/init.sql
+
