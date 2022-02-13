@@ -3,10 +3,12 @@
 file_pug="module/version/index.pug"
 file_version=".version"
 
-# Version number
-echo -n $(git rev-parse --abbrev-ref HEAD) > $file_version
-echo -n "-" >> $file_version
-echo -n $(git describe --always) >> $file_version
+## with branch name
+# echo -n $(git rev-parse --abbrev-ref HEAD) > $file_version
+# echo -n "-" >> $file_version
+# echo -n $(git describe --always) >> $file_version
+## without branch name
+echo -n $(git describe --always) > $file_version
 
 echo "//- module" > $file_pug
 echo -n "- var version = \"" >> $file_pug
