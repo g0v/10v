@@ -20,6 +20,7 @@
     "backend/engine"
   ],
   "scripts": {
+    "setup": "git config core.hooksPath tool/git-hooks",
     "start": "NODE_ENV=production ./start",
     "dev": "./start",
     "demo": "./start demo",

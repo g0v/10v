@@ -2,10 +2,11 @@ require! <[express-session passport passport-local]>
 require! <[passport-facebook]>
 require! <[passport-google-oauth20]>
 require! <[passport-line-auth]>
+require! <[chokidar]>
 require! <[lderror jsonwebtoken]>
 require! <[../aux ./reset ./verify]>
 
-(backend) <- ((f) -> module.exports = auth-module = -> f it) _
+(backend) <- ((f) -> module.exports = auth-module = -> f.call {}, it) _
 {db,app,config,route} = backend
 
 captcha = Object.fromEntries [[k,v] for k,v of config.captcha].map -> [it.0, it.1{sitekey, enabled}]
@@ -85,6 +86,12 @@ strategy = do
           cb null, false, {}
     )
 
+@version = 'na'
+chokidar.watch <[.version]>
+  .on \add, (~> @version = (fs.read-file-sync it .toString!) )
+  .on \change, (~> @version = (fs.read-file-sync it .toString!) )
+
+
 # =============== USER DATA, VIA AJAX
 # Note: jsonp might lead to exploit since jsonp is not protected by CORS.
 # * this cant be protected by CSRF, since it provides CSRF token.
@@ -103,6 +110,7 @@ route.auth.get \/info, (req, res) ~>
     ip: aux.ip(req)
     user: if req.user => req.user{key, config, displayname, verified, username} else {}
     captcha: captcha
+    version: @version
   })
   res.cookie 'global', payload, { path: '/', secure: true }
   res.send payload
@@ -155,3 +163,5 @@ route.auth
 
 reset backend
 verify backend
+
+@

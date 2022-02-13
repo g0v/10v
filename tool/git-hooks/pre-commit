@@ -1,0 +1,17 @@
+#!/bin/bash
+
+file_pug="src/pug/modules/version.pug"
+file_version=".version"
+
+# Version number
+echo -n $(git rev-parse --abbrev-ref HEAD) > $file_version
+echo -n "-" >> $file_version
+echo $(git describe --always) >> $file_version
+exec git add $file_version
+
+#echo "//- module" > $file_pug
+#echo -n "- var version = \"" >> $file_pug
+#echo -n $(git describe --always) >> $file_pug
+#echo "\";" >> $file_pug
+#exec git add $file_version $file_pug
+
