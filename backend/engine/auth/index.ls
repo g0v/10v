@@ -2,7 +2,7 @@ require! <[express-session passport passport-local]>
 require! <[passport-facebook]>
 require! <[passport-google-oauth20]>
 require! <[passport-line-auth]>
-require! <[chokidar]>
+require! <[fs chokidar]>
 require! <[lderror jsonwebtoken]>
 require! <[../aux ./reset ./verify]>
 
