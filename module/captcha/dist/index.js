@@ -4,16 +4,20 @@
   captcha = function(opt){
     var this$ = this;
     opt == null && (opt = {});
-    this._g = opt.global;
+    this._cfg = opt.cfg;
     this.mgr = opt.manager;
-    this.init = proxise.once(function(){
-      return this$._init();
+    this.init = proxise.once(function(cfg){
+      cfg == null && (cfg = {});
+      return this$._init(cfg);
     });
     return this;
   };
   captcha.prototype = import$(Object.create(Object.prototype), {
-    _init: function(){
+    _init: function(cfg){
       var this$ = this;
+      if (cfg) {
+        this._cfg = cfg;
+      }
       return Promise.resolve().then(function(){
         return this$.mgr.get({
           name: 'captcha'
@@ -29,7 +33,7 @@
       }).then(function(cap){
         return this$.captcha = cap;
       }).then(function(){
-        return this$.captcha.init(this$._g.captcha);
+        return this$.captcha.init(this$._cfg);
       });
     },
     guard: function(arg$){
