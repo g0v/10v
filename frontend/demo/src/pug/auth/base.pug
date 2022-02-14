@@ -1,0 +1,51 @@
+//- module
+doctype html
+html
+  block vars
+  include @/@loadingio/bootstrap.ext/index.pug
+  include @/ldview/index.pug
+  head
+    meta(charset="utf-8")
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    block prehead
+    +css([
+      {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
+      {name: "@loadingio/bootstrap.ext"},
+      {name: "ldcover"},
+      {name: "ldloader"},
+      {name: "ldiconfont", path: "ldif.min.css"},
+      {name: "ldbutton"},
+      {name: "@loadingio/loading.css", path: "loading.min.css"},
+      {name: "@loadingio/transition.css", path: "transition.min.css"},
+      {name: "ldnotify"},
+      {url: "/css/reset.min.css"}
+    ])
+    block head
+  body
+    block body
+    +script([
+      {name: "bootstrap.native", version: "main", path: "dist/bootstrap-native-v4.min.js"},
+      {name: "i18next", version: "main", path: "dist/umd/i18next.min.js"},
+      {name: "zmgr", version: "main"},
+      {name: "@loadingio/ldquery", version: "main"},
+      {name: "proxise", version: "main"},
+      {name: "@loadingio/debounce.js", version: "main"},
+      {name: "@plotdb/semver", version: "main"},
+      {name: "@plotdb/rescope", version: "main"},
+      {name: "@plotdb/csscope", version: "main"},
+      {name: "@plotdb/block", version: "main"},
+      {name: "ldcover", version: "main"},
+      {name: "ldform", version: "main"},
+      {name: "curegex", version: "main", path: "curegex.min.js"},
+      {name: "ldview", version: "main"},
+      {name: "ldloader", version: "main"},
+      {name: "lderror", version: "main"},
+      {name: "ldcvmgr", version: "main"},
+      {name: "ldnotify", version: "main"},
+      {name: "auth", version: "main"},
+      {name: "consent", version: "main"},
+      {name: "captcha", version: "main"},
+      {name: "@loadingio/ldc", version: "main"},
+      {url: "/js/core.min.js"}
+    ])
+    block script
