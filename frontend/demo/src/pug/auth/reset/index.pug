@@ -2,7 +2,7 @@ extends ../base.pug
 block body
   .w-100.h-100.d-flex.align-items-center.justify-content-center: div
     h3.text-center 忘記密碼？
-    +nbr(1)
+    br
     +scope("password-reset"): form.form.text-left(style="margin:auto;width:400px")
       .from-group
         p 請輸入您帳號所用的電子郵件地址，我們將發送密碼重設連結給您：
@@ -23,7 +23,7 @@ block body
             li 您剛剛有打錯字。
             li 您之前註冊時有打錯字。
           p 需要協助嗎？請 #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") 直接與我們聯繫]，讓我們來協助您。
-        +nbr(1)
+        br
         .row
           .col-md: .btn.btn-lg.btn-primary.btn-block(onclick="lda.ldcvmgr.toggle('contact')") 聯絡我們
           .col-md: .btn.btn-lg.btn-outline-dark.btn-block(data-ldcv-set="") 關閉視窗
