@@ -99,7 +99,7 @@ chokidar.watch <[.version]>
 # * this is passed via cookie too, but cookie won't be set if user doesn't get files served from express.
 #   so, for the first time user we still have to do ajax.
 #   cookie will be checked in frontend to see if ajax is needed.
-# * user could stil alter cookie's content, so it's necessary to force ajax call for important action
+# * user could still alter cookie's content, so it's necessary to force ajax call for important action
 #   there is no way to prevent user from altering client side content,
 #   so if we want to prevent user from editing our code, we have to go backend for the generation.
 route.auth.get \/info, (req, res) ~>
@@ -120,8 +120,8 @@ route.auth.get \/info, (req, res) ~>
   route.auth
     ..post "/#name", passport.authenticate name, {scope: <[profile openid email]>}
     ..get "/#name/callback", passport.authenticate name, do
-      successRedirect: \/auth/done/
-      failureRedirect: \/auth/failed/social.html
+      successRedirect: \/auth/done.html
+      failureRedirect: \/auth/failed.html
 
 passport.serializeUser (u,done) !->
   db.user-store.serialize u .then (v) !-> done null, v
@@ -144,15 +144,15 @@ app.use passport.session!
 route.auth
   ..post \/signup, (req, res, next) ->
     {username,displayname,password,config} = req.body{username,displayname,password,config}
-    if !username or !displayname or password.length < 8 => return next(new lderror 400)
+    if !username or !displayname or password.length < 8 => return next(lderror 400)
     db.user-store.create {username, password} <<< {
       method: \local, detail: {displayname}, config: (config or {})
     }
       .then (user) !-> req.logIn user, !-> res.send!
-      .catch !-> next(new lderror 403)
+      .catch !-> next(lderror 403)
   ..post \/login, (req, res, next) ->
     ((err,user,info) <- passport.authenticate \local, _
-    if err or !user => return next(err or new lderror(1000))
+    if err or !user => return next(err or lderror(1000))
     req.logIn user, (err) !-> if err => next(err) else res.send!
     )(req, res, next)
   ..post \/logout, (req, res) -> req.logout!; res.send!

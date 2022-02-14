@@ -204,8 +204,8 @@
         scope: ['profile', 'openid', 'email']
       }));
       x$.get("/" + name + "/callback", passport.authenticate(name, {
-        successRedirect: '/auth/done/',
-        failureRedirect: '/auth/failed/social.html'
+        successRedirect: '/auth/done.html',
+        failureRedirect: '/auth/failed.html'
       }));
       return x$;
     });
@@ -244,7 +244,7 @@
         config: ref$.config
       }, username = ref$.username, displayname = ref$.displayname, password = ref$.password, config = ref$.config;
       if (!username || !displayname || password.length < 8) {
-        return next(new lderror(400));
+        return next(lderror(400));
       }
       return db.userStore.create({
         username: username,
@@ -259,13 +259,13 @@
           res.send();
         });
       })['catch'](function(){
-        next(new lderror(403));
+        next(lderror(403));
       });
     });
     x$.post('/login', function(req, res, next){
       return passport.authenticate('local', function(err, user, info){
         if (err || !user) {
-          return next(err || new lderror(1000));
+          return next(err || lderror(1000));
         }
         return req.logIn(user, function(err){
           if (err) {
