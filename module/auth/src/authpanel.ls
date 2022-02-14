@@ -46,6 +46,7 @@ module.exports =
 
   interface: -> (toggle = true, opt = {}) ~>
     if opt.tab => @mod.tab opt.tab
+    if opt.lock => @mod.ldcv.authpanel.lock!
     if toggle => @mod.ldcv.authpanel.get!
     else @mod.frontend.auth.fetch!then (g) -> @mod.ldcv.authpanel.set g
 
