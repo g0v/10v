@@ -51,10 +51,7 @@ route.app.get \/auth/mail/verify/:token, (req, res) ->
           """, [JSON.stringify(u), lc.obj.owner]
     .then ->
       res.redirect \/dash/auth/mail/verify/done/
-      return null
     .catch (e) ->
-      if (e instanceof lderror) and e.id == 1013 =>
-        res.redirect \/dash/auth/mail/verify/expire/
-        return null
-      else Promise.reject e
+      if lderror.id(e) != 1013 => Promise.reject e
+      else res.redirect \/dash/auth/mail/verify/expire/
 
