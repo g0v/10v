@@ -1,21 +1,23 @@
-ldc \core, <[]>, ->
-  init: proxise.once ~>
+ldc.register \core, <[]>, ->
+  init: proxise.once ->
     @ <<<
       global: {}
       user: {}
     @ <<<
       zmgr: new zmgr init: 1000
       auth: new auth!
-      manager: new block.manager registry: ->
+      manager: new block.manager do
+        registry: ({name, version, path, type}) ->
+          "/assets/lib/#{name}/#{version or 'main'}/#{path or if type == \block => 'index.html' else 'index.min.js'}"
     @ <<<
       loader: new ldloader class-name: "ldld full", zmgr: @zmgr
       captcha: new captcha manager: @manager
       ldcvmgr: new ldcvmgr manager: @manager
 
-    err = new lderror.handler handler: -> o.ldcvmgr.get it
+    err = new lderror.handler handler: ~> @ldcvmgr.get it
     @error = (e) -> err e
 
-    manager.init!
+    @manager.init!
       .then ->
         # to optimize, we may delay or completely ignore i18n
         # since not every service need i18n
@@ -29,7 +31,7 @@ ldc \core, <[]>, ->
         @global = g
         @user = g.user
         @captcha.init g.captcha
-      .then ->
+      .then ~>
         # prepare authpanel. involving @plotdb/block creation.
         # should delay until we really have to trigger ui
-
+        @
