@@ -20,10 +20,10 @@
     "@loadingio/ldquery": "^3.0.2",
     "@loadingio/loading.css": "^3.0.0",
     "@loadingio/transition.css": "^3.0.0",
-    "@plotdb/semver": "^0.0.2",
-    "@plotdb/block": "^4.2.0",
+    "@plotdb/block": "^4.5.3",
     "@plotdb/csscope": "^4.0.0",
     "@plotdb/rescope": "^4.1.0",
+    "@plotdb/semver": "^0.0.2",
     "@zbryikt/template": "^2.3.34",
     "bootstrap": "^4.6.0",
     "bootstrap.native": "^3.0.10",
@@ -32,8 +32,8 @@
     "i18next": "^19.9.2",
     "ldbutton": "^2.0.0",
     "ldcover": "^3.0.1",
-    "ldcvmgr": "^0.0.4",
-    "lderror": "^2.0.0",
+    "ldcvmgr": "^0.0.7",
+    "lderror": "^2.1.0",
     "ldfolder": "^0.0.9",
     "ldform": "^0.1.2",
     "ldiconfont": "^0.1.10",
@@ -59,9 +59,18 @@
       "@plotdb/csscope",
       "@plotdb/semver",
       "@plotdb/block",
-      {"name": "auth", "dir": "dist"},
-      {"name": "captcha", "dir": "dist"},
-      {"name": "consent", "dir": "dist"},
+      {
+        "name": "auth",
+        "dir": "dist"
+      },
+      {
+        "name": "captcha",
+        "dir": "dist"
+      },
+      {
+        "name": "consent",
+        "dir": "dist"
+      },
       "curegex",
       "proxise",
       "ldiconfont",
@@ -76,6 +85,7 @@
       "ldbutton",
       "ldview",
       "ldnotify",
+      "@loadingio/ldc",
       "zmgr",
       "i18next",
       "ldbutton",

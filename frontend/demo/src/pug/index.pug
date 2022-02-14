@@ -7,15 +7,17 @@ html(lang="en")
     meta(name="description", content="servebase sample page")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     base(href="/")
-    +css("assets/lib/bootstrap/main/dist/css/bootstrap.min.css")
-    +css("assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
-    +css("assets/lib/ldcover/main/index.min.css")
-    +css("assets/lib/ldloader/main/index.min.css")
-    +css("assets/lib/ldiconfont/main/ldif.min.css")
-    +css("assets/lib/ldbutton/main/index.min.css")
-    +css("assets/lib/@loadingio/loading.css/main/loading.min.css")
-    +css("assets/lib/@loadingio/transition.css/main/transition.min.css")
-    +css("assets/lib/ldnotify/main/index.min.css")
+    +css([
+      {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
+      {name: "@loadingio/bootstrap.ext"},
+      {name: "ldcover"},
+      {name: "ldloader"},
+      {name: "ldiconfont", path: "ldif.min.css"},
+      {name: "ldbutton"},
+      {name: "@loadingio/loading.css", path: "loading.min.css"},
+      {name: "@loadingio/transition.css", path: "transition.min.css"},
+      {name: "ldnotify"}
+    ])
     style(type="text/css"): :stylus
       @font-face {
         font-family: 'ldi';
