@@ -2,7 +2,7 @@ require! <[fs yargs express @plotdb/colors path pino lderror pino-http redis uti
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
-require! <[./error-handler ./redis-node ./mail-queue]>
+require! <[./error-handler ./redis-node ./mail-queue ./captcha]>
 require! <[backend/auth backend/consent backend/i18n backend/aux backend/db/postgresql]>
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
@@ -133,6 +133,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         if app.get(\env) != \development => app.enable 'view cache'
 
         if @config.i18n.enabled => app.use i18next-http-middleware.handle @i18n, {ignoreRoutes: <[]>}
+        @middleware.captcha = new captcha(@config.captcha).middleware
 
         # also, we precompile all view pug into .view folder, which can be used by our custom pug view engine.
         app.engine 'pug', pug({

@@ -1,9 +1,9 @@
 require! <[crypto]>
-require! <[backend/throttle/kit backend/captcha]>
+require! <[backend/throttle/kit]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
 {db,config,route} = backend
-mdw = throttle: kit.login, captcha: captcha(backend)middleware!
+mdw = throttle: kit.login, captcha: backend.middleware.captcha
 
 route.auth.post \/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
   token = req.params.token
