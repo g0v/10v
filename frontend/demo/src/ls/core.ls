@@ -14,6 +14,8 @@ ldc.register \core, <[]>, ->
       captcha: new captcha manager: @manager
       ldcvmgr: new ldcvmgr manager: @manager
 
+    ldc.action \ldcvmgr, @ldcvmgr
+
     err = new lderror.handler handler: ~> @ldcvmgr.get it
     @error = (e) -> err e
 

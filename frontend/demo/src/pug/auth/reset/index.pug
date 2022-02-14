@@ -29,4 +29,6 @@ block body
           .col-md: .btn.btn-lg.btn-outline-dark.btn-block(data-ldcv-set="") 關閉視窗
 
 block script
-  +script("/js/auth/reset/index.js")
+  //-+script("/js/auth/reset/index.js")
+  script(type="module"): :lsc
+    ldc.register <[core]>, ({core}) -> core.init!
