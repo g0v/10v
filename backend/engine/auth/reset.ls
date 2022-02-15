@@ -1,4 +1,4 @@
-require! <[crypto]>
+require! <[crypto lderror]>
 require! <[backend/throttle/kit]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
