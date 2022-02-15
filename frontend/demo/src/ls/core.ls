@@ -5,18 +5,18 @@ ldc.register \core, <[]>, ->
       user: {}
     @ <<<
       zmgr: new zmgr init: 1000
-      auth: new auth!
       manager: new block.manager do
         registry: ({name, version, path, type}) ->
           "/assets/lib/#{name}/#{version or 'main'}/#{path or if type == \block => 'index.html' else 'index.min.js'}"
     @ <<<
+      auth: new auth manager: @manager
       loader: new ldloader class-name: "ldld full", zmgr: @zmgr
       captcha: new captcha manager: @manager
       ldcvmgr: new ldcvmgr manager: @manager
 
     ldc.action \ldcvmgr, @ldcvmgr
 
-    err = new lderror.handler handler: ~> @ldcvmgr.get it
+    err = new lderror.handler handler: ~> @ldcvmgr.get "error/#it"
     @error = (e) -> err e
 
     @manager.init!
