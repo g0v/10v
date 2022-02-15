@@ -50,8 +50,8 @@ route.app.get \/auth/mail/verify/:token, (req, res) ->
           where (detail->'passport'->'user'->>'key')::int = $2
           """, [JSON.stringify(u), lc.obj.owner]
     .then ->
-      res.redirect \/dash/auth/mail/verify/done/
+      res.redirect \/auth/mail/verified/
     .catch (e) ->
       if lderror.id(e) != 1013 => Promise.reject e
-      else res.redirect \/dash/auth/mail/verify/expire/
+      else res.redirect \/auth/mail/expire/
 

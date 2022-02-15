@@ -92,12 +92,12 @@
           return db.query("update sessions set detail = jsonb_set(detail, '{passport,user}', ($1)::jsonb)\nwhere (detail->'passport'->'user'->>'key')::int = $2", [JSON.stringify(u), lc.obj.owner]);
         });
       }).then(function(){
-        return res.redirect('/dash/auth/mail/verify/done/');
+        return res.redirect('/auth/mail/verified/');
       })['catch'](function(e){
         if (lderror.id(e) !== 1013) {
           return Promise.reject(e);
         } else {
-          return res.redirect('/dash/auth/mail/verify/expire/');
+          return res.redirect('/auth/mail/expire/');
         }
       });
     });
