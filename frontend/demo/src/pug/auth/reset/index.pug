@@ -27,8 +27,50 @@ block body
         .row
           .col-md: .btn.btn-lg.btn-primary.btn-block(onclick="lda.ldcvmgr.toggle('contact')") 聯絡我們
           .col-md: .btn.btn-lg.btn-outline-dark.btn-block(data-ldcv-set="") 關閉視窗
+      .ldcv(ld="sent"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-4
+        .text-center
+          h1 重設密碼連結已寄出
+          p 請檢查您的電子郵件信箱，應該不久就會收到重設密碼信囉。
+        br
+        //-.my-4.py-4: img#img(src="/assets/img/p/auth/reset/sending-mail.svg")
+        p 等不到信嗎？有時信件會被分類到垃圾信件匣，請別忘了查看您的 #[b 垃圾信件匣]。或者，您亦可以：
+        ul
+          li #[a(href="/auth/reset/") 再寄一次]
+          li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") 直接聯絡我們]，讓我們協助您。
 
 block script
+  +script([
+    {name: "ldform"},
+    {name: "curegex", path: "curegex.min.js"}
+  ])
   //-+script("/js/auth/reset/index.js")
   script(type="module"): :lsc
-    ldc.register <[core]>, ({core}) -> core.init!
+    ({core}) <- ldc.register <[core]>, _
+    <~ core.init!then _
+    @ldcv = {}
+    {loader, error, captcha} = core
+    view = new ldview do
+      root: '[ld-scope=password-reset]'
+      init:
+        "sent": ({node}) ~> @ldcv.sent = new ldcover root: node, lock: true
+        "not-found": ({node}) ~> @ldcv.not-found = new ldcover root: node
+        "email": ({node}) ~> node.focus!
+      action: click: do
+        submit: ({node}) ~>
+          if !pw-reset-mail.ready! => return
+          loader.on!
+          captcha.guard cb: (captcha) ~>
+            ld$.fetch '/api/auth/passwd/reset', {method: \POST}, {json: {email: view.get(\email).value, captcha}}
+              .then ~>
+                @ldcv.sent.get!
+                #window.location.href = '/auth/reset/sent/'
+              .catch (e) ~>
+                loader.off!
+                if lderror.id(e) == 404 => @ldcv.not-found.toggle!
+                else error e
+    pw-reset-mail = new ldform do
+      names: -> <[email]>
+      submit: '.btn[ld=submit]'
+      root: view.root
+      after-check: (s, f) ->
+        if s.email != 1 and !curegex.get('email').exec(f.email.value) => s.email = 2

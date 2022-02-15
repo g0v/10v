@@ -1,9 +1,10 @@
-extends ../base.pug
+extends ../../base.pug
 block body
   .w-100.h-100.d-flex.align-items-center.justify-content-center: .text-center
-    h1 驗證碼已過期
+    h1 密碼重設連結已失效。
+    br
     p 因為過了有點久，為了安全起見這個驗證碼已經失效。
     .my-4.py-4: img(src="/assets/img/p/auth/reset/alarm.svg")
     p 
       div 等太久才收到信嗎？
-      div 您可以試著 #[a(href="/me/settings/") 再寄一次].
+      div 您可以試著 #[a(href="/auth/reset/") 再寄一次].
