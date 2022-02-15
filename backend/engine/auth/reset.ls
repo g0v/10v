@@ -17,9 +17,9 @@ route.auth.post \/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
       if !r.[]rows.length => return lderror.reject 403
       user = r.rows.0
       user.password = password.hashed
-      db.query "update users set (password,usepasswd) = ($2,$3) where key = $1", [user.key, user.password, true]
+      db.query "update users set (password,method) = ($2,$3) where key = $1", [user.key, user.password, \local]
     .then -> db.query "delete from pwresettoken where pwresettoken.token=$1", [token]
-    .then -> res.redirect \/auth/reset/done
+    .then -> res.send!
 
 route.app.get \/auth/passwd/reset/:token, mdw.throttle, (req, res) ->
   token = req.params.token
