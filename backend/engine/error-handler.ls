@@ -1,4 +1,4 @@
-require! <[lderror]>
+require! <[lderror @plotdb/suuid]>
 
 handler = (err, req, res, next) ->
   # 1. custom error by various package - handle by case and wrapped in lderror
@@ -9,6 +9,7 @@ handler = (err, req, res, next) ->
     if !err => return next!
     # delegate csrf token mismatch to lderror handling
     if err.code == \EBADCSRFTOKEN => err = lderror 1005
+    err.uuid = suuid!
     if lderror.id(err) =>
       # customized error - pass to frontend for them to handle
       delete err.stack
@@ -26,13 +27,13 @@ handler = (err, req, res, next) ->
       return res.status 490 .send err
     else if (err instanceof URIError) and "#{err.stack}".startsWith('URIError: Failed to decode param') =>
       # errors to be ignored, due to un-skippable error like body json parsing issue
-      return res.status 400 .send!
+      return res.status 400 .send err
     # all handled exception should be returned before this line.
   catch e
     req.log.error {err: e}, "exception occurred while handling other exceptions".red
     req.log.error "original exception follows:".red
-  req.log.error {err}, "unhandled exception occurred [URL: #{req.originalUrl}] #{if err.message => ': ' + err.message else ''}".red
-
-  res.status 500 .send!
+  req.log.error {err}, "unhandled exception occurred [URL: #{req.originalUrl}] #{if err.message => ': ' + err.message else ''} #{err.uuid}".red
+  delete err.message
+  res.status 500 .send err
 
 module.exports = handler
