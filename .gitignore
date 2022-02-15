@@ -18,3 +18,5 @@ frontend/demo/.view
 frontend/auth/static
 frontend/auth/.view
 package-lock.json
+config/mail/
+!config/mail/sample/
