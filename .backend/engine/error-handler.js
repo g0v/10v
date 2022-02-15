@@ -43,8 +43,11 @@
     req.log.error({
       err: err
     }, ("unhandled exception occurred [URL: " + req.originalUrl + "] " + (err.message ? ': ' + err.message : '') + " " + err.uuid).red);
-    delete err.message;
-    return res.status(500).send(err);
+    return res.status(500).send({
+      id: err.id,
+      name: err.name,
+      uuid: err.uuid
+    });
   };
   module.exports = handler;
 }).call(this);

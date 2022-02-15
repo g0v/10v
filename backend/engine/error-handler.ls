@@ -33,7 +33,6 @@ handler = (err, req, res, next) ->
     req.log.error {err: e}, "exception occurred while handling other exceptions".red
     req.log.error "original exception follows:".red
   req.log.error {err}, "unhandled exception occurred [URL: #{req.originalUrl}] #{if err.message => ': ' + err.message else ''} #{err.uuid}".red
-  delete err.message
-  res.status 500 .send err
+  res.status 500 .send err{id, name, uuid}
 
 module.exports = handler

@@ -32,11 +32,11 @@
         }
         user = r.rows[0];
         user.password = password.hashed;
-        return db.query("update users set (password,usepasswd) = ($2,$3) where key = $1", [user.key, user.password, true]);
+        return db.query("update users set (password,method) = ($2,$3) where key = $1", [user.key, user.password, 'local']);
       }).then(function(){
         return db.query("delete from pwresettoken where pwresettoken.token=$1", [token]);
       }).then(function(){
-        return res.redirect('/auth/reset/done');
+        return res.send();
       });
     });
     route.app.get('/auth/passwd/reset/:token', mdw.throttle, function(req, res){
