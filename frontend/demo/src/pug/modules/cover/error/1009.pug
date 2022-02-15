@@ -1,0 +1,15 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-name="500"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-2
+  .text-center.mb-4
+    h1.font-weight-bold Captcha Error
+    p.text-muted lderror Code: 1009
+  div
+    p We use Captcha technology to prevent cyber attacks such as unauthorized crawlers, however sometimes this may incorrectly recognize a normal user as a bot. First sorry for this inconvenience if you are a real human but got rejected by this message!
+
+    p Sometimes, using a VPN, in a development / incognito environment or for users from some specific IP address may trigger this warning. Please try switching to a different environment ( IP, browsing mode, etc ) to see if it helps.
+    
+    p If this keeps happen, you can also #[a(href="lda.ldcvmgr.toggle('contact')") contact us] and let us help you.
+    br
+    .row
+      .col-sm: .btn.btn-block.btn-primary.btn-lg(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+      .col-sm: .btn.btn-block.btn-outline-primary.btn-lg(data-ldcv-set="") Close

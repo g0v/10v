@@ -1,0 +1,11 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-name="500"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-2
+  .text-center.mb-4
+    h1.font-weight-bold Access Denied
+    p.text-muted HTTP Status Code: 403
+  div
+    p You can't access the requested resource without proper permission. If you think this is not as expected, you can try again later to see if there is any different result, so you can #[a(href="lda.ldcvmgr.toggle('contact')") contact us] and let us help you.
+    br
+    .row
+      .col-sm: .btn.btn-block.btn-primary.btn-lg(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+      .col-sm: .btn.btn-block.btn-outline-primary.btn-lg(data-ldcv-set="") Close

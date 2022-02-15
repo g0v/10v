@@ -1,0 +1,15 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-name="500"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-2
+  .text-center.mb-4
+    h1.font-weight-bold CSRF Token Mismatch
+    p.text-muted lderror Code: 1005
+  div
+    p Some requests sent to our service have to include a special token called "CSRF Token" to prevent unexpected data access by unauthorized users. However, the token your browser provided didn't match the one in our record.
+
+    p For a normal user this usually happens when there are some issues about user sessions, so it may help by logging out and re-logging in again.
+    
+    p If this keeps happen, you can also #[a(href="lda.ldcvmgr.toggle('contact')") contact us] and let us help you.
+    br
+    .row
+      .col-sm: .btn.btn-block.btn-primary.btn-lg(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+      .col-sm: .btn.btn-block.btn-outline-primary.btn-lg(data-ldcv-set="") Close

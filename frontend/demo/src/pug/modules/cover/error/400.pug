@@ -1,0 +1,11 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-name="500"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-2
+  .text-center.mb-4
+    h1.font-weight-bold Bad Request
+    p.text-muted HTTP Status Code: 400
+  div
+    p Our server can't correctly recognize your request. This may be caused by malformated data, software version mismatched or any other reasons. Please try again later, or you can #[a(href="lda.ldcvmgr.toggle('contact')") contact us] to report this issue.
+    br
+    .row
+      .col-sm: .btn.btn-block.btn-primary.btn-lg(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+      .col-sm: .btn.btn-block.btn-outline-primary.btn-lg(data-ldcv-set="") Close
