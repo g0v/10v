@@ -9,12 +9,17 @@ lc = {}
 get-global = proxise -> if lc.global => return Promise.resolve lc.global
 
 auth = (opt={}) ->
+  @_manager = opt.manager
   @timeout = {loader: 1000, failed: 10000}
   @evt-handler = {}
 
   @ui = do
     loader: {on: ->, off: ->, on-later: ->, cancel: ->}
-    authpanel: -> new Promise (res, rej) -> # do nothing
+    authpanel: (tgl, o = {}) ~>
+      if @_authpanel => return @_authpanel tgl, o
+      @_manager.from {name: "auth"}, {root: document.body, data: {auth: @}}
+        .then (p) ~> @_authpanel = p.interface
+        .then (i) -> i tgl, o
     timeout: -> new Promise (res, rej) -> # do nothing
     
   [k for k of @ui].map (k) ~> if opt.{}ui[k] => @ui[k] = opt.ui[k]

@@ -13,6 +13,7 @@
     auth = function(opt){
       var k, ref$, this$ = this;
       opt == null && (opt = {});
+      this._manager = opt.manager;
       this.timeout = {
         loader: 1000,
         failed: 10000
@@ -25,8 +26,23 @@
           onLater: function(){},
           cancel: function(){}
         },
-        authpanel: function(){
-          return new Promise(function(res, rej){});
+        authpanel: function(tgl, o){
+          o == null && (o = {});
+          if (this$._authpanel) {
+            return this$._authpanel(tgl, o);
+          }
+          return this$._manager.from({
+            name: "auth"
+          }, {
+            root: document.body,
+            data: {
+              auth: this$
+            }
+          }).then(function(p){
+            return this$._authpanel = p['interface'];
+          }).then(function(i){
+            return i(tgl, o);
+          });
         },
         timeout: function(){
           return new Promise(function(res, rej){});

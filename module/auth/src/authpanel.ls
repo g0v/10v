@@ -10,7 +10,7 @@ module.exports =
     {ldview, ldnotify} = ctx
     <-(~>it.apply @mod) _
     @ldcv = ldcv = {}
-    @frontend = data.frontend
+    @_auth = data.auth
     iroot = ld$.find(root, '.ldcv[data-name=authpanel]', 0)
     ldcv.authpanel = new ldcover root: iroot, base-z: 100
     ldcv.authpanel.on \toggle.on, ->
@@ -48,7 +48,7 @@ module.exports =
     if opt.tab => @mod.tab opt.tab
     if opt.lock => @mod.ldcv.authpanel.lock!
     if toggle => @mod.ldcv.authpanel.get!
-    else @mod.frontend.auth.fetch!then (g) -> @mod.ldcv.authpanel.set g
+    else @mod.auth.fetch!then (g) -> @mod.ldcv.authpanel.set g
 
   mod:
     tab: (tab) ->
@@ -70,8 +70,8 @@ module.exports =
         .then -> debounce 1000
         .then ~>
           data = {}
-          ld$.fetch "#{@frontend.auth.api-root!}#{@_tab}", {method: \POST}, {json: body}
-        .then ~> @frontend.auth.fetch!
+          ld$.fetch "#{@_auth.api-root!}#{@_tab}", {method: \POST}, {json: body}
+        .then ~> @_auth.fetch!
         .finally ~> @ldld.off!
         .then (g) ~>
           @info \default
