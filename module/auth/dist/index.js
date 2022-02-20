@@ -32,7 +32,7 @@
             return this$._authpanel(tgl, o);
           }
           return this$._manager.from({
-            name: "auth"
+            name: "@servebase/auth"
           }, {
             root: document.body,
             data: {

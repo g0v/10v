@@ -1,6 +1,6 @@
 {
   "author": "zbryikt",
-  "name": "auth",
+  "name": "@servebase/auth",
   "license": "MIT",
   "description": "servebase auth module",
   "version": "0.1.0",
