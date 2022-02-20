@@ -1,22 +1,8 @@
-root = {}
-<-(->it.apply root) _
-@zmgr = new zmgr init: 1000
-@auth = new auth!
-@captcha = new captcha!
-manager = new block.manager registry: ({name,version,path,type}) ->
-  if type == \block => return "/assets/lib/#name/#{version or \main}/#{path or \index.html}"
-  return "/assets/lib/#name/#version/#{path or \index.min.js}"
+({core}) <- ldc.register <[core]>, _
+<- core.init!then _
+<-(->it.apply core) _
 
-ldld = new ldloader class-name: "ldld full", zmgr: @zmgr
-frontend = do
-  auth: @auth
-  i18next: i18next
-  block-manager: manager
-  zmgr: @zmgr
-
-@user = {}
 @view = {}
-
 @view.panel = new ldview do
   root: document.body
   action: click: do
@@ -54,7 +40,6 @@ frontend = do
                 .catch ->
                   console.error "accessing /api/demo/post with captcha failed: ", it
                   Promise.reject it
-
   text: do
     username: ~> @user.username or 'n/a'
     userid: ~> @user.key or 'n/a'
@@ -65,75 +50,19 @@ frontend = do
       node.innerText = if @user.username => 'Signed in' else 'Not login'
       node.classList.toggle \text-danger, !@user.username
 
-
 update = ~>
   @auth.get!then (g) ~>
     @global = g
     @user = g.user
     @view.panel.render!
-    @captcha = new captcha {global: g, manager}
 
-update!
-  .then -> i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW
-  .then -> block.i18n.use i18next
-  .then -> manager.init!
-  .then ~> @captcha.init!
-  .then -> manager.get {name: 'auth'}
-  .then (bc) -> bc.create!
-  .then (bi) -> bi.attach {root: document.body, data: {frontend}} .then -> bi.interface!
-  .then ~>
-    @auth.set-ui {authpanel: it, loader: new ldloader class-name: "ldld full"}
-    debounce 1000
-  .then ~>
-    console.log "test captcha.guard /api/demo/post ..."
-    @captcha.guard cb: (data) ->
-      console.log "token obj: ", data
-      ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
-        .then -> console.log "api response: ", it
-        # if we want to test all captcha verifier...
-        #.then -> lderror.reject 1010
+@auth.on \change, update
+console.log "test captcha.guard /api/demo/post ..."
+@captcha.guard cb: (data) ->
+  console.log "token obj: ", data
+  ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
+    .then -> console.log "api response: ", it
+    # if we want to test all captcha verifier...
+    #.then -> lderror.reject 1010
 
   #.then -> ldnotify.send \success, "you have successfully logged in."
-
-/*
-  .then -> manager.get {name: 'captcha'}
-  .then (bc) -> bc.create!
-  .then (bi) -> bi.attach {root: document.body} .then -> bi.interface!
-  .then (cap) ~>
-    @captcha = cap
-    @auth.get!
-      .then (g) -> cap.init g.captcha
-      .then ~>
-        cap.guard cb: (data) ->
-          console.log "token obj: ", data
-          ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
-            .then -> console.log "api response: ", it
-            # if we want to test all captcha verifier...
-            #.then -> lderror.reject 1010
-*/
-/*
-  .then ~>
-    console.log "load consent ..."
-    cs = new consent {manager, global: @global}
-    #cs.ensure {name: "consent", path: "block/tos/0.0.1/index.html"}, {link: "/assets/pdf/bitcoin.pdf"}
-    cs.ensure {name: "consent", path: "block/cookie/0.0.1/index.html"}
-  .then ->
-    console.log "done."
-*/
-/*
-capobj = cap.get \recaptcha_v2_checkbox .create {root: @view.panel.get('hcaptcha')}
-@capobj = capobj
-capobj.init!
-  .then ->
-    capobj.render!
-    console.log "capobj inited"
-*/
-
-/*
-capobj = cap.get \hcaptcha .create {root: @view.panel.get('hcaptcha')}
-@capobj = capobj
-capobj.init!
-  .then ->
-    capobj.render!
-    console.log "capobj inited"
-*/

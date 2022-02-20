@@ -37,7 +37,7 @@ html(lang="en")
           a.btn.border.mr-2.my-1.py-0(href="/privacy/") Details
           .btn.border.my-1.py-0(data-ldcv-set="") OK
 
-    #captcha.ldcv: .base: .inner.p-4: div
+    //-#captcha.ldcv: .base: .inner.p-4: div
     .w-100.py-2.px-4.bg-dark.text-light.d-flex
       .flex-grow-1
       .clickable(ld="login") Login
@@ -130,13 +130,13 @@ html(lang="en")
       {name: "ldloader", version: "main"},
       {name: "lderror", version: "main"},
       {name: "ldnotify", version: "main"},
-      {name: "auth", version: "main"},
-      {name: "consent", version: "main"},
-      {name: "captcha", version: "main"}
+      {name: "ldcvmgr", version: "main"},
+      {name: "@loadingio/ldc", version: "main"},
+      {name: "@servebase/auth", version: "main"},
+      {name: "@servebase/consent", version: "main"},
+      {name: "@servebase/captcha", version: "main"},
+      {name: "@servebase/core", version: "main"}
     ])
-
-    //-+script("js/main.min.js",{defer:true})
-    //-+script("https://www.google.com/recaptcha/api.js",{async: true})
 
     script(type="module")
       include:lsc index.ls

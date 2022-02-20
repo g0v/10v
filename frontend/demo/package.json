@@ -9,9 +9,11 @@
     "start": "./node_modules/.bin/server -r . -o true"
   },
   "workspaces": [
+    "../../module/version",
     "../../module/auth",
     "../../module/captcha",
-    "../../module/consent"
+    "../../module/consent",
+    "../../module/core"
   ],
   "dependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",
@@ -60,15 +62,19 @@
       "@plotdb/semver",
       "@plotdb/block",
       {
-        "name": "auth",
+        "name": "@servebase/auth",
         "dir": "dist"
       },
       {
-        "name": "captcha",
+        "name": "@servebase/captcha",
         "dir": "dist"
       },
       {
-        "name": "consent",
+        "name": "@servebase/consent",
+        "dir": "dist"
+      },
+      {
+        "name": "@servebase/core",
         "dir": "dist"
       },
       "curegex",

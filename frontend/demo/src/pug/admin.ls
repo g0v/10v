@@ -1,4 +1,7 @@
-<-(->it.apply root) _
+#<-(->it.apply root) _
+({core}) <- ldc.register \admin, <[core]>, _
+<- core.init!then _
+<-(->it.apply core) _
 
 @admin = {}
 @view.admin = new ldview do
