@@ -85,6 +85,19 @@ We use `@plotdb/block` to simplify and offload authpanel from main pages. It's p
 
 Authpanel script works with bootstrap and still have some class names hardcoded, which should be abstracted in the future to make its UI fully customizable.
 
+
+### Authpanel Construction
+
+Pass `auth` object when constructing authpanel block:
+
+    @auth = new auth!
+    manager.from(
+      {name: "auth"},
+      {root: document.body, data: {auth: @auth}
+    )
+      .then ->  ...
+
+
 ## backend
 
 
