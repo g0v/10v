@@ -8,7 +8,7 @@ captcha.prototype = Object.create(Object.prototype) <<< do
   _init: (cfg) ->
     if cfg => @_cfg = cfg
     Promise.resolve!
-      .then ~> @mgr.get {name: 'captcha'}
+      .then ~> @mgr.get {name: '@servebase/captcha'}
       .then (bc) -> bc.create!
       .then (bi) -> bi.attach {root: document.body} .then -> bi.interface!
       .then (cap) ~> @captcha = cap

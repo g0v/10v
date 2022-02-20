@@ -20,7 +20,7 @@
       }
       return Promise.resolve().then(function(){
         return this$.mgr.get({
-          name: 'captcha'
+          name: '@servebase/captcha'
         });
       }).then(function(bc){
         return bc.create();

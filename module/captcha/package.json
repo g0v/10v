@@ -1,6 +1,6 @@
 {
   "author": "zbryikt",
-  "name": "captcha",
+  "name": "@servebase/captcha",
   "license": "MIT",
   "description": "servebase captcha module",
   "version": "0.1.0",
