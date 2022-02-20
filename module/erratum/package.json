@@ -1,6 +1,6 @@
 {
   "author": "zbryikt",
-  "name": "erratum",
+  "name": "@servebase/erratum",
   "license": "MIT",
   "description": "servebase error module",
   "version": "0.0.1",
