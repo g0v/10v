@@ -18,6 +18,7 @@
     "module/auth",
     "module/captcha",
     "module/consent",
+    "module/core",
     "backend/engine"
   ],
   "scripts": {
