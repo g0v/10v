@@ -1,6 +1,6 @@
 {
   "author": "zbryikt",
-  "name": "consent",
+  "name": "@servebase/consent",
   "license": "MIT",
   "description": "consent sample",
   "version": "0.0.1",
