@@ -19,7 +19,7 @@ ldc.register \core, <[]>, ->
     err = new lderror.handler handler: ~> @ldcvmgr.get "error/#it"
     @error = (e) -> err e
     @update = (g) -> @ <<< {global: g, user: (g.user or {})}
-
+    @auth.on \server-down, @error
 
     @manager.init!
       .then ->
