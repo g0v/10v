@@ -5,11 +5,22 @@
 
 ENV=$1
 if [ -z $ENV ]; then
-  echo "usage: ./build <env-name>"
-  echo "nginx/<env-name>.yaml will be used"
+  echo "usage: ./build <env-name> <cfg-name>"
+  echo
+  echo "following files will be used:"
+  echo " - nginx/<env-name>.yaml ( use 'config' for demonstration config ) "
+  echo " - nginx/<cfg-name>.ngx ( default config.ngx )"
+  echo
+  echo "with proper config, a nginx config file will be generated at gen/nginx/config.ngx"
+  echo
   exit
 fi
 
-mkdir -p gen/nginx
-npx tt -c nginx/$ENV.yaml -o gen/nginx/config.ngx nginx/config.ngx
+CFG=$2
+if [ -z $CFG ]; then
+  CFG=config
+fi
 
+mkdir -p gen/nginx
+npx tt -c nginx/$ENV.yaml -o gen/nginx/config.ngx nginx/$CFG.ngx
+echo "gen/nginx/config.ngx generated"
