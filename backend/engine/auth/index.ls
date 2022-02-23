@@ -161,6 +161,10 @@ route.auth
     req.logout!
     res.send!
 
+app.get \/auth/clear, (req, res) ->
+  aux.clear-cookie res
+  res.redirect "/auth/"
+
 reset backend
 verify backend
 

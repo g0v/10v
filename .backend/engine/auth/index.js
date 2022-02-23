@@ -285,6 +285,10 @@
       req.logout();
       return res.send();
     });
+    app.get('/auth/clear', function(req, res){
+      aux.clearCookie(res);
+      return res.redirect("/auth/");
+    });
     reset(backend);
     verify(backend);
     return this;
