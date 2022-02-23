@@ -67,7 +67,7 @@ block script
     pw-reset = new ldform do
       names: -> <[password confirm]>
       root: \#password-reset
-      submit: 'input[type=submit]'
+      submit: "input[ld='submit']"
       after-check: (s, f) ->
         [p1,p2] = [@fields.password.value, @fields.confirm.value]
         if s.password != 1 and p1.length < 8 => s <<< password: 2, confirm: 1

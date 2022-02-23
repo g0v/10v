@@ -3,5 +3,13 @@ block script
   script(type="module"): :lsc
     ({core}) <- ldc.register <[core]>, _
     <- core.init!then _
-    core.manager.from {name: "@servebase/auth"}, {root: document.body, data: {}}
+    {auth, manager, user} = core
+    # if has been logged in, simply redirect to landing page
+    if user.key => window.location.replace '/'
+    # oherwise trigger login panel
+    manager.from {name: "@servebase/auth"}, {root: document.body, data: {auth}}
       .then (o) -> o.interface true, {lock: true}
+      # TODO: we can design to use cookie as nexturl information.
+      # it may be a Nginx `X-Accel-Redirect` so we simply reload URL.
+      .then -> window.location.reload!
+
