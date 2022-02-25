@@ -161,9 +161,19 @@ route.auth
     req.logout!
     res.send!
 
-app.get \/auth/clear, (req, res) ->
+app.get \/auth, (req, res) ->
   aux.clear-cookie res
-  res.redirect "/auth/"
+  req.logout!
+  # by rendering instead of redirecting, we can keep the URL as is.
+  # in this case a reload after authenticaed will help refresh that page
+  # auth again simply redirect users to landing page so there won't be infinite loop
+  res.render "auth/index.pug"
+
+# identical to `/auth` but if it's more semantic clear.
+app.get \/auth/reset, (req, res) ->
+  aux.clear-cookie res
+  req.logout!
+  res.render "auth/index.pug"
 
 reset backend
 verify backend

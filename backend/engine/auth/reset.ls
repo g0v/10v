@@ -29,9 +29,9 @@ route.app.get \/auth/passwd/reset/:token, mdw.throttle, (req, res) ->
       if !r.[]rows.length => return lderror.reject 403
       obj = r.rows.0
       if new Date!getTime! - new Date(obj.time).getTime! > 1000 * 600 =>
-        return res.redirect \/auth/reset/expire/
+        return res.redirect \/auth/passwd/reset/expire/
       res.cookie "password-reset-token", token
-      res.redirect "/auth/reset/change/"
+      res.redirect "/auth/passwd/reset/change/"
 
 route.auth.post \/passwd/reset, mdw.throttle, mdw.captcha, (req, res) ->
   email = "#{req.body.email}".trim!

@@ -53,10 +53,10 @@
         }
         obj = r.rows[0];
         if (new Date().getTime() - new Date(obj.time).getTime() > 1000 * 600) {
-          return res.redirect('/auth/reset/expire/');
+          return res.redirect('/auth/passwd/reset/expire/');
         }
         res.cookie("password-reset-token", token);
-        return res.redirect("/auth/reset/change/");
+        return res.redirect("/auth/passwd/reset/change/");
       });
     });
     return route.auth.post('/passwd/reset', mdw.throttle, mdw.captcha, function(req, res){

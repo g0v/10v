@@ -285,9 +285,15 @@
       req.logout();
       return res.send();
     });
-    app.get('/auth/clear', function(req, res){
+    app.get('/auth', function(req, res){
       aux.clearCookie(res);
-      return res.redirect("/auth/");
+      req.logout();
+      return res.render("auth/index.pug");
+    });
+    app.get('/auth/reset', function(req, res){
+      aux.clearCookie(res);
+      req.logout();
+      return res.render("auth/index.pug");
     });
     reset(backend);
     verify(backend);
