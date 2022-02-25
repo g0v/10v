@@ -71,6 +71,16 @@ module.exports =
         .then ~>
           data = {}
           ld$.fetch "#{@_auth.api-root!}#{@_tab}", {method: \POST}, {json: body}
+        .catch (e) ~>
+          if lderror.id(e) != 1005 => return Promise.reject e
+          # 1005 csrftoken mismatch - try recoverying directly by reset session
+          ld$.fetch "#{@_auth.api-root!}reset", {method: \POST}
+            .then ~>
+              # now we have our session cleared. fetch global data again.
+              @_auth.fetch {renew: true}
+            .then ~>
+              # try logging in again. if it still fails, fallback to normal error handling process
+              ld$.fetch "#{@_auth.api-root!}#{@_tab}", {method: \POST}, {json: body}
         .then ~> @_auth.fetch!
         .finally ~> @ldld.off!
         .then (g) ~>

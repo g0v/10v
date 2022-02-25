@@ -27,7 +27,7 @@ div
                     li 換一組帳號、密碼或登入方式
                     li 確認您的 email 或密碼沒有打錯
                     li 切換至註冊模式後再試一次
-                    li #[a(href="/dash/auth/reset/",target="_blank",rel="noopener noreferrer") 重設密碼]
+                    li #[a(href="/auth/passwd/reset/",target="_blank",rel="noopener noreferrer") 重設密碼]
                     li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');") 與我們聯絡]
 
                 .d-none.ld.ld-float-rtl-in(ld="info",data-name="login-exceeded")
@@ -88,13 +88,13 @@ div
               .text-center.text-sm.mb-4(t)
                 span by sign-in, you agree to our
                 span 
-                a.mx-1(href="#",target="_blank",rel="noopener noreferrer") Terms
+                a.mx-1(ld="tos",href="/tos",target="_blank",rel="noopener noreferrer") Terms
                 span 
                 span and
                 span 
-                a.mx-1(href="#",target="_blank",rel="noopener noreferrer") Privacy Policy
+                a.mx-1(ld="privacy-policy",href="/pp",target="_blank",rel="noopener noreferrer") Privacy Policy
               .btn.btn-primary.d-block.my-2.ld-ext-right(ld="submit",t) Login #[.ld.ld-spin.ld-ring]
-              .text-right.my-2: a(ld="forget-password",href="#") #[span(t) Forget Password]? »
+              .text-right.my-2: a(ld="forget-password",href="/auth/passwd/reset") #[span(t) Forget Password]? »
             div
               .sep.sep-text.mb-4.text-sm.text-secondary: span(t) or login with
               .d-flex
