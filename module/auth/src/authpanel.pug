@@ -1,5 +1,4 @@
 div
-  .ldcv(data-name="consent"): .base: .inner
   .ldcv(data-name="authpanel"): .base: .inner
     form.w-100.h-100.d-flex.align-items-center.justify-content-center
       .auth-base.d-flex.shadow.sm.rounded.border.mx-auto
@@ -29,6 +28,7 @@ div
                     li 切換至註冊模式後再試一次
                     li #[a(href="/auth/passwd/reset/",target="_blank",rel="noopener noreferrer") 重設密碼]
                     li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');") 與我們聯絡]
+                  p 若不斷失敗，亦可嘗試透過 #[a(href="/auth/") 此連結] 登入，重設您的使用階段試試。
 
                 .d-none.ld.ld-float-rtl-in(ld="info",data-name="login-exceeded")
                   h2.mb-4.font-weight-bold 登入失敗。
