@@ -28,4 +28,6 @@ block script
       # even it's still `/auth/`, user will still be redirect to `/` by above code.
       # TODO: we can design to use cookie as nexturl information.
       # it may be a Nginx `X-Accel-Redirect` so we simply reload URL.
-      .then -> window.location.reload!
+      .then ->
+        if window.location.pathname == "/auth/" => window.location.replace '/'
+        else window.location.reload!
