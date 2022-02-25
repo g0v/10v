@@ -71,17 +71,17 @@ div
               div
                 .form-group
                   span(t) email
-                  input.form-control(ld="username",name="username",t
+                  input.form-control(ld="username input",name="username",t
                   t-placeholder="your email address, as account name",autocomplete="username")
                   .invalid-feedback(style="margin-bottom:-.75em",t) invalid email address
                 .form-group(ld="displayname")
                   span(t) display name
-                  input.form-control(name="displayname",t,
+                  input.form-control(name="displayname",ld="input",t,
                   t-placeholder="such as 'Paris Hillton'",autocomplete="displayname")
                   .invalid-feedback(t) required field
                 .form-group
                   span(t) password
-                  input.form-control(type="password",ld="password",name="password",
+                  input.form-control(type="password",ld="password input",name="password",
                   autocomplete="password",t,t-placeholder="at least 8 characters")
                   .invalid-feedback(style="margin-bottom:-.75em",t) password too short
                   //-.invalid-feedback(style="margin-bottom:-.75em",t) password incorrect

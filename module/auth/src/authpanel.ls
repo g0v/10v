@@ -21,10 +21,12 @@ module.exports =
     @ <<< {_tab: 'login', _info: \default}
     @view = view = new ldview do
       root: iroot
-      action: click:
-        submit: ({node}) ~> @submit!
-        switch: ({node}) ~>
-          @tab node.getAttribute \data-name
+      action:
+        keyup: input: ({node, evt}) ~> if evt.keyCode == 13 => @submit!
+        click:
+          submit: ({node}) ~> @submit!
+          switch: ({node}) ~>
+            @tab node.getAttribute \data-name
       handler:
         submit: ({node}) ~> node.classList.toggle \disabled, !(@ready)
         displayname: ({node}) ~> node.classList.toggle \d-none, @_tab == \login
