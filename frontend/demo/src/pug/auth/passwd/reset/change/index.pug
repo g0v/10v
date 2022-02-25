@@ -1,4 +1,4 @@
-extends ../../base.pug
+extends ../../../base.pug
 block body
   .w-100.h-100.d-flex.align-items-center.justify-content-center: .text-center
     h1 重設您的密碼
@@ -14,14 +14,12 @@ block body
         input.form-control(name="confirm",type="password",placeholder="")
         .invalid-feedback 兩組密碼不相符
       input.btn.btn-success.btn-block.mt-2.disabled(ld="submit",type="button",value="設定密碼")
-      //input(type="hidden",name="_csrf")
-      //input(type="hidden",name="recaptcha")
       +nbr(2)
       .text-muted: small
         p 好的密碼至少要夠長 ( 至少十個字 )。請不要用姓名、電話或生日當您的密碼。
         p 你可以查閱 #[a(href="https://en.wikipedia.org/wiki/Password_strength",target="_blank",rel="noopener noreferrer") Password Strength] 這篇文章來了解怎樣算是一個好密碼。
 
-    .ldcv.ldcvmgr(data-name="done"): .base.w-640: .inner.card: .card-body: .p-4
+    .ldcv.ldcvmgr(data-name="done",data-lock="true"): .base.w-640: .inner.card: .card-body: .p-4
       .text-center: h1 密碼重設完成
       .my-4
         p 您的密碼已經重新設定為新的密碼了，請記住您現在的密碼並妥善保存，並嘗試再次登入。
@@ -30,39 +28,44 @@ block body
       .row
         .col-sm.mb-1: .btn.btn-lg.btn-block.btn-primary(data-ldcv-set="login") 現在就登入
         .col-sm.mb-1: a.btn.btn-lg.btn-block.btn-outline-secondary(href="/") 回首頁
-    .ldcv.ldcvmgr(data-name="invalid"): .base.w-640: .inner.card: .card-body: .p-4
+    .ldcv.ldcvmgr(data-name="invalid",data-lock="true"): .base.w-640: .inner.card: .card-body: .p-4
       .text-center
         h1 無效的重設碼
         p 您所使用的密碼重設連結無效。
       br
       .text-muted
-        p 你所使用的這個密碼重設連結應該是過期了。沒關係，您可以回到 #[a(href="/auth/reset/") 密碼重設頁] 再次發送重設密碼信給自己。
+        p 你所使用的這個密碼重設連結應該是過期了。沒關係，您可以回到 #[a(href="/auth/passwd/reset/") 密碼重設頁] 再次發送重設密碼信給自己。
         p 如果這個問題一直發生，您也可以 #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") 直接聯繫我們 ]，我們可以協助您取回自己的帳號。
 
       br
-      a.btn.btn-primary.btn-lg.btn-block(href="/auth/reset/") 再送一次
+      a.btn.btn-primary.btn-lg.btn-block(href="/auth/passwd/reset/") 再送一次
 
 block script
   script(type="module"): :lsc
     ({core}) <- ldc.register <[core]>, _
     <~ core.init!then _
-    {auth, ldcvmgr, captcha, error} = core
+    {auth, loader, ldcvmgr, captcha, error} = core
     ldcvmgr.init!
     if !document.querySelector(\#password-reset) => return
     view = new ldview do
       root: document.body
       action: click: submit: ~>
+        if !pw-reset.ready! => return
+        loader.on!
         captcha
           .guard cb: (captcha) ~>
             payload = {}
             payload = pw-reset.values!
             payload <<< {captcha}
             ld$.fetch "/api/auth/passwd/reset/#{@token}", {method: \POST}, {json: payload}
+          .finally -> loader.off!
           .then -> ldcvmgr.get \done
           .then (v) ->
             if v != \login => return
             auth.ensure {lock: true} .then -> window.location.href = "/"
-          .catch error
+          .catch (e) ->
+            console.log e
+            error e
 
     pw-reset = new ldform do
       names: -> <[password confirm]>

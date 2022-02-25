@@ -1,4 +1,4 @@
-extends ../base.pug
+extends ../../base.pug
 block body
   .w-100.h-100.d-flex.align-items-center.justify-content-center: div
     h3.text-center 忘記密碼？
@@ -35,7 +35,7 @@ block body
         //-.my-4.py-4: img#img(src="/assets/img/p/auth/reset/sending-mail.svg")
         p 等不到信嗎？有時信件會被分類到垃圾信件匣，請別忘了查看您的 #[b 垃圾信件匣]。或者，您亦可以：
         ul
-          li #[a(href="/auth/reset/") 再寄一次]
+          li #[a(href="/auth/passwd/reset/") 再寄一次]
           li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") 直接聯絡我們]，讓我們協助您。
 
 block script
@@ -43,7 +43,6 @@ block script
     {name: "ldform"},
     {name: "curegex", path: "curegex.min.js"}
   ])
-  //-+script("/js/auth/reset/index.js")
   script(type="module"): :lsc
     ({core}) <- ldc.register <[core]>, _
     <~ core.init!then _
@@ -63,7 +62,6 @@ block script
             ld$.fetch '/api/auth/passwd/reset', {method: \POST}, {json: {email: view.get(\email).value, captcha}}
               .then ~>
                 @ldcv.sent.get!
-                #window.location.href = '/auth/reset/sent/'
               .catch (e) ~>
                 loader.off!
                 if lderror.id(e) == 404 => @ldcv.not-found.toggle!
