@@ -20,6 +20,7 @@ ldc.register \core, <[]>, ->
     @error = (e) -> err e
     @update = (g) -> @ <<< {global: g, user: (g.user or {})}
     @auth.on \server-down, @error
+    @auth.on \logout, -> window.location.replace '/'
 
     @manager.init!
       .then ->

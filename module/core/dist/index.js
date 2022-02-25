@@ -42,6 +42,9 @@
           return this.global = g, this.user = g.user || {}, this;
         };
         this.auth.on('server-down', this.error);
+        this.auth.on('logout', function(){
+          return window.location.replace('/');
+        });
         return this.manager.init().then(function(){
           return i18next.init({
             supportedLng: ['en', 'zh-TW'],
