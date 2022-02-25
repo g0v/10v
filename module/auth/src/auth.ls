@@ -97,7 +97,9 @@ auth.prototype = Object.create(Object.prototype) <<< do
         return lc.global
 
       .catch (e) ~>
-        @fire \server-down, e; console.log e
+        e <<< {name: \lderror, id: 1007}
+        @fire \server-down, e
+        console.log "server down: ", e
         # since server is down and we have handled it here,
         # we simply return a promise that won't be resolved
         # to stop further progress of current code.

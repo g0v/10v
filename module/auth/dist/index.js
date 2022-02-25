@@ -188,8 +188,10 @@
           }
           return lc.global;
         })['catch'](function(e){
+          e.name = 'lderror';
+          e.id = 1007;
           this$.fire('server-down', e);
-          console.log(e);
+          console.log("server down: ", e);
           return new Promise(function(res, rej){});
         });
       },
