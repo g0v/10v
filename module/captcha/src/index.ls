@@ -38,7 +38,7 @@ captcha =
         .then (ret) -> opt.cb ret
         .catch (e) ->
           if lderror.id(e) in [1009 1010] => debounce(1000).then -> _ idx + 1
-          else return lderror.reject e
+          else return Promise.reject e
     _!
 
   prepare: -> @root = it
