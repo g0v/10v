@@ -182,7 +182,8 @@
             config: ref$.config,
             displayname: ref$.displayname,
             verified: ref$.verified,
-            username: ref$.username
+            username: ref$.username,
+            staff: ref$.staff
           }
           : {},
         captcha: captcha,
