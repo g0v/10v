@@ -40,6 +40,14 @@
    - 會需要有程式庫外部的設定架構, 以貼合各種情境 ( staging, different customer, etc ) 來佈署主機.
      - 以舊架構來說, 就是 secret.ls
  - 可能的架構
+   - 提案 3
+     - repo
+       - config
+         - base: 範例設定檔
+           - nginx, db, docker, mail, bootstrap, ...
+         - gen: 生成的設定檔
+         - <name>: 各別設定檔
+         - private ( 不進 git )
    - 提案 2
      - repo
        - config ( 除 private 之外都進 git )

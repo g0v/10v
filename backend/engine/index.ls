@@ -7,14 +7,14 @@ require! <[backend/auth backend/consent backend/i18n backend/aux backend/db/post
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
 routes = fs.readdir-sync path.join(libdir, '..')
-  .filter -> it != \engine 
+  .filter -> !(it in <[engine README.md]>)
   .map -> path.join(libdir, '..', it)
   .map -> require it
 
 argv = yargs
   .option \config-name, do
     alias: \c
-    description: "config file name. `secret` if omitted. for accessing `private/config/[config].ls`"
+    description: "config file name. `secret` if omitted. for accessing `config/private/[config].ls`"
     type: \string
   .help \help
   .alias \help, \h
@@ -49,7 +49,8 @@ backend = (opt = {}) ->
     production: process.env.NODE_ENV == \production
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: with-default(opt.config, default-config) # backend configuration
-    base: opt.config.base or 'frontend/web'
+    feroot: if opt.config.base => "frontend/#{opt.config.base}" else 'frontend/base'
+    base: opt.config.base or 'base'
     server: null     # http.Server object, either created by express or from other lib
     app: null        # express application
     log: null        # obj for logging, in pino / winston interface
@@ -76,7 +77,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
   watch: ({logger, i18n}) ->
     if !(@config.build and @config.build.enabled) => return
     srcbuild.lsp (@config.build or {}) <<< {
-      logger, i18n, base: @base, bundle: {configFile: path.join(@base, 'bundle.json'), relative-path: true}
+      logger, i18n, base: @feroot, bundle: {configFile: path.join(@feroot, 'bundle.json'), relative-path: true}
     }
 
   start: ->
@@ -85,7 +86,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @log-server = @log.child {module: \server}
         @log-build = @log.child {module: \build}
         @log-mail = @log.child {module: \mail}
-        if @config.mail => @mail-queue = new mail-queue {logger: @log-mail} <<< (@config.mail or {})
+        if @config.mail =>
+          @mail-queue = new mail-queue {logger: @log-mail, base: @config.base} <<< (@config.mail or {})
 
         process.on \uncaughtException, (err, origin) ~>
           @log-server.error {err}, "uncaught exception ocurred, outside express routes".red
@@ -142,10 +144,10 @@ backend.prototype = Object.create(Object.prototype) <<< do
           viewdir: '.view'
           srcdir: 'src/pug'
           desdir: 'static'
-          base: @base
+          base: @feroot
         })
         app.set 'view engine', 'pug'
-        app.set 'views', path.join(__dirname, '../..', @base, 'src/pug')
+        app.set 'views', path.join(__dirname, '../..', @feroot, 'src/pug')
         app.locals.basedir = app.get \views
 
         @route.app = aux.routecatch app
@@ -170,7 +172,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         routes.map ~> it @ # APIs
 
-        app.use \/, express.static(path.join __dirname, '../..', @base, 'static') # static file fallback
+        app.use \/, express.static(path.join __dirname, '../..', @feroot, 'static') # static file fallback
         app.use (req, res, next) ~> next new lderror(404) # nothing match - 404
         app.use error-handler # error handler
 

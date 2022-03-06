@@ -5,7 +5,7 @@ module.exports = do
     enabled: true
     lng: <[en zh-TW]>
     ns: <[default]>
-  base: 'frontend/demo'
+  base: 'base'
   db:
     postgresql:
       host: \localhost # host.docker.internal

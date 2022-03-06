@@ -19,6 +19,7 @@
         }
       }
       : nodemailer.createTransport(nodemailerMailgunTransport(opt.mailgun));
+    this.base = opt.base || 'base';
     this.log = opt.logger;
     this.list = [];
     return this;
@@ -98,41 +99,49 @@
       });
     },
     byTemplate: function(name, email, map, config){
-      var this$ = this;
+      var fn, path, that, this$ = this;
       map == null && (map = {});
       config == null && (config = {});
-      return new Promise(function(res, rej){
-        var path, that;
-        path = (that = config.path) ? that : '.';
-        return fs.readFile(path + "/config/mail/" + name + ".yaml", function(e, content){
-          var payload, option;
-          if (e) {
-            this$.log.error("send mail failed: read template file failed.", e);
-            return rej(lderror(500));
-          }
-          try {
-            payload = jsYaml.safeLoad(content);
-          } catch (e$) {
-            e = e$;
-            this$.log.error("send mail failed: parse template yaml failed.", e);
-            return rej(lderror(500));
-          }
-          option = {
-            from: payload.from,
-            to: email,
-            subject: payload.subject,
-            content: payload.content
-          };
-          if (config.bcc) {
-            option.bcc = config.bcc;
-          }
-          return this$.sendFromMd(option, map, {
-            now: config.now
-          }).then(function(){
-            return res();
-          })['catch'](function(e){
-            return rej(e);
-          });
+      fn = function(b){
+        return "config/" + b + "/mail/" + name + ".yaml";
+      };
+      path = (that = config.path) ? that : '.';
+      return fs.promises.access(fn(this.base)).then(function(){
+        return fn(this$.base);
+      })['catch'](function(){
+        return fs.promises.access(fn('base')).then(function(){
+          return fn('base');
+        });
+      })['catch'](function(){
+        this$.log.error("send mail failed: read template file failed.", e);
+        return lderror.reject(1027);
+      }).then(function(file){
+        return fs.promises.readFile(file)['catch'](function(e){
+          this$.log.error("send mail failed: read template file failed. ", e);
+          return lderror.reject(1017);
+        });
+      }).then(function(content){
+        var e;
+        try {
+          return jsYaml.safeLoad(content);
+        } catch (e$) {
+          e = e$;
+          this$.log.error("send mail failed: parse template yaml failed.", e);
+          return lderror.reject(1017);
+        }
+      }).then(function(payload){
+        var option;
+        option = {
+          from: payload.from,
+          to: email,
+          subject: payload.subject,
+          content: payload.content
+        };
+        if (config.bcc) {
+          option.bcc = config.bcc;
+        }
+        return this$.sendFromMd(option, map, {
+          now: config.now
         });
       });
     }

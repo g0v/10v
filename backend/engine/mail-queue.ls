@@ -18,6 +18,7 @@ mail-queue = (opt={}) ->
       @log.error "sendMail called while mail gateway is not available"
       return lderror.reject 500, "mail service not available"
   else nodemailer.createTransport(nodemailer-mailgun-transport(opt.mailgun))
+  @base = opt.base or 'base'
   @log = opt.logger
   @list = []
   @
@@ -69,21 +70,29 @@ mail-queue.prototype = Object.create(Object.prototype) <<< do
     delete payload.content
     @send(payload,opt).then -> res!
 
-  by-template: (name, email, map = {}, config = {}) -> new Promise (res, rej) ~>
+  by-template: (name, email, map = {}, config = {}) ->
+    fn = (b) -> "config/#b/mail/#name.yaml"
     path = if config.path => that else '.'
-    (e, content) <~ fs.read-file "#path/config/mail/#name.yaml", _
-    if e =>
-      @log.error "send mail failed: read template file failed.", e
-      return rej lderror 500
-    try
-      payload = js-yaml.safe-load content
-    catch e
-      @log.error "send mail failed: parse template yaml failed.", e
-      return rej lderror 500
-    option = from: payload.from, to: email, subject: payload.subject, content: payload.content
-    if config.bcc => option.bcc = config.bcc
-    @send-from-md(option, map,{now: config.now})
-      .then -> res!
-      .catch (e) -> rej e
+    fs.promises.access fn @base
+      .then ~> fn @base
+      .catch ~> fs.promises.access fn \base .then ~> fn \base
+      .catch ~>
+        @log.error "send mail failed: read template file failed.", e
+        return lderror.reject 1027
+      .then (file) ~>
+        fs.promises.read-file file
+          .catch (e) ~>
+            @log.error "send mail failed: read template file failed. ", e
+            return lderror.reject 1017
+      .then (content) ~>
+        try
+          return js-yaml.safe-load(content)
+        catch e
+          @log.error "send mail failed: parse template yaml failed.", e
+          return lderror.reject 1017
+      .then (payload) ~>
+        option = from: payload.from, to: email, subject: payload.subject, content: payload.content
+        if config.bcc => option.bcc = config.bcc
+        @send-from-md(option, map,{now: config.now})
 
 module.exports = mail-queue

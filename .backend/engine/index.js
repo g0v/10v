@@ -27,7 +27,7 @@
   postgresql = require('backend/db/postgresql');
   libdir = path.dirname(fs.realpathSync(__filename.replace(/\(js\)$/, '')));
   routes = fs.readdirSync(path.join(libdir, '..')).filter(function(it){
-    return it !== 'engine';
+    return !(it === 'engine' || it === 'README.md');
   }).map(function(it){
     return path.join(libdir, '..', it);
   }).map(function(it){
@@ -35,7 +35,7 @@
   });
   argv = yargs.option('config-name', {
     alias: 'c',
-    description: "config file name. `secret` if omitted. for accessing `private/config/[config].ls`",
+    description: "config file name. `secret` if omitted. for accessing `config/private/[config].ls`",
     type: 'string'
   }).help('help').alias('help', 'h').check(function(argv, options){
     return true;
@@ -84,7 +84,8 @@
       production: process.env.NODE_ENV === 'production',
       middleware: {},
       config: withDefault(opt.config, defaultConfig),
-      base: opt.config.base || 'frontend/web',
+      feroot: opt.config.base ? "frontend/" + opt.config.base : 'frontend/base',
+      base: opt.config.base || 'base',
       server: null,
       app: null,
       log: null,
@@ -141,8 +142,8 @@
       if (!(this.config.build && this.config.build.enabled)) {
         return;
       }
-      return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = this.base, ref$.bundle = {
-        configFile: path.join(this.base, 'bundle.json'),
+      return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = this.feroot, ref$.bundle = {
+        configFile: path.join(this.feroot, 'bundle.json'),
         relativePath: true
       }, ref$));
     },
@@ -161,7 +162,8 @@
         });
         if (this$.config.mail) {
           this$.mailQueue = new mailQueue(import$({
-            logger: this$.logMail
+            logger: this$.logMail,
+            base: this$.config.base
           }, this$.config.mail || {}));
         }
         process.on('uncaughtException', function(err, origin){
@@ -227,10 +229,10 @@
           viewdir: '.view',
           srcdir: 'src/pug',
           desdir: 'static',
-          base: this$.base
+          base: this$.feroot
         }));
         app.set('view engine', 'pug');
-        app.set('views', path.join(__dirname, '../..', this$.base, 'src/pug'));
+        app.set('views', path.join(__dirname, '../..', this$.feroot, 'src/pug'));
         app.locals.basedir = app.get('views');
         this$.route.app = aux.routecatch(app);
         this$.route.extapi = aux.routecatch(express.Router({
@@ -255,7 +257,7 @@
         routes.map(function(it){
           return it(this$);
         });
-        app.use('/', express['static'](path.join(__dirname, '../..', this$.base, 'static')));
+        app.use('/', express['static'](path.join(__dirname, '../..', this$.feroot, 'static')));
         app.use(function(req, res, next){
           return next(new lderror(404));
         });

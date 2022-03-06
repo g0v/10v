@@ -3,8 +3,8 @@ node_modules
 secret.*
 .*.swp
 .swp
-config/private
 config/gen
+config/**/private
 module/**/node_modules
 module/**/web/static/assets/lib/
 web/.view
