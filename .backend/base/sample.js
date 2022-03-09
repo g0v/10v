@@ -4,7 +4,7 @@
   fs = require('fs');
   path = require('path');
   lderror = require('lderror');
-  throttle = require('backend/throttle');
+  throttle = require('@servebase/backend/throttle');
   aux = require('@servebase/backend/aux');
   (function(it){
     return module.exports = it;

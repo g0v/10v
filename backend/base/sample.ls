@@ -1,4 +1,4 @@
-require! <[fs path lderror backend/throttle @servebase/backend/aux]>
+require! <[fs path lderror @servebase/backend/throttle @servebase/backend/aux]>
 (backend, {api, app}) <- (->module.exports = it)  _
 {db,config} = backend
 
