@@ -1,5 +1,5 @@
 require! <[fs path express lderror re2 curegex]>
-required! <[@servebase/backend/aux @servebase/backend/session @servebase/backend/throttle]>
+require! <[@servebase/backend/aux @servebase/backend/session @servebase/backend/throttle]>
 
 (backend) <- (->module.exports = it)  _
 {db,config,route:{api,app}} = backend
