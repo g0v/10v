@@ -20,3 +20,6 @@ mkdir -p dist/block/cookie/0.0.1
 echo "build tos consent  ..."
 mkdir -p dist/block/tos/0.0.1
 ./node_modules/.bin/srcbuild-pug src/block/tos/0.0.1/index.pug > dist/block/tos/0.0.1/index.html
+
+echo "build server files ..."
+node_modules/.bin/lsc -co dist/lib lib

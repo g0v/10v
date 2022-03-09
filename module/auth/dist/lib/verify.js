@@ -8,7 +8,7 @@
   aux = require('backend/aux');
   session = require('backend/session');
   throttle = require('backend/throttle');
-  captcha = require('backend/captcha');
+  captcha = require('@servebase/captcha');
   (function(f){
     return module.exports = function(it){
       return f(it);

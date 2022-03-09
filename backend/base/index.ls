@@ -1,4 +1,4 @@
-require! <[fs path lderror backend/aux express]>
+require! <[fs path lderror express @servebase/backend/aux]>
 (backend) <- (->module.exports = it)  _
 {db,config,route:{api,app}} = backend
 

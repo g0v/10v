@@ -2,8 +2,8 @@ require! <[fs yargs express @plotdb/colors path pino lderror pino-http redis uti
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
-require! <[./error-handler ./redis-node ./mail-queue ./captcha]>
-require! <[backend/auth backend/consent backend/i18n backend/aux backend/db/postgresql]>
+require! <[./error-handler ./redis-node ./mail-queue ./i18n ./aux ./db/postgresql]>
+require! <[@servebase/auth @servebase/consent @servebase/captcha]>
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
 routes = fs.readdir-sync path.join(libdir, '..')

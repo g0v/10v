@@ -7,6 +7,8 @@
   "files": [
     "dist/**/*"
   ],
+  "main": "dist/lib/index.js",
+  "browser": "dist/index.min.js",
   "homepage": "https://github.com/plotdb/servebase",
   "engines": {
     "node": ">=15.4.0",

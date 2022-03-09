@@ -3,7 +3,7 @@
   var request, lderror, aux, captcha, ref$;
   request = require('request');
   lderror = require('lderror');
-  aux = require('./aux');
+  aux = require('backend/aux');
   captcha = function(opt){
     opt == null && (opt = {});
     this.cfg = opt || {};

@@ -1,4 +1,4 @@
-require! <[request lderror ./aux ./throttle/kit]>
+require! <[request lderror backend/aux backend/throttle/kit]>
 
 (backend) <-(->module.exports = it) _
 

@@ -3,8 +3,8 @@
   var request, lderror, aux, kit;
   request = require('request');
   lderror = require('lderror');
-  aux = require('./aux');
-  kit = require('./throttle/kit');
+  aux = require('backend/aux');
+  kit = require('backend/throttle/kit');
   (function(it){
     return module.exports = it;
   })(function(backend){

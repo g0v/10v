@@ -11,3 +11,6 @@ echo "minify index.js -> index.min.js ..."
 
 echo "build index.pug ..."
 ./node_modules/.bin/srcbuild-pug src/index.pug > dist/index.html
+
+echo "build server files ..."
+node_modules/.bin/lsc -co dist/lib lib

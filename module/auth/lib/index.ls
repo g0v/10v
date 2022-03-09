@@ -4,7 +4,7 @@ require! <[passport-google-oauth20]>
 require! <[passport-line-auth]>
 require! <[fs chokidar]>
 require! <[lderror jsonwebtoken]>
-require! <[../aux ./reset ./verify]>
+require! <[backend/aux ./reset ./verify]>
 
 (backend) <- ((f) -> module.exports = auth-module = -> f.call {}, it) _
 {db,app,config,route} = backend

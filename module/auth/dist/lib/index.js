@@ -11,7 +11,7 @@
   chokidar = require('chokidar');
   lderror = require('lderror');
   jsonwebtoken = require('jsonwebtoken');
-  aux = require('../aux');
+  aux = require('backend/aux');
   reset = require('./reset');
   verify = require('./verify');
   (function(f){

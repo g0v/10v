@@ -4,7 +4,7 @@
   fs = require('fs');
   path = require('path');
   lderror = require('lderror');
-  aux = require('backend/aux');
+  aux = require('@servebase/backend/aux');
   express = require('express');
   (function(it){
     return module.exports = it;
