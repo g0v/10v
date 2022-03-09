@@ -1,4 +1,4 @@
-require! <[request lderror backend/aux]>
+require! <[request lderror @servebase/backend/aux]>
 
 captcha = (opt = {}) ->
   @cfg = opt or {}

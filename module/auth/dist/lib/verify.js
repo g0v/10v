@@ -5,9 +5,9 @@
   fsExtra = require('fs-extra');
   crypto = require('crypto');
   lderror = require('lderror');
-  aux = require('backend/aux');
-  session = require('backend/session');
-  throttle = require('backend/throttle');
+  aux = require('@servebase/backend/aux');
+  session = require('@servebase/backend/session');
+  throttle = require('@servebase/backend/throttle');
   captcha = require('@servebase/captcha');
   (function(f){
     return module.exports = function(it){

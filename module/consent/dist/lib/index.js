@@ -3,8 +3,8 @@
   var request, lderror, aux, kit;
   request = require('request');
   lderror = require('lderror');
-  aux = require('backend/aux');
-  kit = require('backend/throttle/kit');
+  aux = require('@servebase/backend/aux');
+  kit = require('@servebase/backend/throttle/kit');
   (function(it){
     return module.exports = it;
   })(function(backend){

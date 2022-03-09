@@ -1,10 +1,8 @@
-require! <[express-session passport passport-local]>
+require! <[fs chokidar lderror jsonwebtoken express-session passport passport-local]>
 require! <[passport-facebook]>
 require! <[passport-google-oauth20]>
 require! <[passport-line-auth]>
-require! <[fs chokidar]>
-require! <[lderror jsonwebtoken]>
-require! <[backend/aux ./reset ./verify]>
+require! <[@servebase/backend/aux ./reset ./verify]>
 
 (backend) <- ((f) -> module.exports = auth-module = -> f.call {}, it) _
 {db,app,config,route} = backend

@@ -3,7 +3,7 @@
   var crypto, lderror, kit;
   crypto = require('crypto');
   lderror = require('lderror');
-  kit = require('backend/throttle/kit');
+  kit = require('@servebase/backend/throttle/kit');
   (function(f){
     return module.exports = function(it){
       return f(it);

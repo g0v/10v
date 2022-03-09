@@ -1,5 +1,5 @@
 require! <[fs fs-extra crypto lderror]>
-require! <[backend/aux backend/session backend/throttle @servebase/captcha]>
+require! <[@servebase/backend/aux @servebase/backend/session @servebase/backend/throttle @servebase/captcha]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
 {db,config,route} = backend

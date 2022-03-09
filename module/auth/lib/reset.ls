@@ -1,5 +1,5 @@
 require! <[crypto lderror]>
-require! <[backend/throttle/kit]>
+require! <[@servebase/backend/throttle/kit]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
 {db,config,route} = backend
