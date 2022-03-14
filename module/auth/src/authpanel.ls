@@ -5,9 +5,10 @@ module.exports =
     dependencies: [
       {name: "ldview", version: "main"}
       {name: "ldnotify", version: "main"}
+      {name: "curegex", version: "main"}
     ]
   init: ({ctx, root, data}) ->
-    {ldview, ldnotify} = ctx
+    {ldview, ldnotify, curegex} = ctx
     <-(~>it.apply @mod) _
     @ldcv = ldcv = {}
     @_auth = data.auth
