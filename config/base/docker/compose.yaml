@@ -6,8 +6,8 @@ services:
       - 6379:6379
   backend:
     build:
-      context: ../..
-      dockerfile: ./config/docker/backend
+      context: ../../..
+      dockerfile: ./config/base/docker/backend
     ports:
       - 18901:8901
     depends_on:
@@ -17,8 +17,8 @@ services:
       - DB_PORT=5432
   db:
     build:
-      context: ../..
-      dockerfile: ./config/docker/db
+      context: ../../..
+      dockerfile: ./config/base/docker/db
     ports:
       - 15432:5432
     environment:
