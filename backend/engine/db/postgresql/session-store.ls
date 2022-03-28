@@ -19,7 +19,7 @@ session-store.prototype = {} <<< express-session.Store.prototype <<< do
     @log.info "removing expired sessions ..."
     @db.query "delete from session where ttl < now()"
       .then ~> @log.info "removing expired sessions done."
-      .catch ~> @log.warn "failed to remove expired sessions."
+      .catch (e) ~> @log.warn {err: e}, "failed to remove expired sessions."
   get: (sid, cb) !->
     @db.query "select * from session where key=$1", [sid]
       .then -> cb null, (it.[]rows.0 or {}).detail

@@ -28,8 +28,10 @@
       this.log.info("removing expired sessions ...");
       this.db.query("delete from session where ttl < now()").then(function(){
         return this$.log.info("removing expired sessions done.");
-      })['catch'](function(){
-        return this$.log.warn("failed to remove expired sessions.");
+      })['catch'](function(e){
+        return this$.log.warn({
+          err: e
+        }, "failed to remove expired sessions.");
       });
     },
     get: function(sid, cb){
