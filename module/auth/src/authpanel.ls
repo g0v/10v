@@ -9,7 +9,7 @@ module.exports =
     ]
   init: ({ctx, root, data}) ->
     {ldview, ldnotify, curegex} = ctx
-    <-(~>it.apply @mod) _
+    <-(~>it.apply @mod = @mod(ctx)) _
     @ldcv = ldcv = {}
     @_auth = data.auth
     iroot = ld$.find(root, '.ldcv[data-name=authpanel]', 0)
@@ -53,7 +53,8 @@ module.exports =
     if toggle => @mod.ldcv.authpanel.get!
     else @mod.auth.fetch!then (g) -> @mod.ldcv.authpanel.set g
 
-  mod:
+  mod: (ctx) ->
+    {ldview, ldnotify, curegex} = ctx
     tab: (tab) ->
       @_tab = tab
       @view.render!
