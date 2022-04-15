@@ -5,7 +5,7 @@ module.exports =
     dependencies: [
       {name: "ldview", version: "main"}
       {name: "ldnotify", version: "main"}
-      {name: "curegex", version: "main"}
+      {name: "curegex", version: "main", path: "curegex.min.js"}
     ]
   init: ({ctx, root, data}) ->
     {ldview, ldnotify, curegex} = ctx
