@@ -7,7 +7,9 @@ ldc.register \core, <[]>, ->
       zmgr: new zmgr init: 1000
       manager: new block.manager do
         registry: ({name, version, path, type}) ->
-          "/assets/lib/#{name}/#{version or 'main'}/#{path or if type == \block => 'index.html' else 'index.min.js'}"
+          path = path or if type == \block => \index.html
+          else if type => "index.min.#type" else 'index.min.js'
+          "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
       auth: new auth manager: @manager
       loader: new ldloader class-name: "ldld full", zmgr: @zmgr

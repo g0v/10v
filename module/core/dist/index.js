@@ -13,7 +13,10 @@
           registry: function(arg$){
             var name, version, path, type;
             name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
-            return "/assets/lib/" + name + "/" + (version || 'main') + "/" + (path || (type === 'block' ? 'index.html' : 'index.min.js'));
+            path = path || (type === 'block'
+              ? 'index.html'
+              : type ? "index.min." + type : 'index.min.js');
+            return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }
         });
         this.auth = new auth({
