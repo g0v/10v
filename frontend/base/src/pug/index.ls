@@ -27,19 +27,29 @@
     "hcaptcha-done": ~>
       console.log "done..."
       #@capobj.get!then -> console.log ">", it
-    captcha: ~>
+    captcha: ({node}) ~>
+      type = node.getAttribute(\data-type)
+      console.log "test captcha.guard /api/demo/post ..."
       @auth.get!
         .then (g) ~> @captcha.init g.captcha
         .then ~>
           @captcha.guard do
             cb: (data) ->
+              console.log "from captcha we got token obj: ", data
               # if we just somehow test captcha.guard:
               # lderror.reject 1010
               ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
-                .then -> console.log "accessing /api/demo/post successfully"
+                .then ->
+                  console.log "api response: ", it
+                  console.log "accessing /api/demo/post successfully"
+                  # if we want to test all captcha verifier...
+                  if type == \all =>
+                    console.log "intentionally reject to test all captcha verifier ..."
+                    return lderror.reject 1010
                 .catch ->
                   console.error "accessing /api/demo/post with captcha failed: ", it
                   Promise.reject it
+        .catch -> alert "captcha verification failed"
   text: do
     username: ~> @user.username or 'n/a'
     userid: ~> @user.key or 'n/a'
@@ -57,12 +67,4 @@ update = ~>
     @view.panel.render!
 
 @auth.on \change, update
-console.log "test captcha.guard /api/demo/post ..."
-@captcha.guard cb: (data) ->
-  console.log "token obj: ", data
-  ld$.fetch "/api/demo/post", {method: \POST}, {json: captcha: data}
-    .then -> console.log "api response: ", it
-    # if we want to test all captcha verifier...
-    #.then -> lderror.reject 1010
 
-  #.then -> ldnotify.send \success, "you have successfully logged in."
