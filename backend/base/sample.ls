@@ -32,3 +32,6 @@ api.get \/ip, (req, res, next) ->
 # Demonstrate using captcha to guard this api.
 api.post \/post, backend.middleware.captcha, (req, res, next) ->
   res.send \pass
+
+api.post \/post-test/, (req, res, next) ->
+  res.send \pass

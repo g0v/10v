@@ -23,7 +23,9 @@
         .catch ->
           console.log it
           return lderror.reject it
-
+    "post-test": ->
+      ld$.fetch "/api/demo/post-test/", {method: \POST}, {type: \text}
+        .then -> console.log it
     "hcaptcha-done": ~>
       console.log "done..."
       #@capobj.get!then -> console.log ">", it
