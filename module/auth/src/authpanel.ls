@@ -10,7 +10,7 @@ module.exports =
       {name: "curegex", version: "main", path: "curegex.min.js"}
     ]
   init: ({ctx, root, data}) ->
-    {ldview, ldnotify, curegex} = ctx
+    {ldview, ldnotify, curegex, ldform} = ctx
     <-(~>it.apply @mod = @mod(ctx)) _
     @ldcv = ldcv = {}
     @_auth = data.auth
