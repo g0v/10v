@@ -6,6 +6,8 @@ module.exports =
       {name: "ldview", version: "main"}
       {name: "ldnotify", version: "main"}
       {name: "ldform", version: "main"}
+      {name: "ldbutton", version: "main", type: \css}
+      {name: "@loadingio/loading.css", version: "main", path: "lite.min.css"}
       {name: "ldnotify", version: "main", type: \css, global: true}
       {name: "curegex", version: "main", path: "curegex.min.js"}
     ]
@@ -20,7 +22,6 @@ module.exports =
       # dont know why we need 100ms delay to make this work. 
       # but indeed modal may still change style due to transition, after toggle.on.
       setTimeout (-> view.get('username').focus! ), 100
-    @ldld = new ldloader class-name: "ldld full z-fixed"
     @ <<< {_tab: 'login', _info: \default}
     @view = view = new ldview do
       root: iroot
@@ -30,10 +31,18 @@ module.exports =
           submit: ({node}) ~> @submit!
           switch: ({node}) ~>
             @tab node.getAttribute \data-name
+      init:
+        submit: ({node}) ~>
+          @ldld = new ldloader root: node
+
       handler:
         submit: ({node}) ~> node.classList.toggle \disabled, !(@ready)
         displayname: ({node}) ~> node.classList.toggle \d-none, @_tab == \login
-        info: ({node}) ~> node.classList.toggle \d-none, (node.getAttribute(\data-name) != @_info)
+        info: ({node}) ~>
+          hide = (node.getAttribute(\data-name) != @_info)
+          if node.classList.contains(\d-none) or hide => return node.classList.toggle \d-none, hide
+          node.classList.toggle \d-none, true
+          setTimeout (-> node.classList.toggle \d-none, hide), 0
         switch: ({node}) ~>
           name = node.getAttribute \data-name
           node.classList.toggle \btn-text, (@_tab != name)
@@ -58,6 +67,7 @@ module.exports =
   mod: (ctx) ->
     {ldview, ldnotify, curegex} = ctx
     tab: (tab) ->
+      if /failed/.exec(@_info) => @_info = \default
       @_tab = tab
       @view.render!
     is-valid:
