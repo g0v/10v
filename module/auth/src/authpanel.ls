@@ -5,6 +5,7 @@ module.exports =
     dependencies: [
       {name: "ldview", version: "main"}
       {name: "ldnotify", version: "main"}
+      {name: "ldform", version: "main"}
       {name: "ldnotify", version: "main", type: \css, global: true}
       {name: "curegex", version: "main", path: "curegex.min.js"}
     ]
