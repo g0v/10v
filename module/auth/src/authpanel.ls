@@ -11,7 +11,7 @@ module.exports =
       {name: "ldnotify", version: "main", type: \css, global: true}
       {name: "curegex", version: "main", path: "curegex.min.js"}
     ]
-  init: ({ctx, root, data}) ->
+  init: ({ctx, root, data, t}) ->
     {ldview, ldnotify, curegex, ldform} = ctx
     <-(~>it.apply @mod = @mod(ctx)) _
     @ldcv = ldcv = {}
@@ -36,7 +36,10 @@ module.exports =
           @ldld = new ldloader root: node
 
       handler:
-        submit: ({node}) ~> node.classList.toggle \disabled, !(@ready)
+        submit: ({node}) ~>
+          node.classList.toggle \disabled, !(@ready)
+        "submit-text": ({node}) ~>
+          node.innerText = t(if @_tab == \login => \Login else 'Sign Up')
         displayname: ({node}) ~> node.classList.toggle \d-none, @_tab == \login
         info: ({node}) ~>
           hide = (node.getAttribute(\data-name) != @_info)
