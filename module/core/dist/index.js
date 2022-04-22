@@ -6,9 +6,7 @@
         var err, this$ = this;
         this.global = {};
         this.user = {};
-        this.zmgr = new zmgr({
-          init: 1000
-        });
+        this.zmgr = new zmgr();
         this.manager = new block.manager({
           registry: function(arg$){
             var name, version, path, type;
@@ -20,11 +18,12 @@
           }
         });
         this.auth = new auth({
-          manager: this.manager
+          manager: this.manager,
+          zmgr: this.zmgr
         });
         this.loader = new ldloader({
           className: "ldld full",
-          zmgr: this.zmgr
+          zmgr: this.zmgr.scope(zmgr.splash)
         });
         this.captcha = new captcha({
           manager: this.manager
