@@ -2,6 +2,7 @@
 
 This document describes how we manage versions, releases and different customization via git.
 
+
 ## Repository / Branch structures
 
  - repo: source
