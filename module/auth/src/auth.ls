@@ -17,7 +17,7 @@ auth = (opt={}) ->
     loader: {on: ->, off: ->, on-later: ->, cancel: ->}
     authpanel: (tgl, o = {}) ~>
       if @_authpanel => return @_authpanel tgl, o
-      @_manager.from {name: "@servebase/auth"}, {root: document.body, data: {auth: @}}
+      @_manager.from {name: "@servebase/auth"}, {root: document.body, data: {auth: @, zmgr: opt.zmgr}}
         .then (p) ~> @_authpanel = p.interface
         .then (i) -> i tgl, o
     timeout: -> new Promise (res, rej) -> # do nothing

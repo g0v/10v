@@ -36,7 +36,8 @@
           }, {
             root: document.body,
             data: {
-              auth: this$
+              auth: this$,
+              zmgr: opt.zmgr
             }
           }).then(function(p){
             return this$._authpanel = p['interface'];
