@@ -32,6 +32,7 @@
     "curegex": "^0.0.4",
     "fedep": "^1.1.5",
     "i18next": "^19.9.2",
+    "i18next-browser-languagedetector": "^6.1.4",
     "ldbutton": "^2.0.0",
     "ldcover": "^3.0.1",
     "ldcvmgr": "^0.0.8",
@@ -94,6 +95,7 @@
       "@loadingio/ldc",
       "zmgr",
       "i18next",
+      "i18next-browser-languagedetector",
       "ldbutton",
       "curegex"
     ]
