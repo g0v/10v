@@ -10,7 +10,7 @@ create table if not exists users (
   description text, constraint users_description_length check (char_length(description) <= 1024),
   title text, constraint  users_title_length check (char_length(title) <= 100),
   tags text, constraint users_tags_length check (char_length(tags) <= 256),
-  createdtime timestamp,
+  createdtime timestamp not nulldefault now(),
   modifiedtime timestamp,
   lastactive timestamp,
   detail jsonb,
