@@ -50,8 +50,17 @@
         return this.manager.init().then(function(){
           return i18next.init({
             supportedLng: ['en', 'zh-TW'],
-            fallbackLng: 'zh-TW'
+            fallbackLng: 'zh-TW',
+            fallbackNS: '',
+            defaultNS: ''
           });
+        }).then(function(){
+          if (typeof i18nextBrowserLanguageDetector != 'undefined' && i18nextBrowserLanguageDetector !== null) {
+            return i18next.use(i18nextBrowserLanguageDetector);
+          }
+        }).then(function(){
+          console.log("use language: ", navigator.language) || navigator.userLanguage;
+          return i18next.changeLanguage(navigator.language) || navigator.userLanguage;
         }).then(function(){
           return block.i18n.use(i18next);
         }).then(function(){
