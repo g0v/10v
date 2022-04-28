@@ -32,6 +32,31 @@
       "static/assets/lib/ldnotify/main/index.min.js",
       "static/assets/lib/curegex/main/curegex.min.js",
       "static/assets/lib/zmgr/main/index.min.js"
+    ],
+    "core": [
+      "static/assets/lib/bootstrap.native/main/dist/bootstrap-native-v4.min.js",
+      "static/assets/lib/i18next/main/dist/umd/i18next.min.js",
+      "static/assets/lib/i18next-browser-languagedetector/main/dist/umd/i18nextBrowserLanguageDetector.min.js",
+      "static/assets/lib/zmgr/main/index.min.js",
+      "static/assets/lib/@loadingio/ldquery/main/index.min.js",
+      "static/assets/lib/proxise/main/index.min.js",
+      "static/assets/lib/@loadingio/debounce.js/main/index.min.js",
+      "static/assets/lib/@plotdb/semver/main/index.min.js",
+      "static/assets/lib/@plotdb/rescope/main/index.min.js",
+      "static/assets/lib/@plotdb/csscope/main/index.min.js",
+      "static/assets/lib/@plotdb/block/main/index.min.js",
+      "static/assets/lib/ldcover/main/index.min.js",
+      "static/assets/lib/ldview/main/index.min.js",
+      "static/assets/lib/ldloader/main/index.min.js",
+      "static/assets/lib/lderror/main/index.min.js",
+      "static/assets/lib/ldnotify/main/index.min.js",
+      "static/assets/lib/ldcvmgr/main/index.min.js",
+      "static/assets/lib/@loadingio/ldc/main/index.min.js",
+      "static/assets/lib/@servebase/auth/main/index.min.js",
+      "static/assets/lib/@servebase/consent/main/index.min.js",
+      "static/assets/lib/@servebase/captcha/main/index.min.js",
+      "static/assets/lib/@servebase/core/main/index.min.js"
+
     ]
   }
 }

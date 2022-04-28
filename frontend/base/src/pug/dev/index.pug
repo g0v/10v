@@ -1,0 +1,35 @@
+extends base.pug
+block head
+  style(type="text/css"): :stylus
+    html, body { width: 100%; height: 100% }
+    #root > div { width: 100%; height: 100% }
+block body
+block script
+  .position-fixed.p-4.d-flex.align-items-center.border-bottom.w-100.bg-white(
+  style="top:0;left:0;height:4em;z-index:99999")
+    select.form-control(ld="select")
+      option(value="index.html") auth index
+      option(value="passwd-reset.html") password reset reqest
+      option(value="passwd-reset-change.html") password reset
+      option(value="passwd-reset-expire.html") password reset expired.
+      option(value="failed.html") auth failed
+      option(value="mail-verified.html") mail verified
+      option(value="mail-expire.html") mail verification expired
+  +scope()#root.w-100.h-100
+  script(type="module"): :lsc
+    blockopt = {name: "test", path: "mail-verified.html"}
+    <-(->it.apply {}) _
+    @manager = new block.manager registry: ({name, version, path, type}) ->
+      if type == \block => return "/dev/block/#name/#{path or 'index.html'}"
+      return "/assets/lib/#{name}/#{version or 'main'}/#{path or 'index.min.js'}"
+    @manager
+      .from(blockopt, {root: ld$.find('#root',0)})
+      .then ~> @ <<< it
+
+    view = new ldview do
+      root: document.body
+      action: change: select: ({node, evt}) ~>
+        path = node.value
+        if @instance => @instance.detach!
+        @manager.from {name: "test", path}, {root: ld$.find('#root', 0)}
+          .then ~> @ <<< it

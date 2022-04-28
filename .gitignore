@@ -10,10 +10,10 @@ module/**/web/static/assets/lib/
 web/.view
 module/**/web/.view
 frontend/*
-!frontend/demo
+!frontend/base
 !frontend/README.md
-frontend/demo/static
-frontend/demo/.view
+frontend/base/static
+frontend/base/.view
 !frontend/auth
 frontend/auth/static
 frontend/auth/.view

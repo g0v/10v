@@ -1,0 +1,55 @@
+doctype html
+html(lang="en")
+  include @/@loadingio/bootstrap.ext/index.pug
+  head
+    meta(charset="utf-8")
+    title Serverbase
+    meta(name="description", content="servebase sample page")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    base(href="/")
+    +css([
+      {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
+      {name: "@loadingio/bootstrap.ext"},
+      {name: "ldcover"},
+      {name: "ldloader"},
+      {name: "ldiconfont"},
+      {name: "ldbutton"},
+      {name: "@loadingio/loading.css", path: "loading.min.css"},
+      {name: "@loadingio/transition.css", path: "transition.min.css"},
+      {name: "ldnotify"}
+    ])
+    style(type="text/css"): :stylus
+      html, body { width: 100%; height: 100% }
+  body
+    .w-100.h-100.d-flex.align-items-center.justify-content-center: div(ld="content") Hello World
+    - var packed = true;
+    if packed
+      +script([
+        {url: "/js/pack/core.min.js"}
+      ])
+    else
+      +script([
+        {name: "bootstrap.native", version: "main", path: "dist/bootstrap-native-v4.min.js"},
+        {name: "i18next", version: "main", path: "dist/umd/i18next.min.js"},
+        {name: "i18next-browser-languagedetector", path: "/dist/umd/i18nextBrowserLanguageDetector.min.js"},
+        {name: "zmgr", version: "main"},
+        {name: "@loadingio/ldquery", version: "main"},
+        {name: "proxise", version: "main"},
+        {name: "@loadingio/debounce.js", version: "main"},
+        {name: "@plotdb/semver", version: "main"},
+        {name: "@plotdb/rescope", version: "main"},
+        {name: "@plotdb/csscope", version: "main"},
+        {name: "@plotdb/block", version: "main"},
+        {name: "ldcover", version: "main"},
+        {name: "ldview", version: "main"},
+        {name: "ldloader", version: "main"},
+        {name: "lderror", version: "main"},
+        {name: "ldnotify", version: "main"},
+        {name: "ldcvmgr", version: "main"},
+        {name: "@loadingio/ldc", version: "main"},
+        {name: "@servebase/auth", version: "main"},
+        {name: "@servebase/consent", version: "main"},
+        {name: "@servebase/captcha", version: "main"},
+        {name: "@servebase/core", version: "main"}
+      ])
+    script(type="module"): include:lsc index.ls
