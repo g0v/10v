@@ -34,6 +34,7 @@ ldc.register \core, <[]>, ->
         i18next.changeLanguage navigator.language or navigator.userLanguage
       .then -> block.i18n.use i18next
       .then ~>
+        # PERF TODO block.i18n.use and manager.init are quite fast.
         # we may provide an anonymous initialization
         # to prevent fetching at loading time to speed up FCP.
         @auth.get!
