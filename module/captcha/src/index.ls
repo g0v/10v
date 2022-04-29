@@ -37,12 +37,17 @@ captcha =
         .catch (e) ->
           if lderror.id(e) in [1009 1010] => debounce(1000).then -> _ idx + 1
           else return Promise.reject e
-    _!
+    Promise.resolve!
+      .then ~> @ldld.on!
+      .then ~> _!
+      .finally ~> @ldld.off!
 
-  prepare: -> @root = it
+  prepare: ->
+    @root = it
+    @ldld = new ldloader className: 'ldld full'
   verify: ({name}) ->
+    provider = @get(name)
     if !@{}obj[name] =>
-      provider = @get(name)
       if provider.headless =>
         p = Promise.resolve!
         ldcv = null
@@ -63,7 +68,19 @@ captcha =
     @obj[name].obj.init!
       .then ~> @obj[name].obj.render!
       .then -> p
-      .then ~> @obj[name].obj.get!
+      .then ~>
+        lc = {}
+        ret = @obj[name].obj.get!then ->
+          lc.done = it
+          if lc.deb => lc.deb.now!
+          lc.done
+        if provider.headless => return ret
+        lc.deb = debounce(5000, ->)!
+        lc.deb
+          .then ->
+            lc.deb = null
+            return if lc.done => that else lderror.reject 1006
+          .catch -> return Promise.reject it
       .catch (e) ->
         console.log e
         return {}
@@ -86,7 +103,6 @@ captcha =
         capobj.render!
         console.log "capobj inited"
 
-
 captcha.register \hcaptcha, do
   priority: 3
   init: proxise.once ->
@@ -106,7 +122,7 @@ captcha.register \hcaptcha, do
       @root.appendChild @_tag
     reset: -> hcaptcha.reset @id
     render: ->
-      if !@id => @id = hcaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
+      if !(@id?) => @id = hcaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
       else @reset!
     get: ->
       p = if (ret = hcaptcha.getResponse @id) => Promise.resolve ret
@@ -160,7 +176,7 @@ captcha.register \recaptcha_v2_checkbox, do
           ret = grecaptcha.getResponse @id
           {token: ret, name: \recaptcha_v2_checkbox}
     reset: ->
-    render: -> @id = grecaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
+    render: -> if !(@id?) => @id = grecaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
 
 if module? => module.exports =
   init: ({root}) -> captcha.prepare root
