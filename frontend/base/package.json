@@ -26,6 +26,7 @@
     "@plotdb/csscope": "^4.0.0",
     "@plotdb/rescope": "^4.1.0",
     "@plotdb/semver": "^0.0.2",
+    "@sentry/tracing": "^6.19.7",
     "@zbryikt/template": "^2.3.34",
     "bootstrap": "^4.6.0",
     "bootstrap.native": "^3.0.10",
@@ -97,6 +98,7 @@
       "i18next",
       "i18next-browser-languagedetector",
       "ldbutton",
+      "@sentry/tracing",
       "curegex"
     ]
   }

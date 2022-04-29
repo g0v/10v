@@ -116,6 +116,9 @@ html(lang="en")
                 b password #[span.text-sm / left empty for auto generation]
                 input.form-control(ld="adduser.password",type="password",aria-label="password")
               .btn.btn-primary(ld="adduser") Add User
+
+    //-+script([ {name: "@sentry/tracing", version: "main", path: "build/bundle.tracing.min.js"} ])
+
     +script([
       {name: "bootstrap.native", version: "main", path: "dist/bootstrap-native-v4.min.js"},
       {name: "i18next", version: "main", path: "dist/umd/i18next.min.js"},
