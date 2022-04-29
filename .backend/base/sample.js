@@ -56,7 +56,10 @@
     api.get('/ip', function(req, res, next){
       return res.send(aux.ip(req));
     });
-    return api.post('/post', backend.middleware.captcha, function(req, res, next){
+    api.post('/post', backend.middleware.captcha, function(req, res, next){
+      return res.send('pass');
+    });
+    return api.post('/post-test/', function(req, res, next){
       return res.send('pass');
     });
   });
