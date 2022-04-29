@@ -17,10 +17,6 @@
             return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }
         });
-        this.auth = new auth({
-          manager: this.manager,
-          zmgr: this.zmgr
-        });
         this.loader = new ldloader({
           className: "ldld full",
           zmgr: this.zmgr.scope(zmgr.splash)
@@ -30,6 +26,11 @@
         });
         this.ldcvmgr = new ldcvmgr({
           manager: this.manager
+        });
+        this.auth = new auth({
+          manager: this.manager,
+          zmgr: this.zmgr,
+          loader: this.loader
         });
         ldc.action('ldcvmgr', this.ldcvmgr);
         err = new lderror.handler({

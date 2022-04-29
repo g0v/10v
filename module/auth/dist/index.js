@@ -11,7 +11,7 @@
       }
     });
     auth = function(opt){
-      var k, ref$, this$ = this;
+      var ref$, this$ = this;
       opt == null && (opt = {});
       this._manager = opt.manager;
       this.timeout = {
@@ -20,10 +20,9 @@
       };
       this.evtHandler = {};
       this.ui = {
-        loader: {
+        loader: opt.loader || {
           on: function(){},
           off: function(){},
-          onLater: function(){},
           cancel: function(){}
         },
         authpanel: function(tgl, o){
@@ -31,6 +30,7 @@
           if (this$._authpanel) {
             return this$._authpanel(tgl, o);
           }
+          this$.ui.loader.on(350);
           return this$._manager.from({
             name: "@servebase/auth"
           }, {
@@ -42,6 +42,7 @@
           }).then(function(p){
             return this$._authpanel = p['interface'];
           }).then(function(i){
+            this$.ui.loader.off();
             return i(tgl, o);
           });
         },
@@ -49,17 +50,6 @@
           return new Promise(function(res, rej){});
         }
       };
-      (function(){
-        var results$ = [];
-        for (k in this.ui) {
-          results$.push(k);
-        }
-        return results$;
-      }.call(this)).map(function(k){
-        if ((opt.ui || (opt.ui = {}))[k]) {
-          return this$.ui[k] = opt.ui[k];
-        }
-      });
       if (!this._apiRoot) {
         this._apiRoot = opt.api || "/api/auth";
       }
@@ -114,8 +104,8 @@
           return this$.fire('logout');
         }).then(function(){
           return this$.ui.loader.off();
-        })['catch'](function(){
-          return this$.fire('error');
+        })['catch'](function(e){
+          return this$.fire('error', e);
         });
       },
       ensure: function(opt){
@@ -191,7 +181,7 @@
         })['catch'](function(e){
           e.name = 'lderror';
           e.id = 1007;
-          this$.fire('server-down', e);
+          this$.fire('error', e);
           console.log("server down: ", e);
           return new Promise(function(res, rej){});
         });
@@ -228,8 +218,8 @@
             return;
           }
           return this$.social.form.parentNode.removeChild(this$.social.form);
-        }).then(function(){}).then(function(){
-          return this$.fire('change');
+        }).then(function(){
+          return this$.fire('change', lc.global);
         })['catch'](function(e){
           this$.fire('error', e);
           return Promise.reject(e);

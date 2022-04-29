@@ -11,10 +11,12 @@ ldc.register \core, <[]>, ->
           else if type => "index.min.#type" else 'index.min.js'
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
-      auth: new auth manager: @manager, zmgr: @zmgr
       loader: new ldloader class-name: "ldld full", zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager
       ldcvmgr: new ldcvmgr manager: @manager
+
+    @ <<<
+      auth: new auth manager: @manager, zmgr: @zmgr, loader: @loader
 
     ldc.action \ldcvmgr, @ldcvmgr
 

@@ -14,15 +14,17 @@ auth = (opt={}) ->
   @evt-handler = {}
 
   @ui = do
-    loader: {on: ->, off: ->, on-later: ->, cancel: ->}
+    loader: opt.loader or {on: ->, off: ->, cancel: ->}
     authpanel: (tgl, o = {}) ~>
       if @_authpanel => return @_authpanel tgl, o
+      @ui.loader.on 350
       @_manager.from {name: "@servebase/auth"}, {root: document.body, data: {auth: @, zmgr: opt.zmgr}}
         .then (p) ~> @_authpanel = p.interface
-        .then (i) -> i tgl, o
+        .then (i) ~>
+          @ui.loader.off!
+          i tgl, o
     timeout: -> new Promise (res, rej) -> # do nothing
     
-  [k for k of @ui].map (k) ~> if opt.{}ui[k] => @ui[k] = opt.ui[k]
   if !@_api-root => @_api-root = opt.api or "/api/auth"
   if @_api-root[* - 1] != \/ => @_api-root += \/
   @fetch!
@@ -31,17 +33,16 @@ auth = (opt={}) ->
 auth.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> (if Array.isArray(n) => n else [n]).map (n) ~> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
-  inject: -> {}
+  inject: -> {} # TBD. may need to be customizable
   api-root: -> return @_api-root
-  set-ui: ->
-    @ui <<< (it or {})
+  set-ui: -> @ui <<< (it or {}) # TBD. seems not needed anymore.
   logout: ->
     @ui.loader.on!
     ld$.fetch "#{@api-root!}/logout", {method: \post}, {}
       .then ~> @fetch {renew: true}
       .then ~> @fire \logout
       .then ~> @ui.loader.off!
-      .catch ~> @fire \error
+      .catch (e) ~> @fire \error, e
 
   # ensure user is authed. shorthand and for readbility for auth.get({authed-only:true})
   ensure: (opt = {}) -> @get(opt <<< {authed-only: true})
@@ -98,7 +99,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
 
       .catch (e) ~>
         e <<< {name: \lderror, id: 1007}
-        @fire \server-down, e
+        @fire \error, e
         console.log "server down: ", e
         # since server is down and we have handled it here,
         # we simply return a promise that won't be resolved
@@ -124,8 +125,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
       .finally ~>
         if !(@social.form and @social.form.parentNode) => return
         @social.form.parentNode.removeChild @social.form
-      .then ~> # after social login
-      .then ~> @fire \change
+      .then ~> @fire \change, lc.global # after social login
       .catch (e) ~> @fire \error, e; return Promise.reject(e)
 
 if module? => module.exports = auth
