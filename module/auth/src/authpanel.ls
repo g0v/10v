@@ -103,7 +103,7 @@ module.exports =
         .then ~> @_auth.fetch!
         .finally ~> @ldld.off!
         .then (g) ~>
-          @info \default
+          debounce 350, ~> @info \default
           @form.reset!
           @ldcv.authpanel.set g
           ldnotify.send "success", "login successfully"
