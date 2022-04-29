@@ -15,13 +15,11 @@ captcha =
     itf = p.interface or {}
     p.factory = f = (o={}) ->
       @opt = o
-      @init!
+      @init = proxise.once -> @_provider.init!then ~> @_init!
       @
     f.prototype = {_provider: p} <<< Object.create(Object.prototype) <<< itf <<<
       priority: 99
       _init: itf.init
-      init: -> @_provider.init!then ~> @_init!
-
   get: (n) -> return @_p[n]
   order: (ns = []) ->
     list = [[k,v] for k,v of @_p]
@@ -66,7 +64,9 @@ captcha =
       .then ~> @obj[name].obj.render!
       .then -> p
       .then ~> @obj[name].obj.get!
-      .catch -> return {}
+      .catch (e) ->
+        console.log e
+        return {}
 
   examine: ->
     root = @root
@@ -97,7 +97,7 @@ captcha.register \hcaptcha, do
       @inited = true
       res!
     s.setAttribute \type, \text/javascript
-    s.setAttribute \src, "https://js.hcaptcha.com/1/api.js"
+    s.setAttribute \src, "https://js.hcaptcha.com/1/api.js?recaptchacompat=off"
     document.body.appendChild s
   interface:
     init: ->
@@ -148,7 +148,6 @@ captcha.register \recaptcha_v2_checkbox, do
     s.setAttribute \type, \text/javascript
     s.setAttribute \src, \https://www.google.com/recaptcha/api.js
     document.body.appendChild s
-    @ldcv = new ldcover root: ld$.find('#captcha', 0)
 
   interface:
     init: ->
@@ -161,8 +160,7 @@ captcha.register \recaptcha_v2_checkbox, do
           ret = grecaptcha.getResponse @id
           {token: ret, name: \recaptcha_v2_checkbox}
     reset: ->
-    render: ->
-      @id = grecaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
+    render: -> @id = grecaptcha.render @_tag, @_provider.cfg!{theme, size, sitekey}
 
 if module? => module.exports =
   init: ({root}) -> captcha.prepare root
