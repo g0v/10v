@@ -4,7 +4,8 @@ session-store = (opt = {}) ->
   events.EventEmitter.call @
   @db = opt.db
   @log = opt.logger
-  @lifespan = opt.lifespan or (1 * 60 * 24 * 365)
+  @lifespan = opt.lifespan or {user: 86400 * 365, guest: 86400 * 7}
+
   # this may have to be externalized for server scaling
   @cleaner-interval = (opt.cleaner-interval or (86400 * 1000) >? 10 * 60 * 1000)
   if !opt.query-only =>
@@ -31,7 +32,7 @@ session-store.prototype = {} <<< express-session.Store.prototype <<< do
     (key, detail, owner, ip, ttl) values ($1, $2, $3, $4, now() + $5 * interval '1 second')
     on conflict (key) do
       update set (detail, owner, ip, ttl) = ($2, $3, $4, now() + $5 * interval '1 second')
-    """, [sid, session, owner, ip, @lifespan])
+    """, [sid, session, owner, ip, @lifespan[if owner => \user else \guest]])
       .then -> cb!
       .catch (err) ~> [@log.error({err},"set session failed"), cb!]
   destroy: (sid, cb) !->
@@ -39,7 +40,9 @@ session-store.prototype = {} <<< express-session.Store.prototype <<< do
       .then -> cb!
       .catch (err) ~> [@log.error({err}, "destroy session failed"), cb!]
   touch: (sid, cb) !->
-    @db.query "update session set ttl = now() + $2 * interval '1 second' where key = $1", [sid, @lifespan]
+    @db.query """
+    update session set ttl = now() + $2 * interval '1 second' where key = $1
+    """, [sid, @lifespan[if owner => \user else \guest]]
       .then -> cb!
       .catch (err) ~> [@log.error({err}, "touch session failed"), cb!]
 

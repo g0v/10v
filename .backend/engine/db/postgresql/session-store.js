@@ -9,7 +9,10 @@
     events.EventEmitter.call(this);
     this.db = opt.db;
     this.log = opt.logger;
-    this.lifespan = opt.lifespan || 1 * 60 * 24 * 365;
+    this.lifespan = opt.lifespan || {
+      user: 86400 * 365,
+      guest: 86400 * 7
+    };
     this.cleanerInterval = opt.cleanerInterval || ((ref$ = 86400 * 1000) > (ref1$ = 10 * 60 * 1000) ? ref$ : ref1$);
     if (!opt.queryOnly) {
       this.handler = setInterval(function(){
@@ -50,7 +53,7 @@
       var owner, that, ip, this$ = this;
       owner = (that = session.passport) ? (that = that.user) ? that.key : null : void 8;
       ip = (that = session.passport) ? (that = that.user) ? that.ip : null : void 8;
-      this.db.query("insert into session\n(key, detail, owner, ip, ttl) values ($1, $2, $3, $4, now() + $5 * interval '1 second')\non conflict (key) do\n  update set (detail, owner, ip, ttl) = ($2, $3, $4, now() + $5 * interval '1 second')", [sid, session, owner, ip, this.lifespan]).then(function(){
+      this.db.query("insert into session\n(key, detail, owner, ip, ttl) values ($1, $2, $3, $4, now() + $5 * interval '1 second')\non conflict (key) do\n  update set (detail, owner, ip, ttl) = ($2, $3, $4, now() + $5 * interval '1 second')", [sid, session, owner, ip, this.lifespan[owner ? 'user' : 'guest']]).then(function(){
         return cb();
       })['catch'](function(err){
         return [
@@ -74,7 +77,7 @@
     },
     touch: function(sid, cb){
       var this$ = this;
-      this.db.query("update session set ttl = now() + $2 * interval '1 second' where key = $1", [sid, this.lifespan]).then(function(){
+      this.db.query("update session set ttl = now() + $2 * interval '1 second' where key = $1", [sid, this.lifespan[owner ? 'user' : 'guest']]).then(function(){
         return cb();
       })['catch'](function(err){
         return [
