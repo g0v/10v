@@ -24,11 +24,22 @@ For custom routes, you should wrap them in `routecatch` manually in case of unca
     backend.route.custom = aux.routecatch express.Router {mergeParams: true}
 
 It's encouraged to use lderror to provide error information. ( `lderror(id, msg)` )
- - with `id`, there is already messages. but to provide custom message `msg`, 
+ - `id` itself is a message ( can be retrieved by lderror.message(id) ); but to provide custom message `msg`, 
    - encode error in following format: `name: message`, where
      - name:
        - for scoped message: `module-name/error-name`
        - for general error: `error-name`
      - message: string. no explicit limitation 
    - all names should be simple, short, and matches `[a-b][a-b0-9-_]*`
+ - by default `lderror` object is sent to frontend directly without logging in server. To force logging, set `log` to true when constructing `lderror` object:
 
+    throw lderror({
+      id: 1011
+      message: "resource not found, may be an internal error"
+      log: true
+    })
+
+
+### Error reporting
+
+`err/490.pug` will be used for reporting view rendering error, along with a cookie `lderror` storing corresponding `lderror` object for error information. Check `frontend/base/src/pug/err/490.pug` for how error handles as a reference.

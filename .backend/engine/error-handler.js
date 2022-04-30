@@ -14,6 +14,11 @@
       }
       err.uuid = suuid();
       if (lderror.id(err)) {
+        if (err.log) {
+          req.log.error({
+            err: err
+          }, ("exception logged [URL: " + req.originalUrl + "] " + (err.message ? ': ' + err.message : '') + " " + err.uuid).red);
+        }
         delete err.stack;
         if (!/^\/api/.exec(req.originalUrl) && !/^\/err\/490/.exec(req.originalUrl)) {
           res.set({

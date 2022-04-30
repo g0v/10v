@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+  body
+    div
+    script: :lsc
+      ret = document.cookie
+        .split(\;)
+        .map ->
+          v = it.trim!.split(\=)
+          [v.0, decodeURIComponent(v.1)]
+        .filter -> it.0 == \lderror
+        .0.1
+      if ret =>
+        err = "server lderror\n"
+        ret = JSON.parse(ret)
+        for k,v of ret => err += " - #{k.padEnd(7,' ')}\t #v\n"
+        console.error err
+        document.querySelector('div').innerText = """
+        error id: #{ret.id}
+        uuid: #{ret.uuid}
+        """
+      else
+        console.error "unknown server error"
+        document.querySelector('div').innerText = "unknow server error"

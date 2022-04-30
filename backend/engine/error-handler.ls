@@ -12,6 +12,11 @@ handler = (err, req, res, next) ->
     err.uuid = suuid!
     if lderror.id(err) =>
       # customized error - pass to frontend for them to handle
+      # to log customized error, set `log` to true
+      if err.log =>
+        req.log.error {err}, """
+        exception logged [URL: #{req.originalUrl}] #{if err.message => ': ' + err.message else ''} #{err.uuid}
+        """.red
       delete err.stack
       # serve a friendly error page if it's not an API and prevent looping error
       if !/^\/api/.exec(req.originalUrl) and !/^\/err\/490/.exec(req.originalUrl) =>
