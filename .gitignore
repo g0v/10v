@@ -20,3 +20,5 @@ frontend/auth/.view
 package-lock.json
 config/mail/
 !config/mail/sample/
+.version
+module/version/index.pug
