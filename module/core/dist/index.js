@@ -22,6 +22,8 @@
         });
         this.loader = new ldloader({
           className: "ldld full",
+          autoZ: true,
+          baseZ: null,
           zmgr: this.zmgr.scope(zmgr.splash)
         });
         this.captcha = new captcha({

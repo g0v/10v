@@ -12,7 +12,7 @@ ldc.register \core, <[]>, ->
           if name == "@local/error" => return "/modules/cover/error/#{path}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
-      loader: new ldloader class-name: "ldld full", zmgr: @zmgr.scope zmgr.splash
+      loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager
       ldcvmgr: new ldcvmgr manager: @manager
 
