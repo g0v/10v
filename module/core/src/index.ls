@@ -9,6 +9,7 @@ ldc.register \core, <[]>, ->
         registry: ({name, version, path, type}) ->
           path = path or if type == \block => \index.html
           else if type => "index.min.#type" else 'index.min.js'
+          if name == "@local/error" => return "/modules/cover/error/#{path}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
       loader: new ldloader class-name: "ldld full", zmgr: @zmgr.scope zmgr.splash
@@ -20,7 +21,8 @@ ldc.register \core, <[]>, ->
 
     ldc.action \ldcvmgr, @ldcvmgr
 
-    err = new lderror.handler handler: ~> @ldcvmgr.get "error/#it"
+    err = new lderror.handler handler: (n, e) ~> @ldcvmgr.get {name: "@local/error", path: "#n.html"}, e
+
     @error = (e) -> err e
     @update = (g) -> @ <<< {global: g, user: (g.user or {})}
     @auth.on \server-down, @error

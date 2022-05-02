@@ -14,6 +14,9 @@
             path = path || (type === 'block'
               ? 'index.html'
               : type ? "index.min." + type : 'index.min.js');
+            if (name === "@local/error") {
+              return "/modules/cover/error/" + path;
+            }
             return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }
         });
@@ -34,8 +37,11 @@
         });
         ldc.action('ldcvmgr', this.ldcvmgr);
         err = new lderror.handler({
-          handler: function(it){
-            return this$.ldcvmgr.get("error/" + it);
+          handler: function(n, e){
+            return this$.ldcvmgr.get({
+              name: "@local/error",
+              path: n + ".html"
+            }, e);
           }
         });
         this.error = function(e){
