@@ -31,12 +31,15 @@ ldc.register \core, <[]>, ->
     @manager.init!
       # to optimize, we may delay or completely ignore i18n
       # since not every service need i18n
-      .then -> i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW, fallbackNS: '', defaultNS: ''
-      .then -> if i18nextBrowserLanguageDetector? => i18next.use i18nextBrowserLanguageDetector
       .then ->
-        console.log "use language: ", navigator.language or navigator.userLanguage
-        i18next.changeLanguage navigator.language or navigator.userLanguage
-      .then -> block.i18n.use i18next
+        if !i18next? => return
+        Promise.resolve!
+          .then -> i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW, fallbackNS: '', defaultNS: ''
+          .then -> if i18nextBrowserLanguageDetector? => i18next.use i18nextBrowserLanguageDetector
+          .then ->
+            console.log "use language: ", navigator.language or navigator.userLanguage
+            i18next.changeLanguage navigator.language or navigator.userLanguage
+          .then -> block.i18n.use i18next
       .then ~>
         # PERF TODO block.i18n.use and manager.init are quite fast.
         # we may provide an anonymous initialization

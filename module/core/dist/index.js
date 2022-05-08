@@ -57,21 +57,26 @@
           return window.location.replace('/');
         });
         return this.manager.init().then(function(){
-          return i18next.init({
-            supportedLng: ['en', 'zh-TW'],
-            fallbackLng: 'zh-TW',
-            fallbackNS: '',
-            defaultNS: ''
-          });
-        }).then(function(){
-          if (typeof i18nextBrowserLanguageDetector != 'undefined' && i18nextBrowserLanguageDetector !== null) {
-            return i18next.use(i18nextBrowserLanguageDetector);
+          if (typeof i18next == 'undefined' || i18next === null) {
+            return;
           }
-        }).then(function(){
-          console.log("use language: ", navigator.language) || navigator.userLanguage;
-          return i18next.changeLanguage(navigator.language) || navigator.userLanguage;
-        }).then(function(){
-          return block.i18n.use(i18next);
+          return Promise.resolve().then(function(){
+            return i18next.init({
+              supportedLng: ['en', 'zh-TW'],
+              fallbackLng: 'zh-TW',
+              fallbackNS: '',
+              defaultNS: ''
+            });
+          }).then(function(){
+            if (typeof i18nextBrowserLanguageDetector != 'undefined' && i18nextBrowserLanguageDetector !== null) {
+              return i18next.use(i18nextBrowserLanguageDetector);
+            }
+          }).then(function(){
+            console.log("use language: ", navigator.language) || navigator.userLanguage;
+            return i18next.changeLanguage(navigator.language) || navigator.userLanguage;
+          }).then(function(){
+            return block.i18n.use(i18next);
+          });
         }).then(function(){
           return this$.auth.get();
         }).then(function(g){
