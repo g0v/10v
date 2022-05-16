@@ -46,7 +46,7 @@
     "ldtab": "^1.0.0",
     "ldview": "^1.1.0",
     "proxise": "^1.0.1",
-    "zmgr": "^2.2.0"
+    "zmgr": "^2.2.1"
   },
   "frontendDependencies": {
     "root": "static/assets/lib",
