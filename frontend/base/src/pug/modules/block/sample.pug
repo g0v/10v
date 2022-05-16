@@ -1,0 +1,10 @@
+.ldcv
+  .base.w-480.rwd: .inner.card: .card-body: .p-4
+    .text-center: h2 Sample Block
+    p.my-4 This is a sample block for demonstrating how to use @plotdb/block in your repo
+    .btn.btn-lg.btn-block.btn-outline-secondary(data-ldcv-set="") Close
+  script(type="@plotdb/block"): :lsc
+    module.exports =
+      pkg: dependencies: []
+      init: ({root}) -> @ldcv = new ldcover root: root
+      interface: -> @ldcv

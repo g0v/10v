@@ -14,8 +14,8 @@
             path = path || (type === 'block'
               ? 'index.html'
               : type ? "index.min." + type : 'index.min.js');
-            if (name === "@local/error") {
-              return "/modules/cover/error/" + path;
+            if (/^@local\/(error|cover|block)/.exec(name)) {
+              return "/modules/" + name.replace(/^@local\//, '') + "/" + (path || 'index.html');
             }
             return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }

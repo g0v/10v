@@ -69,10 +69,12 @@ html(lang="en")
           .card.my-2: .card-body
             .btn.btn-outline-secondary(ld="post-test") Post Test Data
 
-          .input-group
+          .input-group.my-2
             input.form-control(ld="password-reset-email")
             .input-group-append
               .btn.btn-outline-secondary(ld="password-reset") Send Password Reset Link
+          .btn.btn-outline-secondary(
+          onclick='lda.ldcvmgr.get({name: "@local/block", path: "sample.html"})') Sample Block
 
         .col-md.mb-4
 

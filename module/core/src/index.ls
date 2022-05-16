@@ -9,7 +9,8 @@ ldc.register \core, <[]>, ->
         registry: ({name, version, path, type}) ->
           path = path or if type == \block => \index.html
           else if type => "index.min.#type" else 'index.min.js'
-          if name == "@local/error" => return "/modules/cover/error/#{path}"
+          if /^@local\/(error|cover|block)/.exec(name) =>
+            return "/modules/#{name.replace(/^@local\//, '')}/#{path or 'index.html'}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
