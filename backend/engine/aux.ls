@@ -1,4 +1,5 @@
 base = do
+  hostname: (req) -> req.hostname
   ip: (req) ->
     # `req.headers` is kinda case-sensitive. use `req.header()` to get rid of this problem.
     return (

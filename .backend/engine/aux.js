@@ -2,6 +2,9 @@
 (function(){
   var base;
   base = {
+    hostname: function(req){
+      return req.hostname;
+    },
     ip: function(req){
       return req.header('cf-connecting-ip') || req.header('x-real-ip') || req.ip || (req.header('x-forwarded-for') || '').split(',').pop().trim() || req.socket.remoteAddress || req.connection.remoteAddress || 'unknown-ip';
     },
