@@ -18,7 +18,7 @@
   "dependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",
     "@loadingio/debounce.js": "^1.0.1",
-    "@loadingio/ldc": "^0.0.3",
+    "@loadingio/ldc": "^0.0.4",
     "@loadingio/ldquery": "^3.0.2",
     "@loadingio/loading.css": "^3.0.0",
     "@loadingio/transition.css": "^3.0.0",
