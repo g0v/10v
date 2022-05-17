@@ -55,3 +55,16 @@ ldc.register \core, <[]>, ->
         # prepare authpanel. involving @plotdb/block creation.
         # should delay until we really have to trigger ui
         @
+
+servebase =
+  corectx: (cb) ->
+    new Promise (res, rej) ->
+      ret = ldc.register <[core]>, (o) ->
+        o.core.init!
+          .then -> cb.apply o.core, [o]
+          .then res
+          .catch rej
+      ldc.init ret
+
+if module? => module.exports = servebase
+else if window? => window.servebase = servebase
