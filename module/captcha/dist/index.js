@@ -10,6 +10,7 @@
       cfg == null && (cfg = {});
       return this$._init(cfg);
     });
+    this._zmgr = opt.zmgr;
     return this;
   };
   captcha.prototype = import$(Object.create(Object.prototype), {
@@ -33,7 +34,10 @@
       }).then(function(cap){
         return this$.captcha = cap;
       }).then(function(){
-        return this$.captcha.init(this$._cfg);
+        return this$.captcha.init({
+          cfg: this$._cfg,
+          zmgr: this$._zmgr
+        });
       });
     },
     guard: function(arg$){

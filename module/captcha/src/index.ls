@@ -7,8 +7,9 @@ captcha =
   _p: {} # providers
   _order: null
   cfg: {}
-  init: (cfg = {}) ->
-    @cfg = cfg
+  zmgr: -> @zmgr = it
+  init: (o={}) ->
+    @ <<< o{cfg, zmgr}
     for k,v of @_p => v.cfg({} <<< @cfg[k])
   register: (n, o = {}) ->
     @_p[n] = p = new provider o
@@ -55,7 +56,7 @@ captcha =
         node = @root.querySelector('.ldcv').cloneNode(true)
         root = node.querySelector('[ld=box]')
         @root.appendChild node
-        ldcv = new ldcover root: node
+        ldcv = new ldcover root: node, zmgr: @zmgr
         p = ldcv.get!
 
       @obj[name] =
@@ -94,7 +95,7 @@ captcha =
           console.log \result, it
           @ldcv.toggle false
     inner = root.querySelector('[ld=box]')
-    @ldcv = new ldcover root: root.querySelector('.ldcv')
+    @ldcv = new ldcover root: root.querySelector('.ldcv'), zmgr: @zmgr
     @ldcv.toggle!
     capobj = captcha.get \recaptcha_v2_checkbox .create {root: inner}
     capobj = capobj
