@@ -28,7 +28,8 @@
           zmgr: this.zmgr.scope(zmgr.splash)
         });
         this.captcha = new captcha({
-          manager: this.manager
+          manager: this.manager,
+          zmgr: this.zmgr.scope(zmgr.splash)
         });
         this.ldcvmgr = new ldcvmgr({
           manager: this.manager

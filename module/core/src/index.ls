@@ -14,7 +14,7 @@ ldc.register \core, <[]>, ->
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
-      captcha: new captcha manager: @manager
+      captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash
       ldcvmgr: new ldcvmgr manager: @manager
 
     @ <<<
