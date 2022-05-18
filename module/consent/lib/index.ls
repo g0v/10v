@@ -1,10 +1,10 @@
-require! <[request lderror @servebase/backend/aux @servebase/backend/throttle/kit]>
+require! <[request lderror @servebase/backend/aux @servebase/backend/throttle]>
 
 (backend) <-(->module.exports = it) _
 
 db = backend.db
 
-backend.route.api.post \/consent/, kit.generic, (req, res, next) ->
+backend.route.api.post \/consent/, throttle.kit.generic, (req, res, next) ->
   {consent_id, check} = req.body or {}
   user = (req.user or {}).key
   if !(user and consent_id) => return res.send false

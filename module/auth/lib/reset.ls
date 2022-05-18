@@ -1,9 +1,9 @@
 require! <[crypto lderror]>
-require! <[@servebase/backend/throttle/kit]>
+require! <[@servebase/backend/throttle]>
 
 (backend) <- ((f) -> module.exports = -> f it) _
 {db,config,route} = backend
-mdw = throttle: kit.login, captcha: backend.middleware.captcha
+mdw = throttle: throttle.kit.login, captcha: backend.middleware.captcha
 
 route.auth.post \/passwd/reset/:token, mdw.throttle, mdw.captcha, (req, res) ->
   token = req.params.token
