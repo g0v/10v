@@ -1,15 +1,16 @@
-require! <[fs path express lderror re2 curegex]>
-require! <[@servebase/backend/aux @servebase/backend/session @servebase/backend/throttle]>
-
 (backend) <- (->module.exports = it)  _
 {db,config,route:{api,app}} = backend
+if config.base != \base => return
+
+require! <[fs path express lderror re2 curegex]>
+require! <[@servebase/backend/aux @servebase/backend/session @servebase/backend/throttle]>
 
 route = aux.routecatch express.Router {mergeParams: true}
 api.use \/admin, route
 route.use aux.is-admin
 
 route.get \/throttle/reset, (req, res, next) ->
-  throttle.core.reset!
+  throttle.reset!
   res.send!
 
 route.post \/users/, (req, res, next) ->

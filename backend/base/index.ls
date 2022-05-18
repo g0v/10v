@@ -1,6 +1,8 @@
-require! <[fs path lderror express @servebase/backend/aux]>
 (backend) <- (->module.exports = it)  _
 {db,config,route:{api,app}} = backend
+if config.base != \base => return
+
+require! <[fs path lderror express @servebase/backend/aux]>
 
 demo-api = aux.routecatch express.Router {mergeParams: true}
 demo-app = aux.routecatch express.Router {mergeParams: true}
