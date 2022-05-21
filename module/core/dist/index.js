@@ -32,7 +32,11 @@
           zmgr: this.zmgr.scope(zmgr.splash)
         });
         this.ldcvmgr = new ldcvmgr({
-          manager: this.manager
+          manager: this.manager,
+          errorCover: {
+            name: "@local/error",
+            path: "0.html"
+          }
         });
         this.auth = new auth({
           manager: this.manager,

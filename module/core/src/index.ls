@@ -15,7 +15,7 @@ ldc.register \core, <[]>, ->
     @ <<<
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash
-      ldcvmgr: new ldcvmgr manager: @manager
+      ldcvmgr: new ldcvmgr manager: @manager, error-cover: {name: "@local/error", path: "0.html"}
 
     @ <<<
       auth: new auth manager: @manager, zmgr: @zmgr, loader: @loader
