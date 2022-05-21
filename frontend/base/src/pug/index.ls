@@ -6,6 +6,7 @@
 @view.panel = new ldview do
   root: document.body
   action: click: do
+    error: ~> @error((new lderror 1023) <<< uuid: Math.random!toString(36)substring(2))
     # we need an approch to control authpanel. should be done via auth.
     signup: ~> @auth.prompt {tab: \signup} .then -> update!
     login: ~> @auth.prompt {tab: \login} .then -> update!

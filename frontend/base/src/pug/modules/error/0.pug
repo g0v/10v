@@ -1,0 +1,44 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-name="error"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-2
+  .text-center.mb-4
+    h1.font-weight-bold Ooops, Things Broken.
+    p.text-muted We failed to finish your last action/request
+  br
+  .m-auto.text-left.text-muted
+  div
+    p Sorry but something went wrong in our system about what you want to do, so your last action might have failed.
+    p You can try again later or #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") contact us] to see if there is anything we can do for you.
+    .my-4.rounded.p-2.bg-light
+      .text-muted Error Detail:
+      .row.mb-y
+        .col-sm error id: #[span.font-weight-bold(ld="id")]
+        .col-sm error uuid: #[span.font-weight-bold(ld="uuid")]
+      .text-truncate.w-100 message: #[span.font-weight-bold(ld="message")]
+    br
+    .row
+      .col-md.mb-1: .btn.btn-outline-dark.btn-block.btn-lg.mr-2(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+      .col-md.mb-1: .btn.btn-primary.btn-block.btn-lg.mr-2(data-ldcv-set="") Close This Popup
+
+  script(type="@plotdb/block"): :lsc
+    module.exports =
+      pkg: {}
+      init: ({root}) ->
+        fetch = ~>
+          n = @data
+          while n
+            if n.param and n.param.name == \lderror => return n.param
+            else if n.err and n.err.name == \lderror => return n.err
+            else if n.name == \lderror => return n
+            else n = n.param
+          return n or {}
+
+        @ldcv = new ldcover do
+          root: root
+        @ldcv.on \data, (e) ~> @data = e; @view.render!
+        @view = new ldview do
+          root: root
+          text:
+            id: ~> fetch!id or 'n/a'
+            uuid: ~> fetch!uuid or 'n/a'
+            message: ~> fetch!message or 'no message provided'
+      interface: -> @ldcv
