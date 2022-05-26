@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "@loadingio/debounce.js": "^1.0.1",
-    "proxise": "^1.0.1"
+    "lderror": "^2.2.0",
+    "proxise": "^1.0.1",
+    "request": "^2.88.2"
   }
 }
