@@ -145,6 +145,9 @@
       return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = this.feroot, ref$.bundle = {
         configFile: path.join(this.feroot, 'bundle.json'),
         relativePath: true
+      }, ref$.asset = {
+        srcdir: 'src/pug',
+        desdir: 'static'
       }, ref$));
     },
     start: function(){

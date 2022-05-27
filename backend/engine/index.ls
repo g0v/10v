@@ -76,9 +76,13 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
   watch: ({logger, i18n}) ->
     if !(@config.build and @config.build.enabled) => return
-    srcbuild.lsp (@config.build or {}) <<< {
-      logger, i18n, base: @feroot, bundle: {configFile: path.join(@feroot, 'bundle.json'), relative-path: true}
-    }
+
+    srcbuild.lsp((@config.build or {}) <<< {
+      logger, i18n,
+      base: @feroot
+      bundle: {configFile: path.join(@feroot, 'bundle.json'), relative-path: true}
+      asset: {srcdir: 'src/pug', desdir: 'static'}
+    })
 
   start: ->
     Promise.resolve!
