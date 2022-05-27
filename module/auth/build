@@ -4,13 +4,15 @@ echo "prepare..."
 rm -rf dist
 mkdir -p dist
 
-echo "build auth.ls -> index.js ..."
+echo "build src/auth.ls -> dist/index.js ..."
 ./node_modules/.bin/lsc -cp src/auth.ls > dist/index.js
-echo "minify index.js -> index.min.js ..."
+echo "minify dist/index.js -> dist/index.min.js ..."
 ./node_modules/.bin/uglifyjs dist/index.js > dist/index.min.js
 
-echo "build authpanel.pug ..."
+echo "build authpanel.pug -> dist/index.html ..."
 ./node_modules/.bin/srcbuild-pug src/authpanel.pug > dist/index.html
+echo "build base.pug -> dist/base.html ..."
+./node_modules/.bin/srcbuild-pug src/base.pug > dist/base.html
 
 echo "build server files ..."
 node_modules/.bin/lsc -co dist/lib lib
