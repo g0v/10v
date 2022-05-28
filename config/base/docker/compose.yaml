@@ -25,3 +25,6 @@ services:
       - POSTGRES_USER=pg
       - POSTGRES_PASSWORD=pg
       - POSTGRES_DB=pg
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - /var/folders/postgresql/docker:/var/lib/postgresql/data

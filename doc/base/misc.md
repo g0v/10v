@@ -47,6 +47,9 @@ based on the configuration, run command as follow:
     psql -h localhost -p 15432 -U pg < config/db/init.sql
 
 
+DB files are default written to /var/folders/postgresql/data/pgdata (see config/base/docker/compose.yaml). Backup those files for a persistent database across containers.
+
+
 ## redirecting ( TBD )
 
 use cookie to redirect. alternatively, lderror with `redirect` parameter instructs error handlers to pass the redirect parameter to `X-Accel-Redirect`, which provides in place redirection ( different content without touch URL )
