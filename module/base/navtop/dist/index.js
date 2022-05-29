@@ -25,7 +25,6 @@
             return view.render();
           });
         };
-        console.log(1);
         view = new ldview({
           root: navtop,
           action: {
