@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file_pug="module/version/index.pug"
+file_pug="module/base/version/index.pug"
 file_version=".version"
 
 ## with branch name

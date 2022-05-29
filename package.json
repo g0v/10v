@@ -14,11 +14,11 @@
     "npm": ">=7.0.15"
   },
   "workspaces": [
-    "module/version",
-    "module/auth",
-    "module/captcha",
-    "module/consent",
-    "module/core",
+    "module/base/version",
+    "module/base/auth",
+    "module/base/captcha",
+    "module/base/consent",
+    "module/base/core",
     "backend/engine"
   ],
   "scripts": {
