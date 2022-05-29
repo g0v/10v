@@ -1,4 +1,4 @@
-({core}) <- ldc.register <[core]>, _
+({core}) <- ldc.register <[core navtop]>, _
 <- core.init!then _
 <-(->it.apply core) _
 

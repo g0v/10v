@@ -7,8 +7,10 @@
       return function(it){
         return it.apply({});
       }(function(){
-        var auth, navtop, view, navbar, bar, dotst, tstTgt, this$ = this;
+        var auth, navtop, view, bar, dotst, tstTgt, this$ = this;
         auth = core.auth;
+        this.user = core.user;
+        this.global = core.global;
         if (!(navtop = ld$.find('[ld-scope=navtop]', 0))) {
           return;
         }
@@ -23,6 +25,7 @@
             return view.render();
           });
         };
+        console.log(1);
         view = new ldview({
           root: navtop,
           action: {
@@ -76,14 +79,13 @@
             }
           }
         });
-        navbar = navtop.childNodes[0];
-        bar = view.get('navbar');
-        dotst = (navbar.getAttribute('data-classes') || "").split(';').map(function(it){
+        bar = view.get('root');
+        dotst = (bar.getAttribute('data-classes') || "").split(';').map(function(it){
           return it.split(' ').filter(function(it){
             return it;
           });
         });
-        tstTgt = ld$.find(document, navbar.getAttribute('data-pivot'), 0);
+        tstTgt = ld$.find(document, bar.getAttribute('data-pivot'), 0);
         if (!(dotst.length && tstTgt)) {
           return;
         }
@@ -93,10 +95,10 @@
             return;
           }
           dotst[0].map(function(c){
-            return navbar.classList.toggle(c, n.isIntersecting);
+            return bar.classList.toggle(c, n.isIntersecting);
           });
           return dotst[1].map(function(c){
-            return navbar.classList.toggle(c, !n.isIntersecting);
+            return bar.classList.toggle(c, !n.isIntersecting);
           });
         }, {
           threshold: 0.1

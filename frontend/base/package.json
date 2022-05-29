@@ -13,7 +13,8 @@
     "../../module/base/auth",
     "../../module/base/captcha",
     "../../module/base/consent",
-    "../../module/base/core"
+    "../../module/base/core",
+    "../../module/base/navtop"
   ],
   "dependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",
@@ -77,6 +78,10 @@
       },
       {
         "name": "@servebase/core",
+        "dir": "dist"
+      },
+      {
+        "name": "@servebase/navtop",
         "dir": "dist"
       },
       "curegex",

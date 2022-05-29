@@ -1,6 +1,8 @@
 doctype html
 html(lang="en")
   include @/@loadingio/bootstrap.ext/index.pug
+  include @/ldview/index.pug
+
   head
     meta(charset="utf-8")
     title Serverbase
@@ -25,6 +27,17 @@ html(lang="en")
         font-style: normal;
         src: url('assets/lib/ldiconfont/main/ldif.ttf') format('truetype');
       }
+      .navtop
+        transition: color .35s linear, background .35s linear
+      .nav-light
+        background: rgba(255,255,255,.5)
+      .nav-light .btn-text
+        color: #222
+      .nav-dark
+        background: rgba(0,0,0,.5)
+      .nav-dark .btn-text
+        color: #eee
+
       
   body
 
@@ -38,10 +51,21 @@ html(lang="en")
           .btn.border.my-1.py-0(data-ldcv-set="") OK
 
     //-#captcha.ldcv: .base: .inner.p-4: div
-    .w-100.py-2.px-4.bg-dark.text-light.d-flex
-      .flex-grow-1
-      .clickable(ld="login") Login
-    .w-1024.rwd.mx-auto.my-4
+    +scope("navtop").position-fixed.w-100.z-fixed(styl="top:0")
+      .navtop(ld="root",data-classes="nav-light;nav-dark",data-pivot="#pivot")
+        .py-2.px-4.d-flex.align-items-center
+          .flex-grow-1
+          .d-none(ld="unauthed")
+            .btn.btn-text(ld="login") Login
+            .btn.btn-text(ld="signup") Sign Up
+          .dropdown.d-none(ld="authed")
+            .btn.btn-text.dropdown-toggle(data-toggle="dropdown") #[span(ld="avatar")]
+            .dropdown-menu.dropdown-menu-right
+              .dropdown-item(ld="displayname")
+              .dropdown-divider
+              .dropdown-item(ld="logout") Logout
+
+    .w-1024.rwd.mx-auto.py-4
       .row
         .col-md.mb-4
           h4 Authentication
@@ -119,7 +143,8 @@ html(lang="en")
                 b password #[span.text-sm / left empty for auto generation]
                 input.form-control(ld="adduser.password",type="password",aria-label="password")
               .btn.btn-primary(ld="adduser") Add User
-
+    +nbr(5)
+    #pivot: +nbr(50)
     //-+script([ {name: "@sentry/tracing", version: "main", path: "build/bundle.tracing.min.js"} ])
 
     +script([
@@ -146,9 +171,9 @@ html(lang="en")
       {name: "@servebase/auth", version: "main"},
       {name: "@servebase/consent", version: "main"},
       {name: "@servebase/captcha", version: "main"},
-      {name: "@servebase/core", version: "main"}
+      {name: "@servebase/core", version: "main"},
+      {name: "@servebase/navtop", version: "main"}
     ])
-
     script(type="module")
       include:lsc index.ls
       include:lsc admin.ls

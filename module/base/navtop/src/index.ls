@@ -3,6 +3,8 @@
 <-(->it.apply {}) _
 
 auth = core.auth
+@ <<< core{user, global}
+
 if !(navtop = ld$.find('[ld-scope=navtop]',0)) => return
 
 @update = (g) ~>
@@ -11,6 +13,7 @@ if !(navtop = ld$.find('[ld-scope=navtop]',0)) => return
     @ <<< {global: g, user: g.user or {}}
     view.render!
 
+console.log 1
 view = new ldview do
   root: navtop
   action:
@@ -26,16 +29,14 @@ view = new ldview do
     authed: ({node}) ~> node.classList.toggle \d-none, !@user.key
     avatar: ({node}) ~> node.style.backgroundImage = "url(/assets/avatar/#{@user.key})"
 
-navbar = navtop.childNodes.0
-
-bar = view.get \navbar
-dotst = (navbar.getAttribute(\data-classes) or "").split(';').map(->it.split(' ').filter(->it))
-tst-tgt = ld$.find document, navbar.getAttribute(\data-pivot), 0
+bar = view.get \root
+dotst = (bar.getAttribute(\data-classes) or "").split(';').map(->it.split(' ').filter(->it))
+tst-tgt = ld$.find document, bar.getAttribute(\data-pivot), 0
 if !(dotst.length and tst-tgt) => return
 (new IntersectionObserver (->
   if !(n = it.0) => return
-  dotst.0.map (c) -> navbar.classList.toggle c, n.isIntersecting
-  dotst.1.map (c) -> navbar.classList.toggle c, !n.isIntersecting
+  dotst.0.map (c) -> bar.classList.toggle c, n.isIntersecting
+  dotst.1.map (c) -> bar.classList.toggle c, !n.isIntersecting
 ), {threshold: 0.1}).observe tst-tgt
 
 return {}
