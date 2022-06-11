@@ -19,11 +19,11 @@ server {
     return 490;
   }
 
-  # put at the bottom
+  # put at the top ( let the fallback location directive to try files. )
   location ~ \.(?:ico|css|js|gif|jpe?g|png|svg|woff|ttf|otf)$ {
     expires 1d;
-    add_header Pragma public;
-    add_header Cache-Control public;
+    add_header 'Pragma' 'public';
+    add_header 'Cache-Control' 'public';
   }
 
   location ~ ^/(.*)$ {
