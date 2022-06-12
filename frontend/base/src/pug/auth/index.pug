@@ -29,5 +29,5 @@ block script
       # TODO: we can design to use cookie as nexturl information.
       # it may be a Nginx `X-Accel-Redirect` so we simply reload URL.
       .then ->
-        if window.location.pathname == "/auth/" => window.location.replace '/'
+        if /^\/auth/.exec(window.location.pathname) => window.location.replace '/'
         else window.location.reload!
