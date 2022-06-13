@@ -22,6 +22,7 @@ view = new ldview do
       logout: ~> auth.logout!then ~> @update!
   text:
     displayname: ~> @user.displayname or 'User'
+    username: ~> @user.username or 'n/a'
   handler:
     admin: ({node}) ~> node.classList.toggle \d-none, !@user.staff
     unauthed: ({node}) ~> node.classList.toggle \d-none, !!@user.key

@@ -53,6 +53,9 @@
           text: {
             displayname: function(){
               return this$.user.displayname || 'User';
+            },
+            username: function(){
+              return this$.user.username || 'n/a';
             }
           },
           handler: {
