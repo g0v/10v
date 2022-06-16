@@ -21,3 +21,8 @@ And following API:
  - `open`: open a socket connection. auto called after `init()` is called.
  - `reopen`: reopen a socket connection. auto called when previous socket was closed.
    - unlike `open`, this triggers given `ldcv` for loading indicator.
+
+Available members for customized functions:
+
+ - `ws`: websocket object.
+ - `hub`: empty object for storing customized object.

@@ -1,15 +1,16 @@
 connector = (opt = {}) ->
-  @ <<< _ws: null, _running: false, _tag: "[@servebase/connector]"
+  @ <<< ws: null, _running: false, _tag: "[@servebase/connector]"
   @_init = opt.init
   @_ldcv = opt.ldcv or (->)
   @_reconnect = opt.reconnect
   @_path = opt.path or \/ws
+  @hub = {}
   @
 
 connector.prototype = Object.create(Object.prototype) <<<
   open: ->
     console.log "#{@_tag} ws reconnect ..."
-    @_ws.connect!
+    @ws.connect!
       .then ~> console.log "#{@_tag} object reconnect ..."
       .then ~> if @_reconnect => @_reconnect!
       .then ~> console.log "#{@_tag} connected."
@@ -23,8 +24,8 @@ connector.prototype = Object.create(Object.prototype) <<<
       .then ~> if @_ldcv.toggle => @_ldcv.toggle(false) else @_ldcv(false)
       .then ~> @_running = false
   init: ->
-    @_ws = new ews {path: @_path}
-    @_ws.on \close, ~> @reopen!
+    @ws = new ews {path: @_path}
+    @ws.on \close, ~> @reopen!
     if @_init => @_init!
     @open!
 
