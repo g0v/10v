@@ -20,6 +20,7 @@
     "module/base/consent",
     "module/base/core",
     "module/base/navtop",
+    "module/base/connector",
     "backend/engine"
   ],
   "scripts": {

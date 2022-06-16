@@ -14,7 +14,8 @@
     "../../module/base/captcha",
     "../../module/base/consent",
     "../../module/base/core",
-    "../../module/base/navtop"
+    "../../module/base/navtop",
+    "../../module/base/connector"
   ],
   "dependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",
