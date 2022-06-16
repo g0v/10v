@@ -1,0 +1,24 @@
+{
+  "author": "zbryikt",
+  "name": "@servebase/connector",
+  "license": "MIT",
+  "description": "servebase connector module",
+  "version": "0.1.0",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/lib/index.js",
+  "browser": "dist/index.min.js",
+  "homepage": "https://github.com/plotdb/servebase",
+  "engines": {
+    "node": ">=15.4.0",
+    "npm": ">=7.0.15"
+  },
+  "scripts": {
+    "start": "npx server -r . -o true"
+  },
+  "devDependencies": {
+    "livescript": "^1.6.0",
+    "uglify-js": "^3.13.1"
+  }
+}
