@@ -1,8 +1,8 @@
-# servebase
+# 10v
 
-a base server for developing all server-centric services.
+tentative website for g0v 10th-anniversary
 
 
 # License
 
-TBD
+MIT
