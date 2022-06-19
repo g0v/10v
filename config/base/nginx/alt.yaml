@@ -1,9 +1,0 @@
-name: alt
-ip: 127.0.0.1
-port: 8901
-hostname: serve.alt
-root: /Users/tkirby/workspace/zbryikt/plotdb/projects/servebase/frontend/base/static/
-cert:
-  crt: /Users/tkirby/workspace/zbryikt/projects/cert/serve.alt/server.crt
-  key: /Users/tkirby/workspace/zbryikt/projects/cert/serve.alt/server.key
-nginxCfgDir: /usr/local/etc/nginx

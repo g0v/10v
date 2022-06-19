@@ -32,6 +32,18 @@ This document describes how we manage versions, releases and different customiza
  - only branch when we need hotfix. otherwise simply use tag.
 
 
+## private files
+
+Following files will (and should) be ignored, and thus won't be committed to version control system, based on the  `.gitignore` settings:
+
+ - `local.*`
+ - `*.log`
+ - `secret.*`
+ - `config/private` folder.
+
+Additionally, there are other files ignored in `.gitignore` file but it's up to users' descretion to keep ignoring them or not. See `.gitignore` for more information.
+
+
 ## setup new customer repo
 
 init:
