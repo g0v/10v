@@ -1,9 +1,0 @@
-name: 10v
-ip: 127.0.0.1
-port: 9306
-hostname: 10v.loco
-root: /Users/tkirby/workspace/g0v/10v/frontend/base/static/
-cert:
-  crt: /Users/tkirby/workspace/devsuite/cert/10v.loco/server.crt
-  key: /Users/tkirby/workspace/devsuite/cert/10v.loco/server.key
-nginxCfgDir: /opt/homebrew/etc/nginx
