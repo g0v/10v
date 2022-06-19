@@ -1,0 +1,9 @@
+name: servebase
+ip: 127.0.0.1
+port: 8901
+hostname: serve.base
+root: /path/to/your/repo/frontend/static/folder/
+cert:
+  crt: /path/to/your/cert/file
+  key: /path/to/your/cert/key
+nginxCfgDir: /usr/local/etc/nginx

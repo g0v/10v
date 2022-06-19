@@ -18,7 +18,6 @@ frontend/base/.view
 frontend/auth/static
 frontend/auth/.view
 package-lock.json
-config/mail/
-!config/mail/sample/
 .version
 module/version/index.pug
+config/**/local.*
