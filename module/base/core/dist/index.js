@@ -38,6 +38,7 @@
             path: "0.html"
           }
         });
+        this.i18n = i18next;
         this.auth = new auth({
           manager: this.manager,
           zmgr: this.zmgr,

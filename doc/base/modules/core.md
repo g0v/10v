@@ -11,6 +11,7 @@ service core module that initializes, constructs and provides following members:
  - `captcha`: captcha provider
  - `zmgr`: z-index manager
  - `error`: error handler
+ - `i18n`: i18n object. use this instead accessing `i18next` directly for module abstraction.
 
 with additional APIs stored in `servebase` global variable:
 

@@ -52,9 +52,15 @@ html(lang="en")
 
     //-#captcha.ldcv: .base: .inner.p-4: div
     +scope("navtop").position-fixed.w-100.z-fixed(styl="top:0")
-      .navtop(ld="root",data-classes="nav-light;nav-dark",data-pivot="#pivot")
+      .navtop(ld="root",data-classes="nav-dark;nav-light",data-pivot="#pivot")
         .py-2.px-4.d-flex.align-items-center
           .flex-grow-1
+          .btn-group.dropdown.mr-4
+            .btn.btn-sm.btn-outline-dark(ld="lng") EN
+            .btn.btn-sm.btn-outline-dark.dropdown-toggle(data-toggle="dropdown"): i.i-globe
+            .dropdown-menu.dropdown-menu-right
+              .dropdown-item(ld="set-lng",data-name="en") EN
+              .dropdown-item(ld="set-lng",data-name="zh-TW") 中
           .d-none(ld="unauthed")
             .btn.btn-text(ld="login") Login
             .btn.btn-text(ld="signup") Sign Up
