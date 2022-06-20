@@ -17,3 +17,21 @@ with additional APIs stored in `servebase` global variable:
  - `corectx(cb)`: run `cb` a ldc app with core inited as dependency.
    - example: `servebase.corectx(({core}) -> @auth == core.auth);`
    - return a Promise, resolved the return value of `cb` ( `cb` can also return Promise )
+
+
+## dependencies
+
+ - zmgr
+ - ldloader
+ - ldcvmgr
+ - lderror
+ - @servebase/captcha
+ - @servebase/auth
+ - @loadingio/ldc
+ - @plotdb/semver
+ - @plotdb/block
+ - @plotdb/rescope
+ - @plotdb/csscope
+ - @plotdb/httputil
+ - i18next ( optional )
+ - i18nextBrowserLanguageDetector ( optional )
