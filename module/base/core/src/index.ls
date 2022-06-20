@@ -38,8 +38,12 @@ ldc.register \core, <[]>, ->
           .then -> i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW, fallbackNS: '', defaultNS: ''
           .then -> if i18nextBrowserLanguageDetector? => i18next.use i18nextBrowserLanguageDetector
           .then ->
-            console.log "use language: ", navigator.language or navigator.userLanguage
-            i18next.changeLanguage navigator.language or navigator.userLanguage
+            lng = (
+              (if httputil? => (httputil.qs(\lng) or httputil.cookie(\lng)) else null) or
+              navigator.language or navigator.userLanguage
+            )
+            console.log "use language: ", lng
+            i18next.changeLanguage lng
           .then -> block.i18n.use i18next
       .then ~>
         # PERF TODO block.i18n.use and manager.init are quite fast.

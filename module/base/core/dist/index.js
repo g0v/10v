@@ -78,8 +78,10 @@
               return i18next.use(i18nextBrowserLanguageDetector);
             }
           }).then(function(){
-            console.log("use language: ", navigator.language) || navigator.userLanguage;
-            return i18next.changeLanguage(navigator.language) || navigator.userLanguage;
+            var lng;
+            lng = (typeof httputil != 'undefined' && httputil !== null ? httputil.qs('lng') || httputil.cookie('lng') : null) || navigator.language || navigator.userLanguage;
+            console.log("use language: ", lng);
+            return i18next.changeLanguage(lng);
           }).then(function(){
             return block.i18n.use(i18next);
           });
