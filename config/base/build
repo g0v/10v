@@ -28,4 +28,4 @@ fi
 
 mkdir -p ../gen/nginx
 npx tt -c $ENV -o ../gen/nginx/$OUT $CFG
-echo "<root>/config/gen/nginx/$OUT.ngx generated"
+echo "<root>/config/gen/nginx/$OUT generated"
