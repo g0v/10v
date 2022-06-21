@@ -7,7 +7,9 @@
  - `middleware`: middleware objects, including
    - csrf
  - `config`: backend configuration
- - `base`: frontend base dir. by default `frontend`. updated based on `config` related field.
+ - `base`: base name. default `base`. updated based on `config` related field.
+ - `feroot`: default frontend base directory. e.g., `frontend/base`. auto generated based on `base` field
+ - `root`: repo root directory
  - `server`: http.Server object 
  - `app`: express application
  - `log`: logger object, in pino interface
