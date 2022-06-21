@@ -6,7 +6,7 @@ require! <[./error-handler ./redis-node ./mail-queue ./i18n ./aux ./db/postgresq
 require! <[@servebase/auth @servebase/consent @servebase/captcha]>
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
-rootdir = path.join('../..', libdir)
+rootdir = path.join(libdir, '../..')
 routes = fs.readdir-sync path.join(libdir, '..')
   .filter -> !(it in <[engine README.md]>)
   .map -> path.join(libdir, '..', it)

@@ -26,7 +26,7 @@
   consent = require('@servebase/consent');
   captcha = require('@servebase/captcha');
   libdir = path.dirname(fs.realpathSync(__filename.replace(/\(js\)$/, '')));
-  rootdir = path.join('../..', libdir);
+  rootdir = path.join(libdir, '../..');
   routes = fs.readdirSync(path.join(libdir, '..')).filter(function(it){
     return !(it === 'engine' || it === 'README.md');
   }).map(function(it){
