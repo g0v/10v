@@ -104,7 +104,8 @@ html(lang="en")
             .input-group-append
               .btn.btn-outline-secondary(ld="password-reset") Send Password Reset Link
           .btn.btn-outline-secondary.mr-2(
-          onclick='lda.ldcvmgr.get({name: "@local/block", path: "sample.html"})') Sample Block
+          onclick='lda.ldcvmgr.get({ns: "local", name: "sample"})') Sample Block
+          //-onclick='lda.ldcvmgr.get({name: "@local/block", path: "sample.html"})') Sample Block
           .btn.btn-outline-secondary(ld="error") Sample Error
 
         .col-md.mb-4

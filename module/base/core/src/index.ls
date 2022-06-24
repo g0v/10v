@@ -6,16 +6,17 @@ ldc.register \core, <[]>, ->
     @ <<<
       zmgr: new zmgr!
       manager: new block.manager do
-        registry: ({name, version, path, type}) ->
+        registry: ({ns, name, version, path, type}) ->
           path = path or if type == \block => \index.html
           else if type => "index.min.#type" else 'index.min.js'
-          if /^@local\/(error|cover|block)/.exec(name) =>
-            return "/modules/#{name.replace(/^@local\//, '')}/#{path or 'index.html'}"
+          if ns == \local =>
+            if name in <[error cover]> => return "/modules/#name/#{path or 'index.html'}"
+            return "/modules/block/#name/#{path or 'index.html'}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash
-      ldcvmgr: new ldcvmgr manager: @manager, error-cover: {name: "@local/error", path: "0.html"}
+      ldcvmgr: new ldcvmgr manager: @manager, error-cover: {ns: \local, name: "error", path: "0.html"}
       i18n: i18next
 
     @ <<<
@@ -23,7 +24,7 @@ ldc.register \core, <[]>, ->
 
     ldc.action \ldcvmgr, @ldcvmgr
 
-    err = new lderror.handler handler: (n, e) ~> @ldcvmgr.get {name: "@local/error", path: "#n.html"}, e
+    err = new lderror.handler handler: (n, e) ~> @ldcvmgr.get {ns: \local, name: \error, path: "#n.html"}, e
 
     @error = (e) -> err e
     @update = (g) -> @ <<< {global: g, user: (g.user or {})}

@@ -10,13 +10,16 @@
         this.zmgr = new zmgr();
         this.manager = new block.manager({
           registry: function(arg$){
-            var name, version, path, type;
-            name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
+            var ns, name, version, path, type;
+            ns = arg$.ns, name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
             path = path || (type === 'block'
               ? 'index.html'
               : type ? "index.min." + type : 'index.min.js');
-            if (/^@local\/(error|cover|block)/.exec(name)) {
-              return "/modules/" + name.replace(/^@local\//, '') + "/" + (path || 'index.html');
+            if (ns === 'local') {
+              if (name === 'error' || name === 'cover') {
+                return "/modules/" + name + "/" + (path || 'index.html');
+              }
+              return "/modules/block/" + name + "/" + (path || 'index.html');
             }
             return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }
@@ -34,7 +37,8 @@
         this.ldcvmgr = new ldcvmgr({
           manager: this.manager,
           errorCover: {
-            name: "@local/error",
+            ns: 'local',
+            name: "error",
             path: "0.html"
           }
         });
@@ -48,7 +52,8 @@
         err = new lderror.handler({
           handler: function(n, e){
             return this$.ldcvmgr.get({
-              name: "@local/error",
+              ns: 'local',
+              name: 'error',
               path: n + ".html"
             }, e);
           }
