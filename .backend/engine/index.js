@@ -156,6 +156,9 @@
       var this$ = this;
       return Promise.resolve().then(function(){
         var i18nEnabled, ref$;
+        this$.logError = this$.log.child({
+          module: 'error'
+        });
         this$.logServer = this$.log.child({
           module: 'server'
         });
@@ -266,7 +269,7 @@
         app.use(function(req, res, next){
           return next(new lderror(404));
         });
-        app.use(errorHandler);
+        app.use(errorHandler(this$));
         return this$.listen();
       }).then(function(){
         this$.logServer.info(("listening on port " + this$.server.address().port).cyan);

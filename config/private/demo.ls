@@ -32,6 +32,8 @@ module.exports = do
       enabled: false
   log:
     level: \info
+    # when true, all errors handled in `@servebase/backend/error-handler` will be logged with `debug` level
+    all-error: false
   auth:
     google:
       clientID: '...'

@@ -89,6 +89,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
   start: ->
     Promise.resolve!
       .then ~>
+        @log-error = @log.child {module: \error}
         @log-server = @log.child {module: \server}
         @log-build = @log.child {module: \build}
         @log-mail = @log.child {module: \mail}
@@ -180,7 +181,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         app.use \/, express.static(path.join __dirname, '../..', @feroot, 'static') # static file fallback
         app.use (req, res, next) ~> next new lderror(404) # nothing match - 404
-        app.use error-handler # error handler
+        app.use error-handler(@) # error handler
 
         @listen!
       .then ~>
