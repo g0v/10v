@@ -13,6 +13,7 @@
     "../../module/base/auth",
     "../../module/base/captcha",
     "../../module/base/consent",
+    "../../module/base/erratum",
     "../../module/base/core",
     "../../module/base/navtop",
     "../../module/base/connector"
@@ -39,7 +40,7 @@
     "ldbutton": "^2.0.0",
     "ldcover": "^3.2.0",
     "ldcvmgr": "^0.0.10",
-    "lderror": "^2.2.0",
+    "lderror": "^2.3.0",
     "ldfolder": "^0.0.9",
     "ldform": "^0.1.2",
     "ldiconfont": "^0.2.1",
@@ -75,6 +76,10 @@
       },
       {
         "name": "@servebase/consent",
+        "dir": "dist"
+      },
+      {
+        "name": "@servebase/erratum",
         "dir": "dist"
       },
       {
