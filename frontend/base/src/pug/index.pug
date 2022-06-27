@@ -103,10 +103,11 @@ html(lang="en")
             input.form-control(ld="password-reset-email")
             .input-group-append
               .btn.btn-outline-secondary(ld="password-reset") Send Password Reset Link
-          .btn.btn-outline-secondary.mr-2(
-          onclick='lda.ldcvmgr.get({ns: "local", name: "sample"})') Sample Block
-          //-onclick='lda.ldcvmgr.get({name: "@local/block", path: "sample.html"})') Sample Block
-          .btn.btn-outline-secondary(ld="error") Sample Error
+          .d-flex.g-2
+            .btn.btn-outline-secondary(
+            onclick='lda.ldcvmgr.get({ns: "local", name: "sample"})') Sample Block
+            .btn.btn-outline-secondary(ld="error") Sample Error
+            .btn.btn-outline-secondary(ld="unhandled-rejection") Unhandled Rejection
 
         .col-md.mb-4
 
@@ -178,6 +179,7 @@ html(lang="en")
       {name: "@servebase/auth", version: "main"},
       {name: "@servebase/consent", version: "main"},
       {name: "@servebase/captcha", version: "main"},
+      {name: "@servebase/erratum", version: "main"},
       {name: "@servebase/core", version: "main"},
       {name: "@servebase/navtop", version: "main"}
     ])

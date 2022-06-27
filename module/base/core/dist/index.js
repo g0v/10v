@@ -24,6 +24,7 @@
             return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }
         });
+        this.erratum = new erratum();
         this.loader = new ldloader({
           className: "ldld full",
           autoZ: true,

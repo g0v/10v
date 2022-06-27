@@ -14,6 +14,7 @@ ldc.register \core, <[]>, ->
             return "/modules/block/#name/#{path or 'index.html'}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
+      erratum: new erratum!
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash
       ldcvmgr: new ldcvmgr manager: @manager, error-cover: {ns: \local, name: "error", path: "0.html"}
