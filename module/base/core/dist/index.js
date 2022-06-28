@@ -24,7 +24,6 @@
             return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
           }
         });
-        this.erratum = new erratum();
         this.loader = new ldloader({
           className: "ldld full",
           autoZ: true,
@@ -44,12 +43,6 @@
           }
         });
         this.i18n = i18next;
-        this.auth = new auth({
-          manager: this.manager,
-          zmgr: this.zmgr,
-          loader: this.loader
-        });
-        ldc.action('ldcvmgr', this.ldcvmgr);
         err = new lderror.handler({
           handler: function(n, e){
             return this$.ldcvmgr.get({
@@ -62,6 +55,15 @@
         this.error = function(e){
           return err(e);
         };
+        this.auth = new auth({
+          manager: this.manager,
+          zmgr: this.zmgr,
+          loader: this.loader
+        });
+        this.erratum = new erratum({
+          handler: err
+        });
+        ldc.action('ldcvmgr', this.ldcvmgr);
         this.update = function(g){
           return this.global = g, this.user = g.user || {}, this;
         };

@@ -14,20 +14,20 @@ ldc.register \core, <[]>, ->
             return "/modules/block/#name/#{path or 'index.html'}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
     @ <<<
-      erratum: new erratum!
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash
       ldcvmgr: new ldcvmgr manager: @manager, error-cover: {ns: \local, name: "error", path: "0.html"}
       i18n: i18next
 
+    err = new lderror.handler handler: (n, e) ~> @ldcvmgr.get {ns: \local, name: \error, path: "#n.html"}, e
+    @error = (e) -> err e
+
     @ <<<
       auth: new auth manager: @manager, zmgr: @zmgr, loader: @loader
+      erratum: new erratum handler: err
 
     ldc.action \ldcvmgr, @ldcvmgr
 
-    err = new lderror.handler handler: (n, e) ~> @ldcvmgr.get {ns: \local, name: \error, path: "#n.html"}, e
-
-    @error = (e) -> err e
     @update = (g) -> @ <<< {global: g, user: (g.user or {})}
     @auth.on \server-down, @error
     @auth.on \logout, -> window.location.replace '/'
