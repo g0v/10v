@@ -108,6 +108,10 @@
           return this$.fire('error', e);
         });
       },
+      reset: function(){
+        this.ui.loader.on();
+        return window.location.href = "/auth/reset";
+      },
       ensure: function(opt){
         opt == null && (opt = {});
         return this.get((opt.authedOnly = true, opt));

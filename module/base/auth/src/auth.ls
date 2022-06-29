@@ -43,6 +43,9 @@ auth.prototype = Object.create(Object.prototype) <<< do
       .then ~> @fire \logout
       .then ~> @ui.loader.off!
       .catch (e) ~> @fire \error, e
+  reset: ->
+    @ui.loader.on!
+    window.location.href = "/auth/reset"
 
   # ensure user is authed. shorthand and for readbility for auth.get({authed-only:true})
   ensure: (opt = {}) -> @get(opt <<< {authed-only: true})
