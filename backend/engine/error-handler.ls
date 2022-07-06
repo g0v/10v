@@ -15,7 +15,7 @@ handler = (err, req, res, next) ->
     err.uuid = suuid!
     if backend.config.log.all-error =>
       backend.log-error.debug(
-        {err: err <<< {_detail: user: (req.user or {}).key or 0, ip: aux.ip(req)}}
+        {err: err <<< {_detail: user: (req.user or {}).key or 0, ip: aux.ip(req), url: req.originalUrl}}
         "error logged in error handler (lderror id #{lderror.id(err)})"
       )
     if lderror.id(err) =>

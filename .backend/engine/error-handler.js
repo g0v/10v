@@ -23,7 +23,8 @@
           backend.logError.debug({
             err: (err._detail = {
               user: (req.user || {}).key || 0,
-              ip: aux.ip(req)
+              ip: aux.ip(req),
+              url: req.originalUrl
             }, err)
           }, "error logged in error handler (lderror id " + lderror.id(err) + ")");
         }
