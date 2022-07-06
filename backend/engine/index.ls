@@ -1,4 +1,4 @@
-require! <[fs yargs express @plotdb/colors path pino lderror pino-http redis util body-parser csurf]>
+require! <[fs yargs express @plotdb/colors path pino lderror pino-http util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
@@ -110,10 +110,14 @@ backend.prototype = Object.create(Object.prototype) <<< do
         i18n @config.i18n
       .then ~> @i18n = it
       .then ~>
+        if !(@config.redis and @config.redis.enabled) => return
+        @log-server.info "initialize redis connection ...".cyan
+        @store = new redis-node @config.redis{url}
+        @store.init!
+      .then ~>
         @db = new postgresql @
 
         @app = app = express!
-        @store = new redis-node!
         @log-server.info "initializing backend in #{app.get \env} mode".cyan
 
         app.disable \x-powered-by # Dont show server detail
