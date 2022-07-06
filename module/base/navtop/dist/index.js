@@ -114,9 +114,11 @@
           dotst[0].map(function(c){
             return bar.classList.toggle(c, n.isIntersecting);
           });
-          return dotst[1].map(function(c){
-            return bar.classList.toggle(c, !n.isIntersecting);
-          });
+          if (dotst[1]) {
+            return dotst[1].map(function(c){
+              return bar.classList.toggle(c, !n.isIntersecting);
+            });
+          }
         }, {
           threshold: 0.1
         }).observe(tstTgt);

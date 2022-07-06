@@ -45,7 +45,7 @@ if !(dotst.length and tst-tgt) => return
 (new IntersectionObserver (->
   if !(n = it.0) => return
   dotst.0.map (c) -> bar.classList.toggle c, n.isIntersecting
-  dotst.1.map (c) -> bar.classList.toggle c, !n.isIntersecting
+  if dotst.1 => dotst.1.map (c) -> bar.classList.toggle c, !n.isIntersecting
 ), {threshold: 0.1}).observe tst-tgt
 
 return {}
