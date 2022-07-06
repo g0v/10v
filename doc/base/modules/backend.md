@@ -23,7 +23,8 @@
    - `extapi`: routes for api from cross domain access
    - `auth`: routes for authorization 
  - `store`: redis like data store, with following function:
-   - `get(...)`
+   - `get(key)`: return a Promise which resolves with the value corresponding to `key`.
+   - `set(key, value)`: return a Promise which resolves when redis successfully update `key` with `value`.
  - `db`: db interface, postgresql object.
  - `i18n`: i18n object, in `i18next` spec.
 

@@ -6,6 +6,9 @@ module.exports = do
     lng: <[en zh-TW]>
     ns: <[default]>
   base: 'base'
+  redis:
+    enabled: false
+    url: \redis://localhost:6379
   db:
     postgresql:
       host: \localhost # host.docker.internal
