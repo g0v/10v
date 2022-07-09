@@ -522,16 +522,20 @@ pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv
 ;pug_debug_line = 61;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"flex-grow-1 d-flex align-items-center justify-content-center w-50\"\u003E";
 ;pug_debug_line = 62;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"has-tips tip-on manual\"\u003E";
 ;pug_debug_line = 63;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+pug_html = pug_html + "\u003Cdiv class=\"hover-tip top mb-3\"\u003E";
+;pug_debug_line = 63;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+pug_html = pug_html + "點我！\u003C\u002Fdiv\u003E";
+;pug_debug_line = 65;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"emoji d-flex align-items-center mb-3\" ld-each=\"emoji\"\u003E";
-;pug_debug_line = 64;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+;pug_debug_line = 66;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"count\" ld=\"count\"\u003E";
-;pug_debug_line = 64;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+;pug_debug_line = 66;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"ld ld-spin ld-spinner\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 65;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+;pug_debug_line = 67;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"icon\"\u003E";
-;pug_debug_line = 65;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+;pug_debug_line = 67;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv ld=\"icon\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 23;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fg0v\u002F10v\u002Ffrontend\u002Fweb\u002Fsrc\u002Fpug\u002Fbase.pug";
 pug_mixins["script"]([
@@ -568,9 +572,9 @@ pug_mixins["script"]([
       {url: "/js/site.min.js"}
     ]);
 ;pug_debug_line = 56;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fg0v\u002F10v\u002Ffrontend\u002Fweb\u002Fsrc\u002Fpug\u002Fbase.pug";
-;pug_debug_line = 69;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+;pug_debug_line = 71;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cscript type=\"module\"\u003E";
-;pug_debug_line = 69;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
+;pug_debug_line = 71;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "(function(n){return n.apply({})})(function(){var n,a,e=this;n=function(){return e.view.render()};a=new connector({init:function(){return this.hub=new sharehub({ews:this.ws,initConnect:false,watch:n,create:function(){return{}}})},reconnect:function(){return this.hub.connect({id:\"landing\"})},ldcv:function(n){return ldcvmgr.toggle({ns:\"local\",name:\"offline-retry\"},n,{ws:this.ws})}});return a.init().then(function(){var n,u;n=[{name:\"10\",key:\"10\"},{name:\"food\",key:\"food\"},{name:\"g0v\",key:\"g0v\"},{name:\"jothon\",key:\"jothon\"},{name:\"love\",key:\"love\"},{name:\"party\",key:\"party\"}];return e.view=u=new ldview({root:document.body,handler:{emoji:{list:function(){return n},key:function(n){return n.key},view:{action:{click:{\"@\":function(n){var e,t,r,o,i;e=n.ctx;t=JSON.parse(JSON.stringify(r=a.hub.get()));((o=t.data||(t.data={}))[i=e.key]||(o[i]={})).count=(((o=t.data||(t.data={}))[i=e.key]||(o[i]={})).count||0)+1;a.hub.opsOut(json0.diff(r,t));return u.render()}}},text:{count:function(n){var e;e=n.ctx;return(((a.hub.get()||{}).data||{})[e.key]||{}).count||0}},handler:{icon:function(n){var e,t;e=n.node,t=n.ctx;return e.style.backgroundImage=\"url(\u002Fassets\u002Fimg\u002Femoji\u002F\"+t.key+\".gif)\"}}}}}})})});\u003C\u002Fscript\u003E\u003C\u002Fbody\u003E\u003C\u002Fhtml\u003E";
     }.call(this, "Array" in locals_for_with ?
         locals_for_with.Array :
