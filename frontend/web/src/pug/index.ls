@@ -34,5 +34,5 @@ emojis = [
           connect.hub.ops-out json0.diff(src, des)
           view.render!
         text: count: ({ctx}) -> (((connect.hub.get! or {}).data or {})[ctx.key] or {}).count or 0
-        handler: icon: ({node, ctx}) ->
-          node.style.backgroundImage = "url(/assets/img/emoji/#{ctx.key}.gif)"
+        handler: icon: ({node, ctx}) -> node.style.backgroundImage = "url(/assets/img/emoji/#{ctx.key}.gif)"
+    "tip-root": ({node}) -> node.classList.toggle \tip-on, true
