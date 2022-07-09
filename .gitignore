@@ -21,3 +21,4 @@ package-lock.json
 .version
 module/version/index.pug
 config/**/local.*
+!frontend/web

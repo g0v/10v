@@ -1,0 +1,31 @@
+//- module
++scope("navtop"): .navbar.navbar-expand-lg.navbar-light.fixed-top(ld="root")
+  .collapse.navbar-collapse
+    .ml-auto
+      ul.navbar-nav.ml-4
+        li.nav-item.dropdown.mr-2.d-flex.align-items-center
+          .btn-group(data-toggle="dropdown")
+            .btn.btn-sm.btn-outline-secondary(ld="lng") EN
+            .btn.btn-sm.btn-outline-secondary.dropdown-toggle: i.i-globe(style="line-height:1em")
+          .dropdown-menu.dropdown-menu-right.shadow-sm.no-select(style="min-width:0")
+            .dropdown-item(ld="set-lng",data-name="en") EN
+            .dropdown-item(ld="set-lng",data-name="zh-TW") 中
+        li.nav-item.d-none(ld="unauthed login"): a.nav-link 登入
+        li.nav-item.d-none(ld="unauthed signup"): a.nav-link 註冊
+        li.nav-item.dropdown.d-none(ld="authed profile")
+          .btn.btn-sm.btn-outline-dark.bg-white.dropdown-toggle.d-flex.align-items-center(
+          data-toggle="dropdown")
+            .avatar(ld="avatar")
+            span.ml-1(ld="displayname")
+          .dropdown-menu.dropdown-menu-right.shadow-sm
+            a.dropdown-item(href="/me/settings/")
+              .align-middle.text-capitalize.text-ellipsis(ld="displayname") 您好！
+              .text-sm.align-middle.text-ellipsis(ld="username") ...
+            .dropdown-divider
+            .dropdown-header 個人功能
+            a.dropdown-item(href="/me/settings/") 個人設定
+            .dropdown-divider
+            .dropdown-header 進階功能
+            a.dropdown-item(href="/admin/") 管理頁面
+            .dropdown-divider
+            .dropdown-item.text-danger(ld="logout") 登出

@@ -1,0 +1,64 @@
+.ldfd .ldfd-menu {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.25s ease-in-out;
+}
+.ldfd.show > .ldfd-menu {
+  height: auto;
+}
+.ldfd-item {
+  padding: 0.375em 1em;
+  cursor: pointer;
+  color: currentColor;
+}
+.ldfd-item:before {
+  margin-right: 0.5em;
+  font-size: 0.8em;
+  content: "\25b8";
+  display: inline-block;
+  visibility: hidden;
+  transition: transform 0.25s ease-in-out;
+  transform: 0;
+  margin-top: -2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 0.8em;
+  height: 1em;
+}
+.ldfd.no-dart .ldfd-item.ldfd-toggle:before {
+  visibility: hidden !important;
+}
+.ldfd-item.ldfd-toggle:before {
+  visibility: visible;
+}
+.ldfd.show > .ldfd-item.ldfd-toggle:before {
+  transform: rotate(90deg);
+}
+.ldfd-menu > .ldfd-item {
+  padding-left: 2em;
+}
+.ldfd-menu .ldfd-item {
+  padding-left: 2em;
+}
+.ldfd-menu .ldfd-menu .ldfd-item {
+  padding-left: 3em;
+}
+.ldfd-menu .ldfd-menu .ldfd-menu .ldfd-item {
+  padding-left: 4em;
+}
+.ldfd-menu .ldfd-menu .ldfd-menu .ldfd-menu .ldfd-item {
+  padding-left: 5em;
+}
+.ldfd-divider {
+  margin: 0.5em 0;
+}
+/*
+user can implement styles for these two classes for active / highlight effects:
+.ldfd-item.highlight
+.ldfd-item.active
+*/
+.ldfd-item:before {
+  content: " ";
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+Cjxwb2x5Z29uIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50cz0iMjMsMTIgNi41LDIuNDczNzIxIDYuNSwyMS41MjYyNzkgIi8+Cjwvc3ZnPgo=);
+}
