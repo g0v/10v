@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@plotdb/colors": "^0.0.2",
+    "@plotdb/ews": "^0.0.10",
     "@plotdb/srcbuild": "^0.0.46",
     "@plotdb/suuid": "^0.5.1",
     "bcrypt": "^5.0.0",
@@ -85,6 +86,7 @@
     "template-text": "^0.1.2",
     "uglify-js": "^3.13.1",
     "uglifycss": "^0.0.29",
+    "ws": "^8.8.0",
     "yargs": "^17.3.1"
   }
 }
