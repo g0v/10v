@@ -22,3 +22,4 @@ package-lock.json
 module/version/index.pug
 config/**/local.*
 !frontend/web
+frontend/web/static/assets/lib/*
