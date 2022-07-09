@@ -36,4 +36,3 @@ emojis = [
         text: count: ({ctx}) -> (((connect.hub.get! or {}).data or {})[ctx.key] or {}).count or 0
         handler: icon: ({node, ctx}) ->
           node.style.backgroundImage = "url(/assets/img/emoji/#{ctx.key}.gif)"
-

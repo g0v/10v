@@ -24,10 +24,14 @@ block head
         background-repeat: no-repeat
         background-size: 100% 100%
     .emoji .count
+      flex: 1 0 auto
+      justify-content: end
       border-right: 1px solid #dddedf
       padding: .25em 1em
       font-weight: 700
       font-size: 1.66em
+      display: flex
+      align-items: center
     .links .entry
       display: flex
       align-items: center
@@ -57,7 +61,7 @@ block body
       .flex-grow-1.d-flex.align-items-center.justify-content-center.w-50
         div
           .emoji.d-flex.align-items-center.mb-3(ld-each="emoji")
-            .count(ld="count")
+            .count(ld="count"): .ld.ld-spin.ld-spinner
             .icon: div(ld="icon")
             
 
