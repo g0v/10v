@@ -430,7 +430,7 @@ pug_html = pug_html + "\u003Cdiv\u003E";
 ;pug_debug_line = 44;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv\u003E";
 ;pug_debug_line = 45;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cimg style=\"width:128px;\" src=\"\u002Fassets\u002Fimg\u002Flogo\u002Fdraft.gif\"\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cimg style=\"margin-top:-32px;width:128px;\" src=\"\u002Fassets\u002Fimg\u002Flogo\u002Fdraft.gif\"\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 46;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"text-lg links\"\u003E";
 ;pug_debug_line = 47;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
