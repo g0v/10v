@@ -1,7 +1,6 @@
 ({core}) <- ldc.register <[core navtop]>, _
 <- core.init!then _
 <-(->it.apply core) _
-
 @view = {}
 @view.panel = new ldview do
   root: document.body

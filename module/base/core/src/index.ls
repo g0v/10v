@@ -1,11 +1,26 @@
-ldc.register \core, <[]>, ->
-  init: proxise.once ->
-    @ <<<
-      global: {}
-      user: {}
+servebase =
+  corectx: (cb) ->
+    new Promise (res, rej) ->
+      ret = ldc.register <[core]>, (o) ->
+        o.core.init!
+          .then -> cb.apply o.core, [o]
+          .then res
+          .catch rej
+      ldc.init ret
+  config: (o = {}) ->
+    if @_inited =>
+      console.warn """
+      [@servebase/core] `servebase.config` is called after `@servebase/core` is initialized.
+      [@servebase/core] This may lead to inconsistent behavior.
+      """
+    @_cfg = o
+  _init: ->
+    servebase._inited = true
+    @_cfg = servebase._cfg or {}
+    @ <<< global: {}, user: {}
     @ <<<
       zmgr: new zmgr!
-      manager: new block.manager do
+      manager: @_cfg.manager or new block.manager do
         registry: ({ns, name, version, path, type}) ->
           path = path or if type == \block => \index.html
           else if type => "index.min.#type" else 'index.min.js'
@@ -26,7 +41,7 @@ ldc.register \core, <[]>, ->
       auth: new auth manager: @manager, zmgr: @zmgr, loader: @loader
       erratum: new erratum handler: err
 
-    ldc.action \ldcvmgr, @ldcvmgr
+    if ldc? => ldc.action \ldcvmgr, @ldcvmgr
 
     @update = (g) -> @ <<< {global: g, user: (g.user or {})}
     @auth.on \server-down, @error
@@ -58,20 +73,14 @@ ldc.register \core, <[]>, ->
         @user = g.user
         @captcha.init g.captcha
       .then ~>
-        @auth.on \change, (g) ~> @update g 
+        @auth.on \change, (g) ~> @update g
         # prepare authpanel. involving @plotdb/block creation.
         # should delay until we really have to trigger ui
         @
 
-servebase =
-  corectx: (cb) ->
-    new Promise (res, rej) ->
-      ret = ldc.register <[core]>, (o) ->
-        o.core.init!
-          .then -> cb.apply o.core, [o]
-          .then res
-          .catch rej
-      ldc.init ret
+ldc.register \core, <[corecfg]>, ({corecfg}) ->
+  if corecfg? => servebase.config corecfg
+  init: proxise.once -> servebase._init.apply @
 
 if module? => module.exports = servebase
 else if window? => window.servebase = servebase
