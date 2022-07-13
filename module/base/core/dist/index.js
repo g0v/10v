@@ -24,6 +24,9 @@
       var err, this$ = this;
       servebase._inited = true;
       this._cfg = servebase._cfg || {};
+      if (typeof this._cfg === 'function') {
+        this._cfg = this._cfg();
+      }
       this.global = {};
       this.user = {};
       this.zmgr = new zmgr();

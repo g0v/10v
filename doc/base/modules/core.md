@@ -63,8 +63,10 @@ However, building a similar module from scratch may be kinda a redundant work. T
  - with `corecfg` ldc module, which is the dependency of `core` ldc module.
  - config with `servebase.config`.
 
-`corecfg` (or the `opt` passed to `servebase.config`) should return an object with following fields:
+Both the option in `servebase.config` or the `corecfg` ldc module are something with the same definition as below:
 
- - `manager`: a `@plotdb/block` block manager. Optional, it will replace the default manager if provided.
+ - an object. In this case, it should be an object with following fields:
+   - `manager`: a `@plotdb/block` block manager. Optional, it will replace the default manager if provided.
+ - a function. In this case, it will be called with `core` context and should return an object defined above.
 
 `servebase.config` should always be called only once and before any possible core initialization to prevent inconsistent behavior.

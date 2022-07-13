@@ -15,8 +15,13 @@ servebase =
       """
     @_cfg = o
   _init: ->
+    # _init is usually called with provided context (the core context, instead of `servebase`),
+    # so we have to access `servebase` directly with its name.
     servebase._inited = true
     @_cfg = servebase._cfg or {}
+    # similarly, corecfg will be called with `this` as its context
+    # so it can access core context.
+    if typeof(@_cfg) == \function => @_cfg = @_cfg!
     @ <<< global: {}, user: {}
     @ <<<
       zmgr: new zmgr!
