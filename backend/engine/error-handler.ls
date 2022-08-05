@@ -10,6 +10,13 @@ handler = (err, req, res, next) ->
   # 4. log all unexpected error.
   try
     if !err => return next!
+    # SESSION corrupted, usually caused by a duplicated session id
+    if err.code == \SESSIONCORRUPTED =>
+      aux.clear-cookie req, res
+      err = lderror 1029
+      # DUPSESSIONID is a rare and strange error.
+      # we should log it until we have confidence that this is solved correctly.
+      err.log = true
     # delegate csrf token mismatch to lderror handling
     if err.code == \EBADCSRFTOKEN => err = lderror 1005
     err.uuid = suuid!

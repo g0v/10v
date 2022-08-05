@@ -183,6 +183,10 @@
           }
           return lc.global;
         })['catch'](function(e){
+          console.log(">", lderror(e));
+          if (lderror.id(e) === 1029) {
+            return Promise.reject(e);
+          }
           e.name = 'lderror';
           e.id = 1007;
           this$.fire('error', e);

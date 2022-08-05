@@ -176,6 +176,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.use @middleware.csrf = csurf!
 
         app.use \/api, @route.api
+        # note that some route may be hardcoded directly by `auth(...)`.
+        # we have to patch `@servebase/auth/lib` if we need to change auth api entry point
         app.use \/api/auth, @route.auth
         app.use \/api/consent, @route.consent
 

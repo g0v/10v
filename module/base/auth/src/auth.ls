@@ -101,6 +101,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
         return lc.global
 
       .catch (e) ~>
+        if lderror.id(e) == 1029 => return Promise.reject e
         e <<< {name: \lderror, id: 1007}
         @fire \error, e
         console.log "server down: ", e

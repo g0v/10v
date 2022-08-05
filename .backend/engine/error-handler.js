@@ -15,6 +15,11 @@
         if (!err) {
           return next();
         }
+        if (err.code === 'SESSIONCORRUPTED') {
+          aux.clearCookie(req, res);
+          err = lderror(1029);
+          err.log = true;
+        }
         if (err.code === 'EBADCSRFTOKEN') {
           err = lderror(1005);
         }
