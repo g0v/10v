@@ -33,6 +33,7 @@ servebase =
             if name in <[error cover]> => return "/modules/#name/#{path or 'index.html'}"
             return "/modules/block/#name/#{path or 'index.html'}"
           "/assets/lib/#{name}/#{version or 'main'}/#{path}"
+    ldcover.zmgr @zmgr
     @ <<<
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash

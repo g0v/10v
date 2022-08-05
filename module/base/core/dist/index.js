@@ -46,6 +46,7 @@
           return "/assets/lib/" + name + "/" + (version || 'main') + "/" + path;
         }
       });
+      ldcover.zmgr(this.zmgr);
       this.loader = new ldloader({
         className: "ldld full",
         autoZ: true,
