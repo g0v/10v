@@ -81,11 +81,29 @@ block body
         hr
         p #零宇宙大爆炸短講、表演、開放工作坊、闖關小遊戲熱情徵件中！即日起至 9/15 截止！
 
-        .d-flex.g-2
+        .d-flex.g-2.mb-2
           a.btn.btn-primary(href="https://forms.gle/bRSmmUAqSmd2ZbQK9") 提案「短講」
           a.btn.btn-primary(href="https://forms.gle/LCxF9BepH1mwxrYD6") 提案「表演」
           a.btn.btn-primary(href="https://forms.gle/RPyvNxtFSgE7Z8TD8") 提案「開放工作坊」
+        .d-flex.g-2.mb-2
           a.btn.btn-primary(href="https://forms.gle/DVAVk4cAoDZbL8e7A") 提案「闖關小遊戲」
+          a.btn.vivid(href="https://g0v.github.io/10v-points/") 看闖關小遊戲範例
+        style(type="text/css"): :stylus
+          @keyframes vivid {
+            0% { background-position: 0px 0 }
+            100% { background-position: 300px 0}
+          }
+          .vivid
+            color: #fff
+            background: #40E0D0
+            background-image: linear-gradient(90deg, #3b7, #16d, #3b7)
+            background-size: 300px 100px
+            animation: vivid 1s linear infinite
+            text-shadow: 0 0 3px rgba(255,255,0,.8)
+          .vivid:hover
+            color: #fff
+
+
 
       .sect
         h2 什麼是 g0v 零時政府
