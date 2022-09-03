@@ -1,5 +1,6 @@
 extends /base.pug
 block head
+  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
   link(rel="preconnect",href="https://fonts.googleapis.com")
   link(rel="preconnect",href="https://fonts.gstatic.com",crossorigin)
   link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700&family=Roboto&display=swap",rel="stylesheet")
@@ -100,6 +101,11 @@ block head
         .btns { transform: none }
       }
     }
+    .btn-list {
+      display: flex
+      flex-wrap: wrap
+      gap: .75em
+    }
 
 block body
   
@@ -113,12 +119,12 @@ block body
       div
         .btns.d-inline-blokc
           .mb-1 想參與嗎？現在就提案：
-          .d-flex.g-2.mb-2
+          .btn-list.mb-2
             +exbtn("https://forms.gle/bRSmmUAqSmd2ZbQK9").btn-hero 短講
             +exbtn("https://forms.gle/LCxF9BepH1mwxrYD6").btn-hero 表演
             +exbtn("https://forms.gle/RPyvNxtFSgE7Z8TD8").btn-hero 開放工作坊
             +exbtn("https://forms.gle/DVAVk4cAoDZbL8e7A").btn-hero 闖關小遊戲
-            +exbtn("https://g0v.github.io/10v-points/").vivid 看闖關小遊戲範例
+            +exbtn("https://g0v.github.io/10v-points/").vivid 看闖關遊戲範例
 
   .w-1024.rwd.mx-auto: .row
     .col.d-flex.justify-content-center: div
@@ -199,11 +205,11 @@ block body
   .w-100.p-4.footer
     .w-1024.rwd.mx-auto
       hr
-      .d-flex.g-4.align-items-end.justify-content-center
+      .d-flex.g-4.align-items-end.justify-content-center.flex-wrap
         .font-weight-bold 零宇宙大爆炸
         .text-sm 主辦 / 零時政府零宇宙艦隊
         .text-sm 協辦 / 社會創新實驗中心、g0v零時政府揪松團
-      .d-flex.justify-content-center.text-sm
+      .d-flex.justify-content-center.text-sm.flex-wrap
         .m-2.entry #[i.i-link]#[a(href="https://g0v.hackmd.io/@eaKkAb8HRjOKJ4erd2STnA/10Anni-Party/https%3A%2F%2Fg0v.hackmd.io%2FMpTtG8xSTwqS6TlCM-b6VA") 生日趴總表]
         .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") 活動報名]
         .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") Call for Porjects]
