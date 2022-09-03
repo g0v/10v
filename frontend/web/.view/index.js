@@ -526,7 +526,7 @@ pug_html = pug_html + "\u003Cdiv class=\"sect\"\u003E";
 ;pug_debug_line = 137;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cp\u003E";
 ;pug_debug_line = 137;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "地球曆上，g0v 零時政府從 0 走到 10，度過了十個公轉週期。宇宙曆上，零時空旅人從鄉民變身為沒有人，經歷了 53 次黑客松、3 次高峰會、100+ 小松與餐聚、∞ 次線上協作。並且穿梭在選舉監督、街頭抗爭、救災演習、環境保護、語言復振、教育翻轉、闢謠舉報、疫情協作的多重宇宙空間。地球曆 2022 年 10 月 23 日，g0v 零時政府準備度過十歲生日。散佈在各星系宇宙填坑打怪的零時空旅人們，將藉由「零宇宙大爆炸」穿越前往地球坐標 25.03, 121.54，在交會的時空中，見證從 ∅ (無) 的過去到 ∞ (無限大) 的未來！\u003C\u002Fp\u003E";
+pug_html = pug_html + "地球曆上，g0v 零時政府從 0 走到 10，度過了十個公轉週期。宇宙曆上，零時空旅人從鄉民變身為沒有人，經歷了 53 次黑客松、4 次高峰會、100+ 小松與餐聚、∞ 次線上協作。並且穿梭在選舉監督、街頭抗爭、救災演習、環境保護、語言復振、教育翻轉、闢謠舉報、疫情協作的多重宇宙空間。地球曆 2022 年 10 月 23 日，g0v 零時政府準備度過十歲生日。散佈在各星系宇宙填坑打怪的零時空旅人們，將藉由「零宇宙大爆炸」穿越前往地球坐標 25.03, 121.54，在交會的時空中，見證從 ∅ (無) 的過去到 ∞ (無限大) 的未來！\u003C\u002Fp\u003E";
 ;pug_debug_line = 139;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cp\u003E";
 ;pug_debug_line = 139;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
