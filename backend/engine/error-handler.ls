@@ -14,7 +14,7 @@ handler = (err, req, res, next) ->
     if err.code == \SESSIONCORRUPTED =>
       aux.clear-cookie req, res
       err = lderror 1029
-      # DUPSESSIONID is a rare and strange error.
+      # SESSIONCORRUPTED is a rare and strange error.
       # we should log it until we have confidence that this is solved correctly.
       err.log = true
     # delegate csrf token mismatch to lderror handling
