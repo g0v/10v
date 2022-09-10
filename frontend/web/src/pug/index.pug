@@ -1,6 +1,36 @@
 extends /base.pug
-block head
+block prehead
+  -
+    var meta = {
+      url: "https://10th.g0v.tw",
+      title: "零宇宙大爆炸 - 零時政府 g0v 十週年生日派對於台北的社會創新實驗中心",
+      description: "零時政府十週年了！「零宇宙大爆炸」將以生日派對的形式，舉辦在台北的社會創新實驗中心，透過短講、表演、開放工作坊、闖關遊戲、和源力不絕的生日蛋糕與美食，我們邀請「沒有人」化身為「零時空旅人」一同來回顧 g0v 的第一個十年，並且想像第二個、第三個、第 n 個十年！",
+      thumbnail: "https://10th.g0v.tw/assets/img/thumb.png",
+      thumb: {
+        type: "image/png",
+        width: "1200",
+        height: "630"
+      }
+    };
   meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+  meta(property="og:url", content=meta.url)
+  meta(name="description", content=meta.description)
+  meta(property="og:title", content=meta.title)
+  meta(property="og:description", content=meta.description)
+  meta(property="og:locale",content="zh_TW")
+  meta(property="og:image",content=meta.thumbnail)
+  meta(property="og:image:type",content=meta.thumb.type || "image/jpeg")
+  meta(property="og:image:width",content=meta.thumb.width || "1200")
+  meta(property="og:image:height",content=meta.thumb.height || "630")
+  meta(property="og:type", content=meta.ogtype || "website")
+  meta(name="twitter:card",content=meta.twtcardtype || "summary")
+  meta(name="twitter:site",content="@g0v.tw")
+  meta(name="twitter:title",content=meta.title)
+  meta(name="twitter:description",content=meta.description)
+  meta(name="twitter:creator",content="@g0v.tw")
+  meta(name="twitter:image",content=meta.thumbnail)
+  link(rel="icon",type="image/x-icon",href="/favicon.ico")
+block head
   link(rel="preconnect",href="https://fonts.googleapis.com")
   link(rel="preconnect",href="https://fonts.gstatic.com",crossorigin)
   link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700&family=Roboto&display=swap",rel="stylesheet")
