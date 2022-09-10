@@ -354,7 +354,7 @@ pug_html = pug_html + "\u003Cmeta name=\"twitter:creator\" content=\"@g0v.tw\"\u
 ;pug_debug_line = 31;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cmeta" + (" name=\"twitter:image\""+pug_attr("content", meta.thumbnail, true, true)) + "\u003E";
 ;pug_debug_line = 32;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Clink rel=\"icon\" type=\"image\u002Fx-icon\" href=\"\u002Ffavicon.ico\"\u003E";
+pug_html = pug_html + "\u003Clink rel=\"icon\" type=\"image\u002Fpng\" href=\"\u002Ffavicon.png\"\u003E";
 ;pug_debug_line = 9;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fg0v\u002F10v\u002Ffrontend\u002Fweb\u002Fsrc\u002Fpug\u002Fbase.pug";
 pug_mixins["css"]([
       {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
