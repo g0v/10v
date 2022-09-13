@@ -12,36 +12,8 @@ block prehead
         height: "630"
       }
     };
-  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
-  meta(property="og:url", content=meta.url)
-  meta(name="description", content=meta.description)
-  meta(property="og:title", content=meta.title)
-  meta(property="og:description", content=meta.description)
-  meta(property="og:locale",content="zh_TW")
-  meta(property="og:image",content=meta.thumbnail)
-  meta(property="og:image:type",content=meta.thumb.type || "image/jpeg")
-  meta(property="og:image:width",content=meta.thumb.width || "1200")
-  meta(property="og:image:height",content=meta.thumb.height || "630")
-  meta(property="og:type", content=meta.ogtype || "website")
-  meta(name="twitter:card",content=meta.twtcardtype || "summary")
-  meta(name="twitter:site",content="@g0v.tw")
-  meta(name="twitter:title",content=meta.title)
-  meta(name="twitter:description",content=meta.description)
-  meta(name="twitter:creator",content="@g0v.tw")
-  meta(name="twitter:image",content=meta.thumbnail)
-  link(rel="icon",type="image/png",href="/favicon.png")
 block head
-  link(rel="preconnect",href="https://fonts.googleapis.com")
-  link(rel="preconnect",href="https://fonts.gstatic.com",crossorigin)
-  link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700&family=Roboto&display=swap",rel="stylesheet")
-
   style(type="text/css"): :stylus
-    html, body
-      width: 100%
-      margin: 0
-      padding: 0
-      font-family: 'Noto Sans TC', 'Roboto', sans-serif;
-      font-size: 22px
     body
       background: url(/assets/img/star.svg) right bottom fixed no-repeat;
       background-size: 350px

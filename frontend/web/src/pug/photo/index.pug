@@ -1,0 +1,39 @@
+extends /base.pug
+block prehead
+  -
+    var meta = {
+      url: "https://10th.g0v.tw",
+      title: "零宇宙大爆炸 - 零時政府 g0v 十週年生日派對於台北的社會創新實驗中心",
+      description: "零時政府十週年了！「零宇宙大爆炸」將以生日派對的形式，舉辦在台北的社會創新實驗中心，透過短講、表演、開放工作坊、闖關遊戲、和源力不絕的生日蛋糕與美食，我們邀請「沒有人」化身為「零時空旅人」一同來回顧 g0v 的第一個十年，並且想像第二個、第三個、第 n 個十年！",
+      thumbnail: "https://10th.g0v.tw/assets/img/thumb.png",
+      thumb: {
+        type: "image/png",
+        width: "1200",
+        height: "630"
+      }
+    };
+
+block head
+  style(type="text/css"): :stylus
+    html, body { width: 100%; height: 100% }
+    .wall
+      position: absolute
+      top: 0
+      left: 0
+      transition: opacity .35s linear
+      opacity: 0
+      background-size: cover
+      background-position: center center
+    .wall.active
+      position: absolute
+      top: 0
+      left: 0
+      opacity: 1
+
+block body
+  .w-100.h-100.bg-dark
+    .w-100.h-100.wall(ld="wall",data-name="0")
+    .w-100.h-100.wall(ld="wall",data-name="1")
+
+block script
+  script(type="module"): include:lsc index.ls
