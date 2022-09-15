@@ -65,10 +65,12 @@
           return;
         }
         root = path.resolve(path.join(webroot, path.resolve(path.join('/', d.path))));
-        console.log("deploy " + url + " to " + root + " ...");
+        console.log("[deploy] " + url + ": fetch to " + root + " ...");
         return deploy((ref$ = {
           root: root
-        }, ref$.url = d.url, ref$.branch = d.branch, ref$.username = d.username, ref$.password = d.password, ref$));
+        }, ref$.url = d.url, ref$.branch = d.branch, ref$.username = d.username, ref$.password = d.password, ref$)).then(function(){
+          return console.log("[deploy] " + url + ": done.");
+        });
       });
     });
   });

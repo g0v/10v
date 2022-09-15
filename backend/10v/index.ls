@@ -43,6 +43,7 @@ backend.route.extapi.post \/deploy, (req, res) ->
     if !hmac-digest(req.headers['x-hub-signature'], req.raw-body, d.secret) => return
     if !d.path => return
     root = path.resolve(path.join(webroot, path.resolve(path.join('/', d.path))))
-    console.log "deploy #url to #root ..."
+    console.log "[deploy] #url: fetch to #root ..."
     deploy({root} <<< d{url, branch, username, password})
+      .then -> console.log "[deploy] #url: done." 
 
