@@ -1,4 +1,4 @@
-require! <[fs path crypto]>
+require! <[fs fs-extra path crypto]>
 isogit = require "isomorphic-git"
 http = require "isomorphic-git/http/node"
 (backend) <- (->module.exports = it)  _
@@ -23,7 +23,7 @@ deploy = ({root, url, branch, username, password}) ->
     fs, http,
     dir: root
     url: url
-    ref: branch or 'master'
+    ref: branch or 'gh-pages'
     depth: 1
     singleBranch: true
     # pull = fetch + merge, and ask for author name.
