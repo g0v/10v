@@ -1,0 +1,9 @@
+name: g10v
+ip: 127.0.0.1
+port: 9306
+hostname: 10th.g0v.tw
+root: /home/web/projects/10v/server/frontend/web/static/
+cert:
+  crt: /etc/letsencrypt/live/10th.g0v.tw/fullchain.pem
+  key: /etc/letsencrypt/live/10th.g0v.tw/privkey.pem
+nginxCfgDir: /etc/nginx
