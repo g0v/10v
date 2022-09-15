@@ -69,7 +69,16 @@ base = do
     if ((val = req.params.key) and !isNaN(val) and val > 0) => return next!
     next new lderror(400)
 
-  clear-cookie: (res) ->
+  clear-cookie: (req, res) ->
+    domain = "#{req.hostname}".split('.').filter(->it)
+    for i from 0 til domain.length - 1 =>
+      d = domain.slice i .join('.')
+      res.clearCookie \connect.sid, {path:'/', domain: d }
+      res.clearCookie \global, {path:'/', domain: d}
+      res.clearCookie \connect.sid, {path:'/', domain: ".#d" }
+      res.clearCookie \global, {path:'/', domain: ".#d" }
+      res.clearCookie \connect.sid, {path:'/', domain: "www.#d" }
+      res.clearCookie \global, {path:'/', domain: "www.#d" }
     res.clearCookie \connect.sid, {path:'/'}
     res.clearCookie \global, {path:'/'}
 

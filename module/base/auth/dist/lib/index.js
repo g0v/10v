@@ -221,6 +221,18 @@
         done(null, u);
       });
     });
+    app.use(function(req, res, next){
+      var c, cs;
+      c = (req.headers || {}).cookie || '';
+      cs = c.split(/;/).filter(function(it){
+        return /^connect.sid=/.exec(it.trim());
+      });
+      return cs.length > 1
+        ? next({
+          code: 'SESSIONCORRUPTED'
+        })
+        : next();
+    });
     app.use(backend.session = session = expressSession({
       secret: config.session.secret,
       resave: true,
@@ -281,20 +293,20 @@
       req.logout();
       return res.send();
     });
-    x$.post('/reset', function(req, res){
-      aux.clearCookie(res);
-      req.logout();
-      return res.send();
-    });
     app.get('/auth', function(req, res){
-      aux.clearCookie(res);
+      aux.clearCookie(req, res);
       req.logout();
       return res.render("auth/index.pug");
     });
     app.get('/auth/reset', function(req, res){
-      aux.clearCookie(res);
+      aux.clearCookie(req, res);
       req.logout();
       return res.render("auth/index.pug");
+    });
+    app.post('/api/auth/reset', function(req, res){
+      aux.clearCookie(req, res);
+      req.logout();
+      return res.send();
     });
     reset(backend);
     verify(backend);

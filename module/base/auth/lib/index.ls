@@ -126,6 +126,13 @@ passport.serializeUser (u,done) !->
 passport.deserializeUser (v,done) !->
   db.user-store.deserialize v .then (u = {}) !-> done null, u
 
+# prevent dupsessionid which may block user from correctly login.
+# see https://github.com/expressjs/session/issues/881
+app.use (req, res, next) ->
+  c = ((req.headers or {}).cookie or '')
+  cs = c.split /;/ .filter -> /^connect.sid=/.exec(it.trim!)
+  return if cs.length > 1 => next {code: \SESSIONCORRUPTED} else next!
+
 app.use backend.session = session = express-session do
   secret: config.session.secret
   resave: true
@@ -154,13 +161,9 @@ route.auth
     req.logIn user, (err) !-> if err => next(err) else res.send!
     )(req, res, next)
   ..post \/logout, (req, res) -> req.logout!; res.send!
-  ..post \/reset, (req, res) ->
-    aux.clear-cookie res
-    req.logout!
-    res.send!
 
 app.get \/auth, (req, res) ->
-  aux.clear-cookie res
+  aux.clear-cookie req, res
   req.logout!
   # by rendering instead of redirecting, we can keep the URL as is.
   # in this case a reload after authenticaed will help refresh that page
@@ -169,9 +172,15 @@ app.get \/auth, (req, res) ->
 
 # identical to `/auth` but if it's more semantic clear.
 app.get \/auth/reset, (req, res) ->
-  aux.clear-cookie res
+  aux.clear-cookie req, res
   req.logout!
   res.render "auth/index.pug"
+
+# this must not be guarded by csrf since it's used to recover csrf token.
+app.post \/api/auth/reset, (req, res) ->
+  aux.clear-cookie req, res
+  req.logout!
+  res.send!
 
 reset backend
 verify backend

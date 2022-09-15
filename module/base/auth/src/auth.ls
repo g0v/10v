@@ -43,6 +43,9 @@ auth.prototype = Object.create(Object.prototype) <<< do
       .then ~> @fire \logout
       .then ~> @ui.loader.off!
       .catch (e) ~> @fire \error, e
+  reset: ->
+    @ui.loader.on!
+    window.location.href = "/auth/reset"
 
   # ensure user is authed. shorthand and for readbility for auth.get({authed-only:true})
   ensure: (opt = {}) -> @get(opt <<< {authed-only: true})
@@ -98,6 +101,7 @@ auth.prototype = Object.create(Object.prototype) <<< do
         return lc.global
 
       .catch (e) ~>
+        if lderror.id(e) == 1029 => return Promise.reject e
         e <<< {name: \lderror, id: 1007}
         @fire \error, e
         console.log "server down: ", e

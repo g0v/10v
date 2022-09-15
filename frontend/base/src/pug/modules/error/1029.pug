@@ -1,0 +1,13 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-name="500",data-lock="true"): .base.w-640.rwd: .inner.card: .card-body: .p-4.my-2
+  .text-center.mb-4
+    h1.font-weight-bold Session Updated
+    p.text-muted lderror Code: 1029
+  div
+    p There is something wrong about the data stored in your session information. Our service has detected this issue and has tried to fix it, you may try again with your last action after reloading this page to see if this issue has been resolved.
+
+    p If this keeps happening, you can also #[a(href="lda.ldcvmgr.toggle('contact')") contact us] and let us help you.
+    br
+    .row
+      .col-sm: .btn.btn-block.btn-primary.btn-lg(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+      .col-sm: .btn.btn-block.btn-outline-primary.btn-lg(onclick="window.location.reload()") Reload

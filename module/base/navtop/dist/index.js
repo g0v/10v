@@ -47,6 +47,12 @@
                 return auth.logout().then(function(){
                   return this$.update();
                 });
+              },
+              "set-lng": function(arg$){
+                var node, views;
+                node = arg$.node, views = arg$.views;
+                core.i18n.changeLanguage(node.getAttribute('data-name'));
+                return views[0].render('lng');
               }
             }
           },
@@ -56,6 +62,15 @@
             },
             username: function(){
               return this$.user.username || 'n/a';
+            },
+            lng: function(){
+              var lng;
+              lng = core.i18n.language;
+              return view.getAll('set-lng').filter(function(n){
+                return lng === n.getAttribute('data-name');
+              }).map(function(n){
+                return n.getAttribute('data-alias') || n.innerText.trim();
+              })[0] || lng;
             }
           },
           handler: {
@@ -99,9 +114,11 @@
           dotst[0].map(function(c){
             return bar.classList.toggle(c, n.isIntersecting);
           });
-          return dotst[1].map(function(c){
-            return bar.classList.toggle(c, !n.isIntersecting);
-          });
+          if (dotst[1]) {
+            return dotst[1].map(function(c){
+              return bar.classList.toggle(c, !n.isIntersecting);
+            });
+          }
         }, {
           threshold: 0.1
         }).observe(tstTgt);

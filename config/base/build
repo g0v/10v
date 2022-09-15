@@ -8,9 +8,9 @@ if [ -z $ENV ]; then
   echo "usage: ./build <env-name> <cfg-name> <out-name>"
   echo
   echo "following files will be used:"
-  echo " - <env-name>.yaml ( use 'config' for demonstration config ) "
-  echo " - <cfg-name>.ngx ( default config.ngx )"
-  echo " - output to config/gen/nginx/<out-name>.ngx ( default config.ngx )"
+  echo " - <env-name> ( use 'nginx/config.yaml' for demonstration config ) "
+  echo " - <cfg-name> ( default config.ngx )"
+  echo " - output to config/gen/nginx/<out-name>.ngx ( default `config` )"
   echo
   echo "with proper config, a nginx config file will be generated at config/gen/nginx/<out-name>.ngx"
   echo
@@ -27,5 +27,5 @@ if [ -z $OUT ]; then
 fi
 
 mkdir -p ../gen/nginx
-npx tt -c $ENV.yaml -o ../gen/nginx/$OUT.ngx $CFG.ngx
-echo "config/gen/nginx/$OUT.ngx generated"
+npx tt -c $ENV -o ../gen/nginx/$OUT $CFG
+echo "<root>/config/gen/nginx/$OUT generated"

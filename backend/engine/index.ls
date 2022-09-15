@@ -1,4 +1,4 @@
-require! <[fs yargs express @plotdb/colors path pino lderror pino-http redis util body-parser csurf]>
+require! <[fs yargs express @plotdb/colors path pino lderror pino-http util body-parser csurf]>
 require! <[i18next-http-middleware]>
 require! <[@plotdb/srcbuild]>
 require! <[@plotdb/srcbuild/dist/view/pug]>
@@ -6,6 +6,7 @@ require! <[./error-handler ./redis-node ./mail-queue ./i18n ./aux ./db/postgresq
 require! <[@servebase/auth @servebase/consent @servebase/captcha]>
 
 libdir = path.dirname fs.realpathSync(__filename.replace(/\(js\)$/,''))
+rootdir = path.join(libdir, '../..')
 routes = fs.readdir-sync path.join(libdir, '..')
   .filter -> !(it in <[engine README.md]>)
   .map -> path.join(libdir, '..', it)
@@ -50,6 +51,7 @@ backend = (opt = {}) ->
     middleware: {} # middleware that are dynamically created with certain config, such as csurf, etc
     config: with-default(opt.config, default-config) # backend configuration
     feroot: if opt.config.base => "frontend/#{opt.config.base}" else 'frontend/base'
+    root: rootdir
     base: opt.config.base or 'base'
     server: null     # http.Server object, either created by express or from other lib
     app: null        # express application
@@ -87,6 +89,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
   start: ->
     Promise.resolve!
       .then ~>
+        @log-error = @log.child {module: \error}
         @log-server = @log.child {module: \server}
         @log-build = @log.child {module: \build}
         @log-mail = @log.child {module: \mail}
@@ -107,10 +110,14 @@ backend.prototype = Object.create(Object.prototype) <<< do
         i18n @config.i18n
       .then ~> @i18n = it
       .then ~>
+        if !(@config.redis and @config.redis.enabled) => return
+        @log-server.info "initialize redis connection ...".cyan
+        @store = new redis-node @config.redis{url}
+        @store.init!
+      .then ~>
         @db = new postgresql @
 
         @app = app = express!
-        @store = new redis-node!
         @log-server.info "initializing backend in #{app.get \env} mode".cyan
 
         app.disable \x-powered-by # Dont show server detail
@@ -169,6 +176,8 @@ backend.prototype = Object.create(Object.prototype) <<< do
         app.use @middleware.csrf = csurf!
 
         app.use \/api, @route.api
+        # note that some route may be hardcoded directly by `auth(...)`.
+        # we have to patch `@servebase/auth/lib` if we need to change auth api entry point
         app.use \/api/auth, @route.auth
         app.use \/api/consent, @route.consent
 
@@ -178,7 +187,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         app.use \/, express.static(path.join __dirname, '../..', @feroot, 'static') # static file fallback
         app.use (req, res, next) ~> next new lderror(404) # nothing match - 404
-        app.use error-handler # error handler
+        app.use error-handler(@) # error handler
 
         @listen!
       .then ~>

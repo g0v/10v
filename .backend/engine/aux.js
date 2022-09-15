@@ -73,7 +73,39 @@
       }
       return next(new lderror(400));
     },
-    clearCookie: function(res){
+    clearCookie: function(req, res){
+      var domain, i$, to$, i, d;
+      domain = (req.hostname + "").split('.').filter(function(it){
+        return it;
+      });
+      for (i$ = 0, to$ = domain.length - 1; i$ < to$; ++i$) {
+        i = i$;
+        d = domain.slice(i).join('.');
+        res.clearCookie('connect.sid', {
+          path: '/',
+          domain: d
+        });
+        res.clearCookie('global', {
+          path: '/',
+          domain: d
+        });
+        res.clearCookie('connect.sid', {
+          path: '/',
+          domain: "." + d
+        });
+        res.clearCookie('global', {
+          path: '/',
+          domain: "." + d
+        });
+        res.clearCookie('connect.sid', {
+          path: '/',
+          domain: "www." + d
+        });
+        res.clearCookie('global', {
+          path: '/',
+          domain: "www." + d
+        });
+      }
       res.clearCookie('connect.sid', {
         path: '/'
       });
