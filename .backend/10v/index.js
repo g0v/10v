@@ -10,7 +10,7 @@
   (function(it){
     return module.exports = it;
   })(function(backend){
-    var db, config, ref$, api, app, hmacDigest, deploy, webroot;
+    var db, config, ref$, api, app, hmacDigest, deploy, reporoot;
     db = backend.db, config = backend.config, ref$ = backend.route, api = ref$.api, app = ref$.app;
     hmacDigest = function(sig, content, key){
       var v1, v2, e;
@@ -47,7 +47,7 @@
       };
       return isogit.clone(opt);
     };
-    webroot = path.join(process.cwd(), 'frontend/web/static');
+    reporoot = path.join(process.cwd(), 'frontend/web/repo');
     return backend.route.extapi.post('/deploy', function(req, res){
       var url, ref$, branch;
       url = ((ref$ = req.body || (req.body = {})).repository || (ref$.repository = {})).html_url;
@@ -64,7 +64,7 @@
         if (!d.path) {
           return;
         }
-        root = path.resolve(path.join(webroot, path.resolve(path.join('/', d.path))));
+        root = path.resolve(path.join(reporoot, path.resolve(path.join('/', d.path))));
         console.log("[deploy] " + url + ": fetch to " + root + " ...");
         return deploy((ref$ = {
           root: root

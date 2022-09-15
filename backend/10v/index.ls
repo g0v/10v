@@ -33,7 +33,7 @@ deploy = ({root, url, branch, username, password}) ->
   }
   isogit.clone opt
 
-webroot = path.join(process.cwd!, 'frontend/web/static')
+reporoot = path.join(process.cwd!, 'frontend/web/repo')
 backend.route.extapi.post \/deploy, (req, res) ->
   url = req.{}body.{}repository.html_url
   branch = (/^refs\/heads\/(.+)$/.exec(req.body.ref or '') or []).1
@@ -42,7 +42,7 @@ backend.route.extapi.post \/deploy, (req, res) ->
   config.{}webhook.[]list.map (d) ->
     if !hmac-digest(req.headers['x-hub-signature'], req.raw-body, d.secret) => return
     if !d.path => return
-    root = path.resolve(path.join(webroot, path.resolve(path.join('/', d.path))))
+    root = path.resolve(path.join(reporoot, path.resolve(path.join('/', d.path))))
     console.log "[deploy] #url: fetch to #root ..."
     deploy({root} <<< d{url, branch, username, password})
       .then -> console.log "[deploy] #url: done." 

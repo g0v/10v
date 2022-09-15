@@ -1,0 +1,80 @@
+upstream !{name}_api {
+  server !{ip}:!{port};
+}
+
+server {
+  listen 443 ssl;
+  #listen 443 ssl http2;
+  # for IPv6
+  #listen [::]:443 ssl http2 ipv6only=on;
+  include !{nginxCfgDir}/mime.types;
+  server_name !{hostname};
+  server_tokens off;
+  ssl_certificate !{cert.crt};
+  ssl_certificate_key !{cert.key};
+  root !{root};
+
+  location = /err/490 {
+    error_page 490 /err/490.html;
+    return 490;
+  }
+
+  location ~ ^/ws$ {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_pass http://!{name}_api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_connect_timeout 30m;
+    proxy_send_timeout 30m;
+    proxy_read_timeout 30m;
+  }
+
+  # put at the top ( let the fallback location directive to try files. )
+  location ~ \.(?:ico|css|js|gif|jpe?g|png|svg|woff|ttf|otf)$ {
+    expires 1d;
+    add_header 'Pragma' 'public';
+    add_header 'Cache-Control' 'public';
+  }
+
+  location ~ ^/(.*)$ {
+    root !{root};
+    try_files /../repo/$1 /../repo/$1/index.html /$1 /$1/index.html @apiserver;
+  }
+
+  location @apiserver {
+
+    # i18n path - save locale in lng and store it in I18n-Locale header.
+    #             express server can config i18next-http-middleware to get lng from that header.
+    rewrite ^/intl/(?<lng>.*)/(.*) /$2 break;
+    proxy_set_header I18n-Locale $lng;
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_pass http://!{name}_api;
+
+    # we use location block instead of error_page directive to handle error 490
+    # because cookie wont pass through proxy_intercept_errors to error_page dir.
+    proxy_intercept_errors on;
+
+    proxy_redirect off;
+    #limit_req zone=api burst=7 nodelay;
+  }
+}
+
+server {
+  listen 80;
+  server_name !{hostname};
+  add_header Strict-Transport-Security "max-age=16070400; includeSubDomains";
+  location / {
+    if ($http_user_agent !~* (facebook) ) {
+      return 301 https://$host$request_uri;
+    }
+    root !{root};
+  }
+  #rewrite     ^   https://$server_name$request_uri? permanent;
+}
