@@ -3,7 +3,6 @@
   var fs, path, isogit, http;
   fs = require('fs');
   path = require('path');
-  isogit = require('isogit');
   isogit = require("isomorphic-git");
   http = require("isomorphic-git/http/node");
   (function(it){

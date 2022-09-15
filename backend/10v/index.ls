@@ -1,4 +1,4 @@
-require! <[fs path isogit]>
+require! <[fs path]>
 isogit = require "isomorphic-git"
 http = require "isomorphic-git/http/node"
 (backend) <- (->module.exports = it)  _
