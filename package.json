@@ -56,6 +56,7 @@
     "i18next": "^19.8.3",
     "i18next-fs-backend": "^1.0.7",
     "i18next-http-middleware": "^3.0.6",
+    "isomorphic-git": "^1.21.0",
     "js-yaml": "^3.14.0",
     "jsonwebtoken": "^8.5.1",
     "lderror": "^2.2.0",
