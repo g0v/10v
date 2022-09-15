@@ -108,6 +108,21 @@ block head
       gap: .75em
     }
 
+    @keyframes vivid {
+      0% { background-position: 0px 0 }
+      100% { background-position: 300px 0}
+    }
+    .vivid
+      color: #fff
+      background: #40E0D0
+      background-image: linear-gradient(90deg, #3b7, #16d, #3b7)
+      background-size: 300px 100px
+      animation: vivid 1s linear infinite
+      text-shadow: 0 0 3px rgba(255,255,0,.8)
+    .vivid:hover
+      color: #fff
+
+
 block body
   
   .hero.position-relative.w-100.d-flex.align-items-center.justify-content-left
@@ -117,7 +132,8 @@ block body
       mixin exbtn(link)
         a.btn(href=link,target="_blank",rel="noopener noreferrer")&attributes(attributes)
           block
-      div
+
+      //-div
         .btns.d-inline-blokc
           .mb-1 想參與嗎？現在就提案：
           .btn-list.mb-2
@@ -126,6 +142,12 @@ block body
             +exbtn("https://forms.gle/RPyvNxtFSgE7Z8TD8").btn-hero 開放工作坊
             +exbtn("https://forms.gle/DVAVk4cAoDZbL8e7A").btn-hero 闖關小遊戲
             +exbtn("https://g0v.github.io/10v-points/").vivid 看闖關遊戲範例
+
+      div
+        .btns.d-inline-blokc
+          .mb-1 想參與嗎？活動免費，現在就報名！：
+          .btn-list.mb-2
+            +exbtn("https://g0v-jothon.kktix.cc/events/g0v-hackath52n").vivid 前往活動報名頁面 KKTIX
 
   .w-1024.rwd.mx-auto: .row
     .col.d-flex.justify-content-center: div
@@ -153,8 +175,28 @@ block body
               li 穿梭過去、現在、未來的零時政府互動展 #∅時空穿梭
               li 每一個 Unconf 都是一個宇宙的 #∅時多重宇宙
               li 親子同樂，孕育未來的沒有人的 #超新星遊樂園
+          li
+            div 報名連結： #[a(href="https://g0v-jothon.kktix.cc/events/g0v-hackath52n") https://g0v-jothon.kktix.cc/events/g0v-hackath52n]
+            div 本活動為#[span.text-danger 免費參加]，名額有限別錯過囉！
+      .text-center
+        a.btn.btn-lg.vivid(href="https://g0v-jothon.kktix.cc/events/g0v-hackath52n",target="_blank",
+        rel="noopener noreferrer") 點我前往 KKTIX 活動報名頁面
+
+      +nbr(3)
+
 
       .sect
+        h3 交通資訊
+        p 社會創新實驗中心 有兩處入口：
+        ul
+          li 台北市大安區忠孝東路三段248巷 (捷運忠孝復興站走路6分鐘)
+          li 台北市大安區仁愛路三段99號 (捷運大安站走路10分鐘)
+        iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.8656609465384!2d121.53875451444651!3d25.03863268397022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a983817f600d%3A0xa055f2f16c67c77d!2z56S-5pyD5Ym15paw5a-m6amX5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1662263775538!5m2!1szh-TW!2stw",width="100%",height="450",style="border:0;",allowfullscreen="",loading="lazy",referrerpolicy="no-referrer-when-downgrade")
+        img.w-100.rwd(src="/assets/img/map.png")
+        br
+        h4 活動場地圖 ( 點擊看大圖 )
+        a(href="/assets/img/space-lg.png"): img.w-100(src="/assets/img/space.png")
+      //-.sect
         h2 沒有人一起來辦生日趴
         hr
         p #零宇宙大爆炸短講、表演、開放工作坊、闖關小遊戲熱情徵件中！即日起至 9/15 截止！
@@ -166,20 +208,6 @@ block body
         .d-flex.g-2.mb-2
           a.btn.btn-primary(href="https://forms.gle/DVAVk4cAoDZbL8e7A",target="_blank",rel="noopener noreferrer") 提案「闖關小遊戲」
           a.btn.vivid(href="https://g0v.github.io/10v-points/",target="_blank",rel="noopener noreferrer") 看闖關小遊戲範例
-        style(type="text/css"): :stylus
-          @keyframes vivid {
-            0% { background-position: 0px 0 }
-            100% { background-position: 300px 0}
-          }
-          .vivid
-            color: #fff
-            background: #40E0D0
-            background-image: linear-gradient(90deg, #3b7, #16d, #3b7)
-            background-size: 300px 100px
-            animation: vivid 1s linear infinite
-            text-shadow: 0 0 3px rgba(255,255,0,.8)
-          .vivid:hover
-            color: #fff
 
 
 
