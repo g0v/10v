@@ -1,4 +1,7 @@
-require! <[lderror @plotdb/suuid]>
+require! <[lderror @plotdb/suuid ./aux]>
+
+(backend) <- (->module.exports = it)  _
+{config} = backend
 
 handler = (err, req, res, next) ->
   # 1. custom error by various package - handle by case and wrapped in lderror
@@ -7,9 +10,21 @@ handler = (err, req, res, next) ->
   # 4. log all unexpected error.
   try
     if !err => return next!
+    # SESSION corrupted, usually caused by a duplicated session id
+    if err.code == \SESSIONCORRUPTED =>
+      aux.clear-cookie req, res
+      err = lderror 1029
+      # SESSIONCORRUPTED is a rare and strange error.
+      # we should log it until we have confidence that this is solved correctly.
+      err.log = true
     # delegate csrf token mismatch to lderror handling
     if err.code == \EBADCSRFTOKEN => err = lderror 1005
     err.uuid = suuid!
+    if backend.config.log.all-error =>
+      backend.log-error.debug(
+        {err: err <<< {_detail: user: (req.user or {}).key or 0, ip: aux.ip(req), url: req.originalUrl}}
+        "error logged in error handler (lderror id #{lderror.id(err)})"
+      )
     if lderror.id(err) =>
       # customized error - pass to frontend for them to handle
       # to log customized error, set `log` to true
@@ -40,4 +55,4 @@ handler = (err, req, res, next) ->
   req.log.error {err}, "unhandled exception occurred [URL: #{req.originalUrl}] #{if err.message => ': ' + err.message else ''} #{err.uuid}".red
   res.status 500 .send err{id, name, uuid}
 
-module.exports = handler
+return handler

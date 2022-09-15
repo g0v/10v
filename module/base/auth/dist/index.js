@@ -108,6 +108,10 @@
           return this$.fire('error', e);
         });
       },
+      reset: function(){
+        this.ui.loader.on();
+        return window.location.href = "/auth/reset";
+      },
       ensure: function(opt){
         opt == null && (opt = {});
         return this.get((opt.authedOnly = true, opt));
@@ -179,6 +183,10 @@
           }
           return lc.global;
         })['catch'](function(e){
+          console.log(">", lderror(e));
+          if (lderror.id(e) === 1029) {
+            return Promise.reject(e);
+          }
           e.name = 'lderror';
           e.id = 1007;
           this$.fire('error', e);

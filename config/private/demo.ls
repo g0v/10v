@@ -6,6 +6,9 @@ module.exports = do
     lng: <[en zh-TW]>
     ns: <[default]>
   base: 'base'
+  redis:
+    enabled: false
+    url: \redis://localhost:6379
   db:
     postgresql:
       host: \localhost # host.docker.internal
@@ -32,6 +35,8 @@ module.exports = do
       enabled: false
   log:
     level: \info
+    # when true, all errors handled in `@servebase/backend/error-handler` will be logged with `debug` level
+    all-error: false
   auth:
     google:
       clientID: '...'

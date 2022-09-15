@@ -1,17 +1,17 @@
-require! <[redis-clustr redis util]>
+require! <[redis util]>
 
 redis-node = (opt = {}) ->
   @opt = opt
   @evt-handler = {}
   @redis = redis.createClient opt
-  #@redis = new redis-clustr { servers: [{ ... }]}
   @redis.on \error, (err) ~> @fire \error, err
-  @get = util.promisify(@redis.get).bind(@redis)
-  @set = util.promisify(@redis.set).bind(@redis)
   @
 
 redis-node.prototype = Object.create(Object.prototype) <<< do
+  init: -> @redis.connect!
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
+  set: -> @redis.set.apply @redis, arguments
+  get: -> @redis.get.apply @redis, arguments
 
 module.exports = redis-node

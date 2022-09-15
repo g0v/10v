@@ -56,6 +56,7 @@ The constructed object provides following API: ( TODO: review and rename / refac
  - `ensure()`: make sure an user is logged in. prompt a auth panel if not
    - return a Promise that resolves the `global` object.
    - reject `lderror(1000)` if anyway we fail to ensure the user is logged in.
+ - `reset()`: reset user cookie by redirecting user to `/auth/reset`.
  - `set-ui`: change ui widget configured in constructor option `ui`.
  - `on(name, cb)`: listen to specific event `name` with callback function `cb`
  - `fire(name, ...args)`: fire event `name` with `args`.
