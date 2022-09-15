@@ -717,7 +717,7 @@ pug_html = pug_html + "\u003Chr\u003E";
 ;pug_debug_line = 205;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cp\u003E";
 ;pug_debug_line = 205;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "#零宇宙大爆炸短講、表演、開放工作坊、闖關小遊戲熱情徵件中！即日起至 9\u002F19 截止！\u003C\u002Fp\u003E";
+pug_html = pug_html + "#零宇宙大爆炸短講、表演、開放工作坊、闖關小遊戲熱情徵件中！即日起至 9\u002F18 23:59 截止！\u003C\u002Fp\u003E";
 ;pug_debug_line = 207;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"d-flex g-2 mb-2\"\u003E";
 ;pug_debug_line = 208;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
