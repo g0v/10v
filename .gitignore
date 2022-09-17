@@ -24,3 +24,4 @@ config/**/local.*
 !frontend/web
 frontend/web/static/assets/lib/*
 frontend/web/repo/*
+frontend/web/static/google*.html
