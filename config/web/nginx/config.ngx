@@ -40,9 +40,16 @@ server {
     try_files /../repo/$1 /$1 =404;
   }
 
+  location ~ ^/([^/]*)/(.*)$ {
+    root !{root};
+    # 404.html is for anuglar routing
+    try_files /../repo/$1/$2 /../repo/$1/$2/index.html /../repo/$1/404.html /$1/$2 /$1/$2/index.html @apiserver;
+  }
+
   location ~ ^/(.*)$ {
     root !{root};
-    try_files /../repo/$1 /../repo/$1/index.html /$1 /$1/index.html @apiserver;
+    # 404.html is for anuglar routing
+    try_files /$1 /$1/index.html @apiserver;
   }
 
   location @apiserver {
