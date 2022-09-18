@@ -380,7 +380,7 @@ pug_html = pug_html + "html,body{width:100%;margin:0;padding:0;font-family:'Noto
 ;pug_debug_line = 16;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cstyle type=\"text\u002Fcss\"\u003E";
 ;pug_debug_line = 16;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "body{background:url(\"\u002Fassets\u002Fimg\u002Fstar.svg\") right bottom fixed no-repeat;background-size:350px}.sect{margin-bottom:4em}p{font-weight:200}.emoji{cursor:pointer;border:1px solid #dddedf;border-radius:.5em;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:background .15s ease-in-out}.emoji:hover{background:#edeeef}.emoji .icon{padding:.25em 1em}.emoji .icon div{width:40px;height:40px;background-position:center center;background-repeat:no-repeat;background-size:100% 100%}.emoji .count{flex:1 0 auto;justify-content:end;border-right:1px solid #dddedf;padding:.25em 1em;font-weight:700;font-size:1.66em;display:flex;align-items:center}.links .entry{display:flex;align-items:center}.links i{margin-right:.5em;color:#06b;font-size:.75em}.links .i-unlink{color:#b60}.btn-hero{color:#000;background:#fff;border-color:#000}.hero{height:100vh;font-size:16px;background-size:contain;background-color:#202123;background-image:url(\"\u002Fassets\u002Fimg\u002Fvisual-animated.svg\");background-repeat:no-repeat;background-position:left center}.hero .btn{font-size:1em}.hero-inner{width:50%;margin-left:43%;background:rgba(32,33,35,0.5);padding:10px;border-radius:1em}.hero-inner h1{transform:rotate(-4deg);display:inline-block}.hero-inner .btns{transform:rotate(4deg) translate(0,16px)}.hero-inner .btn-join{transform:rotate(8deg) translate(0,16px)}.footer{background:rgba(255,255,255,0.7)}@media(max-width:1024px){.hero{background-size:cover}.hero-inner{text-align:center;background:rgba(32,33,35,0.85);padding:1.5em;box-shadow:0 5px 10px rgba(0,0,0,0.3);left:0;right:0;width:90%;margin:auto}.hero-inner h1{transform:none;display:block}.hero-inner .btns{transform:none}.hero-inner .btn-join{transform:none}}.btn-list{display:flex;flex-wrap:wrap;gap:.75em}.vivid{color:#fff;background:#40e0d0;background-image:linear-gradient(90deg,#3b7,#16d,#3b7);background-size:300px 100px;animation:vivid 1s linear infinite;text-shadow:0 0 3px rgba(255,255,0,0.8)}.vivid:hover{color:#fff}@-moz-keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}@-webkit-keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}@-o-keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}@keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}\u003C\u002Fstyle\u003E\u003C\u002Fhead\u003E";
+pug_html = pug_html + "body{background:url(\"\u002Fassets\u002Fimg\u002Fstar.svg\") right bottom fixed no-repeat;background-size:350px}.sect{margin-bottom:4em}p{font-weight:200}.emoji{cursor:pointer;border:1px solid #dddedf;border-radius:.5em;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:background .15s ease-in-out}.emoji:hover{background:#edeeef}.emoji .icon{padding:.25em 1em}.emoji .icon div{width:40px;height:40px;background-position:center center;background-repeat:no-repeat;background-size:100% 100%}.emoji .count{flex:1 0 auto;justify-content:end;border-right:1px solid #dddedf;padding:.25em 1em;font-weight:700;font-size:1.66em;display:flex;align-items:center}.links .entry{display:flex;align-items:center}.links i{margin-right:.5em;color:#06b;font-size:.75em}.links .i-unlink{color:#b60}.btn-hero{color:#000;background:#fff;border-color:#000}.hero{height:100vh;font-size:16px;background-size:contain;background-color:#202123;background-image:url(\"\u002Fassets\u002Fimg\u002Fvisual-animated.svg\");background-repeat:no-repeat;background-position:left center}.hero .btn{font-size:1em}.hero-inner{width:50%;margin-left:43%;background:rgba(32,33,35,0.5);padding:10px;border-radius:1em}.hero-inner h1{transform:rotate(-4deg);display:inline-block}.hero-inner .btns{transform:rotate(4deg) translate(0,16px)}.hero-inner .btn-join{transform:rotate(4deg) translate(0,4px)}.footer{background:rgba(255,255,255,0.7)}@media(max-width:1024px){.hero{background-size:cover}.hero-inner{text-align:center;background:rgba(32,33,35,0.85);padding:1.5em;box-shadow:0 5px 10px rgba(0,0,0,0.3);left:0;right:0;width:90%;margin:auto}.hero-inner h1{transform:none;display:block}.hero-inner .btns{transform:none}.hero-inner .btn-join{transform:none}}.btn-list{display:flex;flex-wrap:wrap;gap:.75em}.vivid{color:#fff;background:#40e0d0;background-image:linear-gradient(90deg,#3b7,#16d,#3b7);background-size:300px 100px;animation:vivid 1s linear infinite;text-shadow:0 0 3px rgba(255,255,0,0.8)}.vivid:hover{color:#fff}@-moz-keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}@-webkit-keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}@-o-keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}@keyframes vivid{0%{background-position:0 0}100%{background-position:300px 0}}\u003C\u002Fstyle\u003E\u003C\u002Fhead\u003E";
 ;pug_debug_line = 49;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fg0v\u002F10v\u002Ffrontend\u002Fweb\u002Fsrc\u002Fpug\u002Fbase.pug";
 pug_html = pug_html + "\u003Cbody\u003E";
 ;pug_debug_line = 2;pug_debug_filename = "\u002FUsers\u002Ftkirby\u002Fworkspace\u002Fg0v\u002F10v\u002Ffrontend\u002Fweb\u002Fsrc\u002Fpug\u002Fmodules\u002Fnavtop.pug";
@@ -500,57 +500,6 @@ pug_html = pug_html + "\u003Ca" + (pug_attrs(pug_merge([{"class": "btn","href": 
 block && block();
 pug_html = pug_html + "\u003C\u002Fa\u003E";
 };
-;pug_debug_line = 139;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv\u003E";
-;pug_debug_line = 140;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv class=\"btns d-inline-block\"\u003E";
-;pug_debug_line = 141;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv class=\"mb-1\"\u003E";
-;pug_debug_line = 141;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "想參與嗎？現在就提案：\u003C\u002Fdiv\u003E";
-;pug_debug_line = 142;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv class=\"btn-list mb-2\"\u003E";
-;pug_debug_line = 143;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_mixins["exbtn"].call({
-block: function(){
-;pug_debug_line = 143;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "短講";
-},
-attributes: {"class": "btn-hero"}
-}, "https://forms.gle/bRSmmUAqSmd2ZbQK9");
-;pug_debug_line = 144;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_mixins["exbtn"].call({
-block: function(){
-;pug_debug_line = 144;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "表演";
-},
-attributes: {"class": "btn-hero"}
-}, "https://forms.gle/LCxF9BepH1mwxrYD6");
-;pug_debug_line = 145;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_mixins["exbtn"].call({
-block: function(){
-;pug_debug_line = 145;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "開放工作坊";
-},
-attributes: {"class": "btn-hero"}
-}, "https://forms.gle/RPyvNxtFSgE7Z8TD8");
-;pug_debug_line = 146;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_mixins["exbtn"].call({
-block: function(){
-;pug_debug_line = 146;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "闖關小遊戲";
-},
-attributes: {"class": "btn-hero"}
-}, "https://forms.gle/DVAVk4cAoDZbL8e7A");
-;pug_debug_line = 147;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_mixins["exbtn"].call({
-block: function(){
-;pug_debug_line = 147;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "看闖關遊戲範例";
-},
-attributes: {"class": "vivid"}
-}, "https://g0v.github.io/10v-points/");
-pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 149;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv\u003E";
 ;pug_debug_line = 150;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
@@ -706,42 +655,6 @@ pug_html = pug_html + "活動場地圖 ( 點擊看大圖 )\u003C\u002Fh4\u003E";
 pug_html = pug_html + "\u003Ca href=\"\u002Fassets\u002Fimg\u002Fspace-lg.png\"\u003E";
 ;pug_debug_line = 201;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cimg class=\"w-100\" src=\"\u002Fassets\u002Fimg\u002Fspace.png\"\u003E\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 202;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv class=\"sect\"\u003E";
-;pug_debug_line = 203;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ch2\u003E";
-;pug_debug_line = 203;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "沒有人一起來辦生日趴\u003C\u002Fh2\u003E";
-;pug_debug_line = 204;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Chr\u003E";
-;pug_debug_line = 205;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cp\u003E";
-;pug_debug_line = 205;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "#零宇宙大爆炸短講、表演、開放工作坊、闖關小遊戲熱情徵件中！即日起至 9\u002F18 23:59 截止！\u003C\u002Fp\u003E";
-;pug_debug_line = 207;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv class=\"d-flex g-2 mb-2\"\u003E";
-;pug_debug_line = 208;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ca class=\"btn btn-primary\" href=\"https:\u002F\u002Fforms.gle\u002FbRSmmUAqSmd2ZbQK9\" target=\"_blank\" rel=\"noopener noreferrer\"\u003E";
-;pug_debug_line = 208;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "提案「短講」\u003C\u002Fa\u003E";
-;pug_debug_line = 209;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ca class=\"btn btn-primary\" href=\"https:\u002F\u002Fforms.gle\u002FLCxF9BepH1mwxrYD6\" target=\"_blank\" rel=\"noopener noreferrer\"\u003E";
-;pug_debug_line = 209;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "提案「表演」\u003C\u002Fa\u003E";
-;pug_debug_line = 210;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ca class=\"btn btn-primary\" href=\"https:\u002F\u002Fforms.gle\u002FRPyvNxtFSgE7Z8TD8\" target=\"_blank\" rel=\"noopener noreferrer\"\u003E";
-;pug_debug_line = 210;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "提案「開放工作坊」\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 211;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Cdiv class=\"d-flex g-2 mb-2\"\u003E";
-;pug_debug_line = 212;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ca class=\"btn btn-primary\" href=\"https:\u002F\u002Fforms.gle\u002FDVAVk4cAoDZbL8e7A\" target=\"_blank\" rel=\"noopener noreferrer\"\u003E";
-;pug_debug_line = 212;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "提案「闖關小遊戲」\u003C\u002Fa\u003E";
-;pug_debug_line = 213;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ca class=\"btn vivid\" href=\"https:\u002F\u002Fg0v.github.io\u002F10v-points\u002F\" target=\"_blank\" rel=\"noopener noreferrer\"\u003E";
-;pug_debug_line = 213;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "看闖關小遊戲範例\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 217;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Cdiv class=\"sect\"\u003E";
 ;pug_debug_line = 218;pug_debug_filename = "frontend\u002Fweb\u002Fsrc\u002Fpug\u002Findex.pug";
