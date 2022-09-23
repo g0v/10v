@@ -20,9 +20,12 @@
       }
       return this._cfg = o;
     },
-    _init: function(){
-      var err, this$ = this;
+    _init: function(o){
+      var i18n, err, this$ = this;
       servebase._inited = true;
+      if (o != null) {
+        servebase._cfg = o;
+      }
       this._cfg = servebase._cfg || {};
       if (typeof this._cfg === 'function') {
         this._cfg = this._cfg();
@@ -65,7 +68,7 @@
           path: "0.html"
         }
       });
-      this.i18n = i18next;
+      this.i18n = i18n = this._cfg.i18n || (typeof i18next != 'undefined' && i18next !== null ? i18next : undefined);
       err = new lderror.handler({
         handler: function(n, e){
           return this$.ldcvmgr.get({
@@ -97,11 +100,11 @@
         return window.location.replace('/');
       });
       return this.manager.init().then(function(){
-        if (typeof i18next == 'undefined' || i18next === null) {
+        if (i18n == null) {
           return;
         }
         return Promise.resolve().then(function(){
-          return i18next.init({
+          return i18n.init({
             supportedLng: ['en', 'zh-TW'],
             fallbackLng: 'zh-TW',
             fallbackNS: '',
@@ -109,15 +112,15 @@
           });
         }).then(function(){
           if (typeof i18nextBrowserLanguageDetector != 'undefined' && i18nextBrowserLanguageDetector !== null) {
-            return i18next.use(i18nextBrowserLanguageDetector);
+            return i18n.use(i18nextBrowserLanguageDetector);
           }
         }).then(function(){
           var lng;
           lng = (typeof httputil != 'undefined' && httputil !== null ? httputil.qs('lng') || httputil.cookie('lng') : null) || navigator.language || navigator.userLanguage;
           console.log("use language: ", lng);
-          return i18next.changeLanguage(lng);
+          return i18n.changeLanguage(lng);
         }).then(function(){
-          return block.i18n.use(i18next);
+          return block.i18n.use(i18n);
         });
       }).then(function(){
         return this$.auth.get();
@@ -140,8 +143,8 @@
       servebase.config(corecfg);
     }
     return {
-      init: proxise.once(function(){
-        return servebase._init.apply(this);
+      init: proxise.once(function(o){
+        return servebase._init.apply(this, [o]);
       })
     };
   });
