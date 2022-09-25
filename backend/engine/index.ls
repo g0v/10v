@@ -81,7 +81,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
     srcbuild.lsp((@config.build or {}) <<< {
       logger, i18n,
-      base: @feroot
+      base: Array.from(new Set([@feroot] ++ (@config.srcbuild or [])))
       bundle: {configFile: path.join(@feroot, 'bundle.json'), relative-path: true}
       asset: {srcdir: 'src/pug', desdir: 'static'}
     })

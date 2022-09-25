@@ -1,0 +1,1 @@
+ (function() { function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv\u003Esrcbuild builds this file.\u003C\u002Fdiv\u003E";;return pug_html;}; module.exports = template; })() 
