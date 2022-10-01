@@ -5,11 +5,11 @@
       ul.navbar-nav.ml-4
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           .btn-group(data-toggle="dropdown")
-            .btn.btn-sm.btn-outline-secondary(ld="lng") EN
+            //-.btn.btn-sm.btn-outline-secondary(ld="lng") EN
             .btn.btn-sm.btn-outline-secondary.dropdown-toggle: i.i-globe(style="line-height:1em")
           .dropdown-menu.dropdown-menu-right.shadow-sm.no-select(style="min-width:0")
-            .dropdown-item(ld="set-lng",data-name="en") EN
-            .dropdown-item(ld="set-lng",data-name="zh-TW") 中
+            a.dropdown-item(href="/intl/en/", ld="set-lng",data-name="en") EN
+            a.dropdown-item(href="/", ld="set-lng",data-name="zh-TW") 中
         li.nav-item.d-none(ld="unauthed login"): a.nav-link 登入
         li.nav-item.d-none(ld="unauthed signup"): a.nav-link 註冊
         li.nav-item.dropdown.d-none(ld="authed profile")
