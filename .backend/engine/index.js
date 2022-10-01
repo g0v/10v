@@ -167,6 +167,9 @@
         this$.logMail = this$.log.child({
           module: 'mail'
         });
+        this$.logI18n = this$.log.child({
+          module: 'i18n'
+        });
         if (this$.config.mail) {
           this$.mailQueue = new mailQueue(import$({
             logger: this$.logMail,
@@ -189,7 +192,7 @@
         });
         i18nEnabled = this$.config.i18n && (this$.config.i18n.enabled || !(this$.config.i18n.enabled != null));
         ((ref$ = this$.config).i18n || (ref$.i18n = {})).enabled = i18nEnabled;
-        return i18n(this$.config.i18n);
+        return i18n.apply(this$, [this$.config.i18n]);
       }).then(function(it){
         return this$.i18n = it;
       }).then(function(){

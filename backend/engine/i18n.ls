@@ -1,4 +1,4 @@
-require! <[chokidar i18next i18next-fs-backend i18next-http-middleware]>
+require! <[fs chokidar i18next i18next-fs-backend i18next-http-middleware js-yaml]>
 
 ret = (opt) ->
   if !opt or (opt.enabled? and !opt.enabled) => return Promise.resolve!
@@ -14,15 +14,22 @@ ret = (opt) ->
     .use i18next-fs-backend
     .use i18next-http-middleware.LanguageDetector
     .init options
-    .then ->
+    .then ~>
+      _load = ({file, type}) ~>
+        if type != \unlink =>
+          try
+            ret = js-yaml.load fs.read-file-sync file, \utf8
+            i18next.reloadResources(options.lng)
+            @log-i18n.info "#file #{if type == \add => '' else \re}loaded."
+          catch err
+            @log-i18n.error {err}, "locale file #file parse error: #{err.message or 'no message provided'}".red
       watcher = chokidar.watch <[locales]>, do
         persistent: true
         ignored: (f) ~> /\/\./.exec(f)
       watcher
-        .on \add, (~> i18next.reloadResources(options.lng))
-        .on \change, (~> i18next.reloadResources(options.lng))
-        .on \unlink, (~> i18next.reloadResources(options.lng))
-
+        .on \add, -> _load {file: it, type: \add}
+        .on \change, -> _load {file: it, type: \change}
+        .on \unlink, -> _load {file: it, type: \unlink}
       return i18next
 
 module.exports = ret

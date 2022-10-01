@@ -93,6 +93,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
         @log-server = @log.child {module: \server}
         @log-build = @log.child {module: \build}
         @log-mail = @log.child {module: \mail}
+        @log-i18n = @log.child {module: \i18n}
         if @config.mail =>
           @mail-queue = new mail-queue {logger: @log-mail, base: @config.base} <<< (@config.mail or {})
 
@@ -107,7 +108,7 @@ backend.prototype = Object.create(Object.prototype) <<< do
 
         i18n-enabled = @config.i18n and (@config.i18n.enabled or !(@config.i18n.enabled?))
         @config.{}i18n.enabled = i18n-enabled
-        i18n @config.i18n
+        i18n.apply @, [@config.i18n]
       .then ~> @i18n = it
       .then ~>
         if !(@config.redis and @config.redis.enabled) => return
