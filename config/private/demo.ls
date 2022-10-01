@@ -6,6 +6,7 @@ module.exports = do
     lng: <[en zh-TW]>
     ns: <[default]>
   base: 'base'
+  srcbuild: [] # value in `base` will be added by default
   redis:
     enabled: false
     url: \redis://localhost:6379

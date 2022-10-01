@@ -14,10 +14,11 @@ servebase =
       [@servebase/core] This may lead to inconsistent behavior.
       """
     @_cfg = o
-  _init: ->
+  _init: (o) ->
     # _init is usually called with provided context (the core context, instead of `servebase`),
     # so we have to access `servebase` directly with its name.
     servebase._inited = true
+    if o? => servebase._cfg = o
     @_cfg = servebase._cfg or {}
     # similarly, corecfg will be called with `this` as its context
     # so it can access core context.
@@ -38,7 +39,7 @@ servebase =
       loader: new ldloader class-name: "ldld full", auto-z: true, base-z: null, zmgr: @zmgr.scope zmgr.splash
       captcha: new captcha manager: @manager, zmgr: @zmgr.scope zmgr.splash
       ldcvmgr: new ldcvmgr manager: @manager, error-cover: {ns: \local, name: "error", path: "0.html"}
-      i18n: i18next
+      i18n: i18n = @_cfg.i18n or if i18next? => i18next else undefined
 
     err = new lderror.handler handler: (n, e) ~> @ldcvmgr.get {ns: \local, name: \error, path: "#n.html"}, e
     @error = (e) -> err e
@@ -57,18 +58,18 @@ servebase =
       # to optimize, we may delay or completely ignore i18n
       # since not every service need i18n
       .then ->
-        if !i18next? => return
+        if !i18n? => return
         Promise.resolve!
-          .then -> i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW, fallbackNS: '', defaultNS: ''
-          .then -> if i18nextBrowserLanguageDetector? => i18next.use i18nextBrowserLanguageDetector
+          .then -> i18n.init supportedLng: <[en zh-TW]>, fallbackLng: \zh-TW, fallbackNS: '', defaultNS: ''
+          .then -> if i18nextBrowserLanguageDetector? => i18n.use i18nextBrowserLanguageDetector
           .then ->
             lng = (
               (if httputil? => (httputil.qs(\lng) or httputil.cookie(\lng)) else null) or
               navigator.language or navigator.userLanguage
             )
             console.log "use language: ", lng
-            i18next.changeLanguage lng
-          .then -> block.i18n.use i18next
+            i18n.changeLanguage lng
+          .then -> block.i18n.use i18n
       .then ~>
         # PERF TODO block.i18n.use and manager.init are quite fast.
         # we may provide an anonymous initialization
@@ -86,7 +87,7 @@ servebase =
 
 ldc.register \core, <[corecfg]>, ({corecfg}) ->
   if corecfg? => servebase.config corecfg
-  init: proxise.once -> servebase._init.apply @
+  init: proxise.once (o) -> servebase._init.apply @, [o]
 
 if module? => module.exports = servebase
 else if window? => window.servebase = servebase

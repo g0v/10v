@@ -143,7 +143,7 @@
       if (!(this.config.build && this.config.build.enabled)) {
         return;
       }
-      return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = this.feroot, ref$.bundle = {
+      return srcbuild.lsp((ref$ = this.config.build || {}, ref$.logger = logger, ref$.i18n = i18n, ref$.base = Array.from(new Set([this.feroot].concat(this.config.srcbuild || []))), ref$.bundle = {
         configFile: path.join(this.feroot, 'bundle.json'),
         relativePath: true
       }, ref$.asset = {
