@@ -44,7 +44,7 @@
   "dependencies": {
     "@plotdb/colors": "^0.0.2",
     "@plotdb/ews": "^0.0.10",
-    "@plotdb/srcbuild": "^0.0.50",
+    "@plotdb/srcbuild": "^0.0.51",
     "@plotdb/suuid": "^0.5.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
