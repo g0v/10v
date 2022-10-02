@@ -159,9 +159,9 @@ block body
         img(style="width:128px;",src="/assets/img/logo/draft.gif")
         h1(style="margin:-32px 0 1em"): :i18n main-title
         .text-center.d-flex.g-2.justify-content-center
-          a.btn.btn-outline-secondary.shadow-sm(href="https://10th.g0v.tw/g0v-timeline",target="_blank",rel="noopener noreferrer") 零宇宙時間軸
-          a.btn.btn-outline-secondary.shadow-sm(href="https://g0v.github.io/10v-points/",target="_blank",rel="noopener noreferrer") 闖關零宇宙
-          a.btn.btn-outline-secondary.shadow-sm(href="https://www.youtube.com/c/g0vTW",target="_blank",rel="noopener noreferrer") 活動現場直播
+          a.btn.btn-outline-secondary.shadow-sm(href="https://10th.g0v.tw/g0v-timeline",target="_blank",rel="noopener noreferrer"): :i18n link-timeline
+          a.btn.btn-outline-secondary.shadow-sm(href="https://g0v.github.io/10v-points/",target="_blank",rel="noopener noreferrer"): :i18n link-game
+          a.btn.btn-outline-secondary.shadow-sm(href="https://www.youtube.com/c/g0vTW",target="_blank",rel="noopener noreferrer"): :i18n link-streaming
       hr
       .sect
         p: :i18n main-content1
@@ -173,13 +173,13 @@ block body
           li: :i18n main-item3
           li: :i18n main-item4
           li
-            div 活動內容：
+            div: :i18n agenda-title
             ul
 
-              li 聽短講／看表演／吃美食／聊社群的 #零宇宙
-              li 穿梭過去、現在、未來的零時政府互動展 #∅時空穿梭
-              li 每一個 Unconf 都是一個宇宙的 #∅時多重宇宙
-              li 親子同樂，孕育未來的沒有人的 #超新星遊樂園
+              li: :i18n agenda1
+              li: :i18n agenda2
+              li: :i18n agenda3
+              li: :i18n agenda4
           li
             div: :i18n main-item6
             div: :i18n main-item7
@@ -223,31 +223,43 @@ block body
         p: :i18n what-content3
 
       .sect
-        h2 我也想一起來辦趴
+        h2: :i18n work with us
         hr
-        p 加入 g0v： #[a(href="https://g0v-tw.slack.com/intl/zh-tw/join/shared_invite/zt-1dvm0vok1-Mbxl2F5n_186QXmppslfjQ#/shared-invite/email",target="_blank",rel="noopener noreferrer") https://g0v-tw.slack.com/intl/zh-tw/join/shared_invite/zt-1dvm0vok1-Mbxl2F5n_186QXmppslfjQ#/shared-invite/email]
-        p 在 #[code #10th-anniversary] 頻道就可以找到我們。
+        p
+          :i18n join us in g0v slack
+          | : 
+          a(href="https://g0v-tw.slack.com/intl/zh-tw/join/shared_invite/zt-1dvm0vok1-Mbxl2F5n_186QXmppslfjQ#/shared-invite/email",target="_blank",rel="noopener noreferrer") https://g0v-tw.slack.com/intl/zh-tw/join/shared_invite/zt-1dvm0vok1-Mbxl2F5n_186QXmppslfjQ#/shared-invite/email
+        p: :i18n in 10th-anniversary
         br
 
-        h5 艦隊成員
+        h5: :i18n staffs
+        br
         .d-flex.flex-wrap.g-2
-          div Chai-yun Lee
-          div chihao
-          div hkazami
-          div grass
-          div ddio
-          div Kirby
-          div mglee
-          div Oliver
-          div Peter
-          div Sam
-          div Sandra
-          div SeanGau
-          div Stella
-          div Stimim Terry
-          div Yanyiyi
-          div Yutin
-          div and more…
+          -
+            var staffs = [
+              {name: "Chai-yun Lee", url: "chai-yun-lee"},
+              {name: "chihao", url: "chihao"},
+              {name: "ddio", url: "ddio"},
+              {name: "hkazami", url: "hkazami"},
+              {name: "grass", url: "grass"},
+              {name: "mglee", url: "mglee"},
+              {name: "Oliver", url: "oliver"},
+              {name: "Peter", url: "peter"},
+              {name: "Sam", url: "sam"},
+              {name: "Sandra", url: "sandra"},
+              {name: "SeanGau", url: "seangau"},
+              {name: "Stella", url: "stella"},
+              {name: "Stimim", url: "stimim"},
+              {name: "Yanyiyi", url: "yanyiyi"},
+              {name: "Terry", url: "terry"},
+              {name: "tkirby", url: "tkirby"},
+              {name: "Yutin", url: "yutin"}
+            ];
+          .g-2.d-flex.flex-wrap.align-items-center.justify-content-start
+            each staff in staffs
+              .mb-2.text-center(style="width:5em;flex:0 0 auto")
+                img.rounded(style="box-shadow:0 0 2px rgba(0,0,0,.2);width:3.5em",src=`/assets/img/avatar/${staff.url}.jpg`)
+                .text-sm= staff.name
 
 
 
@@ -263,17 +275,15 @@ block body
     .w-1024.rwd.mx-auto
       hr
       .d-flex.g-4.align-items-end.justify-content-center.flex-wrap
-        .font-weight-bold 零宇宙大爆炸
-        .text-sm 主辦 / 零時政府零宇宙艦隊
-        .text-sm 協辦 / 社會創新實驗中心、g0v零時政府揪松團
+        .font-weight-bold: :i18n main-title
+        .text-sm: :i18n foot-organizer
+        .text-sm: :i18n foot-co-organizer
       .d-flex.justify-content-center.text-sm.flex-wrap
-        .m-2.entry #[i.i-link]#[a(href="https://g0v.hackmd.io/@eaKkAb8HRjOKJ4erd2STnA/10Anni-Party/https%3A%2F%2Fg0v.hackmd.io%2FMpTtG8xSTwqS6TlCM-b6VA") 生日趴總表]
-        .m-2.entry #[i.i-link.mr-1]#[a(href="/photo/") 照片牆]
-        .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") 活動報名]
-        .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") Call for Projects]
-        .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") 線上參與]
-        .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") 時間軸]
-        .m-2.entry #[i.i-unlink.mr-1]#[a(href="#") 購買 NFT]
+        .m-2.entry #[i.i-link]#[a(href="https://g0v.hackmd.io/@eaKkAb8HRjOKJ4erd2STnA/10Anni-Party/https%3A%2F%2Fg0v.hackmd.io%2FMpTtG8xSTwqS6TlCM-b6VA"): :i18n foot-hackmd]
+        .m-2.entry #[i.i-link.mr-1]#[a(href="/photo/"): :i18n foot-photo]
+        .m-2.entry #[i.i-link.mr-1]#[a(href="https://g0v-jothon.kktix.cc/events/g0v-hackath52n",target="_blank",rel="noopener noreferrer"): :i18n foot-signup]
+        //-.m-2.entry #[i.i-unlink.mr-1]#[a(href="#") Call for Projects]
+        //-.m-2.entry #[i.i-unlink.mr-1]#[a(href="#"): :i18n foot-online]
           
 
 block script
