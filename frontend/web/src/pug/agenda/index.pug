@@ -1,0 +1,59 @@
+extends /base.pug
+block vars
+  -
+    var meta = {
+      url: "https://10th.g0v.tw",
+      title: "零宇宙大爆炸 - 零時政府 g0v 十週年生日派對於台北的社會創新實驗中心",
+      description: "零時政府十週年了！「零宇宙大爆炸」將以生日派對的形式，舉辦在台北的社會創新實驗中心，透過短講、表演、開放工作坊、闖關遊戲、和源力不絕的生日蛋糕與美食，我們邀請「沒有人」化身為「零時空旅人」一同來回顧 g0v 的第一個十年，並且想像第二個、第三個、第 n 個十年！",
+      thumbnail: "https://10th.g0v.tw/assets/img/thumb.png",
+      thumb: {
+        type: "image/png",
+        width: "1200",
+        height: "630"
+      }
+    };
+block head
+  style(type="text/css"): include:stylus index.styl
+
+block body
+  mixin session(name)
+    .session(ld-each="session", data-name=name)
+      h5(ld="name")
+      .topic(ld-each="topic")
+        .inner
+          .p-2.border-right.align-items-center.justify-content-center(
+          style="grid-area: 1 / 1 / span 2 / 1;display:flex;"): span(ld="time")
+          .p-2.border-bottom(ld="speaker")
+          .p-2.text-right.border-bottom.topic-type(ld="type",style="grid-area: 1 / 3 / 1 / span 1")
+          .p-2(ld="title",style="grid-area: 2 / 2 / 2 / span 2")
+        //div(ld="desc")
+        //div(ld="slide")
+
+  .w-1024.rwd.mx-auto.my-4
+    br
+    .text-muted.mb-2 #[a(href="/") 零宇宙大爆炸] / #[br]零時政府 g0v 十週年生日派對
+    h1 議程表
+    hr
+    +nbr(2)
+    .d-flex
+      .flex-grow-1
+        h3#main 主舞台
+        br
+        .mb-4: +session("main")
+        br
+        h3#workshop R106 / 107 工作坊
+        br
+        div: +session("room")
+      .pl-2.d-none.d-md-block
+        +nbr(3)
+        .sticky(style="font-size:1em;top:1em")
+          .font-weight-bold 索引表
+          .list-group.shadowm-sm(style="border:3px solid #000")
+            a.list-group-item.text-white(style="background:#000;border-radius:0",href="#main") 主舞台
+            div: a.list-group-item.text-sm.text-nowrap(ld-each="index",data-name="main")
+            a.list-group-item.text-white(style="background:#000",href="#workshop") 工作坊
+            div: a.list-group-item.text-sm.text-nowrap(ld-each="index",data-name="room")
+  include /modules/footer.pug
+
+block script
+  script(type="module"): include:lsc index.ls

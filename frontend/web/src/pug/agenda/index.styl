@@ -1,0 +1,19 @@
+html,body
+  scroll-behavior: smooth
+.session
+  margin-bottom: 4em
+.topic
+  .inner
+    display: grid
+    grid-template: fit-content(2.5em) fit-content(2.5em) / 7em 1fr 5em
+  border: 3px solid #000
+  border-bottom: 0
+  .inner div
+    align-items: center
+  &:last-child
+    border-bottom: 3px solid #000
+  .topic-type
+    background: linear-gradient(80deg,rgba(0,0,0,0) 1em, rgba(255,0,0,1) 1.01em, rgba(255,0,0,1) 1.3em, rgba(0,0,0,1) 1.31em);
+    color: #fff
+.sticky a
+  color: #000

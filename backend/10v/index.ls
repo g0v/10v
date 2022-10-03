@@ -1,4 +1,4 @@
-require! <[fs fs-extra path crypto]>
+require! <[fs fs-extra path crypto request]>
 isogit = require "isomorphic-git"
 http = require "isomorphic-git/http/node"
 (backend) <- (->module.exports = it)  _
@@ -47,3 +47,23 @@ backend.route.extapi.post \/deploy, (req, res) ->
     deploy({root} <<< d{url, branch, username, password})
       .then -> console.log "[deploy] #url: done." 
 
+cache = {}
+api.get \/agenda, (req, res, next) ->
+  if cache.data and cache.timestamp and cache.timestamp >= Date.now! - (10 * 60 * 60 * 1000) =>
+    return res.send cache.data
+  key = backend.config.gcs.apikey
+  url = "https://content-sheets.googleapis.com/v4/spreadsheets/1pqre8p5MwXv690aV9ML71XigY2XegA4QH0Qko9HsH7c?key=#key&includeGridData=true&ranges=#{encodeURIComponent('主舞台-短講&表演!A1:K100')}&ranges=#{encodeURIComponent('R107&108-工作坊!A1:K100')}"
+  Promise.resolve!
+    .then ->
+      new Promise (response, rej) ->
+        (e, r, b) <- request url, {method: "GET"}, _
+        if e => return rej e
+        data = JSON.parse(b)
+        #return response(data.sheets.map -> it.data.0.rowData)
+        data = data.sheets.map -> it{data, properties}
+        data.map ->
+          it.data = it.data.0.rowData.map (r) -> r.values.map(-> it.formattedValue).map(->if it? => it else '')
+        cache.data = data
+        cache.timestamp = Date.now!
+        return response data
+    .then -> res.send it
