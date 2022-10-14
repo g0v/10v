@@ -225,14 +225,33 @@ block body
 
       .sect
         h2: :i18n sponsor
-        .card.shadow: .card-body
-          h4: :i18n sil-five
-          p Better 2 Gether, Gather 4 Better.
-          ul
-            li #[span: :i18n sponsor-time] ｜ 10.28(Fri) ～ 10.30(Sun) / Join for Free
-            li #[span: :i18n sponsor-location] ｜ #[span: :i18n sil]
-            li #[span: :i18n sponsor-site] ｜ #[a(href="https://silab5years.com/",target="_blank",rel="noopener noreferrer") https://silab5years.com/]
+        style(type="text/css"): :stylus
+          .sponsor
+            flex-direction: row
+            flex-wrap: nowrap
+            align-items: stretch
+            .bgimg
+              background: #efecea url(/assets/img/sponsor.jpg) center center no-repeat
+              background-size: contain
+              width: 50%
+          @media (max-width: 960px)
+            .sponsor {
+              flex-wrap: wrap
+              .bgimg {
+                width: 100%
+                height: 400px
+              }
+            }
 
+        .card.shadow.sponsor
+          .bgimg
+          .card-body
+            h4: :i18n sil-five
+            p Better 2 Gether, Gather 4 Better.
+            ul
+              li #[span: :i18n sponsor-time] ｜ 10.28(Fri) ～ 10.30(Sun) / Join for Free
+              li #[span: :i18n sponsor-location] ｜ #[span: :i18n sil]
+              li #[span: :i18n sponsor-site] ｜ #[a(href="https://silab5years.com/",target="_blank",rel="noopener noreferrer") https://silab5years.com/]
 
 
       .sect
