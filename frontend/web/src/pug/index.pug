@@ -224,6 +224,18 @@ block body
         p: :i18n what-content3
 
       .sect
+        h2: :i18n sponsor
+        .card.shadow: .card-body
+          h4: :i18n sil-five
+          p Better 2 Gether, Gather 4 Better.
+          ul
+            li #[span: :i18n sponsor-time] ｜ 10.28（五）～ 10.30（日）/ Join for Free
+            li #[span: :i18n sponsor-location] ｜ #[span: :i18n sil]
+            li #[span: :i18n sponsor-site] ｜ #[a(href="https://silab5years.com/",target="_blank",rel="noopener noreferrer") https://silab5years.com/]
+
+
+
+      .sect
         h2: :i18n work with us
         hr
         p
@@ -238,11 +250,16 @@ block body
         .d-flex.flex-wrap.g-2
           -
             var staffs = [
+              {name: "Aaron Su", url: "aaron-su"},
               {name: "Chai-yun Lee", url: "chai-yun-lee"},
               {name: "chihao", url: "chihao"},
+              {name: "daisuke", url: "daisuke"},
               {name: "ddio", url: "ddio"},
+              {name: "fly", url: "fly"},
               {name: "hkazami", url: "hkazami"},
               {name: "grass", url: "grass"},
+              {name: "james", url: "james"},
+              {name: "KC", url: "kc"},
               {name: "mglee", url: "mglee"},
               {name: "Oliver", url: "oliver"},
               {name: "Peter", url: "peter"},
@@ -253,8 +270,14 @@ block body
               {name: "Stimim", url: "stimim"},
               {name: "Yanyiyi", url: "yanyiyi"},
               {name: "Terry", url: "terry"},
+              {name: "Tiff", url: "tiff"},
               {name: "tkirby", url: "tkirby"},
-              {name: "Yutin", url: "yutin"}
+              {name: "Ying", url: "ying"}, 
+              {name: "Yutin", url: "yutin"},
+              {name: "ziaosen", url: "ziaosen"},
+              {name: "Zoe Gao", url: "zoe-gao"},
+              {name: "阿甫", url: "阿甫"},
+              {name: "松鼠", url: "松鼠"}
             ];
           .g-2.d-flex.flex-wrap.align-items-center.justify-content-start
             each staff in staffs
