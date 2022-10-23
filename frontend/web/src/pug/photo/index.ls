@@ -46,7 +46,7 @@ handler = ->
     console.log "load #{ctx.idx} ..."
     {server, id, secret} = photo
     ctx.last = 1 - ctx.last
-    ctx.cell[ctx.last].img = url = "https://live.staticflickr.com/#server/#{id}_#{secret}.jpg"
+    ctx.cell[ctx.last].img = url = "https://live.staticflickr.com/#server/#{id}_#{secret}_b.jpg"
     img = new Image!
     img.onload = ->
       ctx.idx++
