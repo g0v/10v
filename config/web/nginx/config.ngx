@@ -31,6 +31,10 @@ server {
     proxy_read_timeout 30m;
   }
 
+  location /g0v-timeline/ {
+    return 301 https://timeline.g0v.tw;
+  }
+
   # put at the top ( let the fallback location directive to try files. )
   location ~ ^/(.*\.(?:ico|css|js|gif|jpe?g|png|svg|woff|ttf|otf))$ {
     expires 1d;
