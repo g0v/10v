@@ -32,10 +32,12 @@ WORKTREE="$(mktemp -d)"
 trap 'git worktree remove --force "$WORKTREE" 2>/dev/null; rm -rf "$TMPDIR"' EXIT
 
 if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH"; then
+  # Ensure local tracking branch exists, then add worktree
+  git branch --track "$BRANCH" "origin/$BRANCH" 2>/dev/null || true
   git worktree add "$WORKTREE" "$BRANCH"
 else
   # Branch doesn't exist yet — create an orphan branch
-  git worktree add --orphan "$WORKTREE" "$BRANCH"
+  git worktree add --orphan -b "$BRANCH" "$WORKTREE"
 fi
 
 echo "Syncing files..."
