@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Deploy frontend/web/static/ to gh-pages branch
+# Usage: ./script/deploy-gh-pages [commit message]
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+STATIC_DIR="$REPO_ROOT/frontend/web/static"
+BRANCH="gh-pages"
+MSG="${1:-deploy: update gh-pages}"
+
+if [ ! -d "$STATIC_DIR" ]; then
+  echo "Error: $STATIC_DIR does not exist." >&2
+  exit 1
+fi
+
+TMPDIR="$(mktemp -d)"
+trap 'rm -rf "$TMPDIR"' EXIT
+
+echo "Copying $STATIC_DIR to temp dir..."
+cp -r "$STATIC_DIR/." "$TMPDIR/"
+
+echo "Checking out $BRANCH branch..."
+cd "$REPO_ROOT"
+
+# Fetch remote so we know if gh-pages exists
+git fetch origin "$BRANCH" 2>/dev/null || true
+
+# Work in a temp worktree to avoid touching the current checkout
+WORKTREE="$(mktemp -d)"
+trap 'git worktree remove --force "$WORKTREE" 2>/dev/null; rm -rf "$TMPDIR"' EXIT
+
+if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH"; then
+  git worktree add "$WORKTREE" "$BRANCH"
+else
+  # Branch doesn't exist yet — create an orphan branch
+  git worktree add --orphan "$WORKTREE" "$BRANCH"
+fi
+
+echo "Syncing files..."
+# Remove everything except .git
+find "$WORKTREE" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+cp -r "$TMPDIR/." "$WORKTREE/"
+
+cd "$WORKTREE"
+git add -A
+
+if git diff --cached --quiet; then
+  echo "Nothing to deploy — working tree is clean."
+  exit 0
+fi
+
+git commit -m "$MSG"
+
+echo "Pushing to origin/$BRANCH..."
+git push origin "$BRANCH"
+
+echo "Done. Deployed to gh-pages."
